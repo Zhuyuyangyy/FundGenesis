@@ -1,0 +1,18 @@
+{
+  "demo": "coordinated_kol_amplification",
+  "v0.4_risk_agent": true,
+  "description": "Coordinated multi-KOL amplification -> HIGH manipulation risk",
+  "steps": 200,
+  "peak_manipulation_risk": 0.65,
+  "avg_manipulation_risk": 0.1128,
+  "high_risk_steps": 36,
+  "coordinated_pattern_detected": true,
+  "final_price": 260.44,
+  "price_change_pct": 1.6044,
+  "verification": {
+    "peak_risk_gte_0.50": true,
+    "coordinated_pattern_found": true,
+    "required_action": true,
+    "demo_sensitive_thresholds_used": true
+  }
+}

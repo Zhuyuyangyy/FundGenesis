@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FundGenesis - 实时仿真仪表盘</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --green: #3fb950;
+      --red: #f85149;
+      --yellow: #d29922;
+      --blue: #58a6ff;
+      --purple: #a371f7;
+      --text: #c9d1d9;
+      --text-dim: #8b949e;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .header {
+      padding: 20px 30px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      font-size: 1.4rem;
+      color: var(--blue);
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+    .status-dot.connected { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-card .label { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; }
+    .stat-card .value { font-size: 1.8rem; font-weight: 700; }
+    .stat-card .value.green { color: var(--green); }
+    .stat-card .value.red { color: var(--red); }
+    .stat-card .value.blue { color: var(--blue); }
+    .stat-card .value.yellow { color: var(--yellow); }
+    .stat-card .value.purple { color: var(--purple); }
+
+    .charts { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .chart-card h3 { font-size: 0.9rem; margin-bottom: 12px; color: var(--text-dim); }
+    canvas { width: 100% !important; }
+
+    .regime-bar {
+      display: flex;
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .regime-segment {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+    }
+    .regime-segment.active { background: var(--blue); }
+
+    .controls {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 8px 20px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    button:hover { background: var(--border); }
+    button.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+    button.primary:hover { background: #4090e0; }
+    .info { font-size: 0.8rem; color: var(--text-dim); }
+
+    .narrative-log {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .narrative-log h3 { font-size: 0.9rem; margin-bottom: 12px; color: var(--text-dim); }
+    .log-entry {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .log-entry:last-child { border-bottom: none; }
+    .log-entry .time { color: var(--text-dim); margin-right: 8px; }
+    .log-entry.positive { color: var(--green); }
+    .log-entry.negative { color: var(--red); }
+    .log-entry.reversal { color: var(--purple); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>FundGenesis 实时仿真仪表盘</h1>
+    <div class="status">
+      <div class="status-dot" id="wsStatus"></div>
+      <span id="wsLabel">未连接</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="controls">
+      <button class="primary" onclick="startDemo(1)">Demo 1</button>
+      <button class="primary" onclick="startDemo(2)">Demo 2</button>
+      <button class="primary" onclick="startDemo(3)">Demo 3</button>
+      <button onclick="clearData()">清空</button>
+      <span class="info">| 连接: ws://localhost:8765/ws</span>
+    </div>
+
+    <div class="grid">
+      <div class="stat-card">
+        <div class="label">价格</div>
+        <div class="value blue" id="price">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Greed</div>
+        <div class="value green" id="greed">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Fear</div>
+        <div class="value red" id="fear">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Reflexivity</div>
+        <div class="value purple" id="reflexivity">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Bubble Risk</div>
+        <div class="value yellow" id="bubble">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Panic Risk</div>
+        <div class="value red" id="panic">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Step</div>
+        <div class="value blue" id="step">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Regime</div>
+        <div class="value" id="regime" style="font-size:1.2rem">--</div>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>价格走势</h3>
+        <canvas id="priceChart" height="120"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>情绪指数 (Greed vs Fear)</h3>
+        <canvas id="emotionChart" height="120"></canvas>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>泡沫风险 & 恐慌风险</h3>
+        <canvas id="riskChart" height="120"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>反身性指数</h3>
+        <canvas id="refChart" height="120"></canvas>
+        <div class="regime-bar" id="regimeBar">
+          <div class="regime-segment" title="Normal"></div>
+          <div class="regime-segment" title="Bubble Forming"></div>
+          <div class="regime-segment" title="Bubble Peak"></div>
+          <div class="regime-segment" title="Crash"></div>
+          <div class="regime-segment" title="Panic"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="narrative-log">
+      <h3>叙事事件日志</h3>
+      <div id="logContainer"></div>
+    </div>
+  </div>
+
+<script>
+  // ============ Chart Setup ============
+  const chartCfg = (label, color, maxPts=200) => ({
+    type: 'line',
+    data: { labels: [], datasets: [{ label, data: [], borderColor: color, tension: 0.3, fill: false, pointRadius: 0 }] },
+    options: { responsive: true, animation: false, scales: { x: { display: false }, y: { beginAtZero: false } } }
+  });
+
+  const priceChart = new Chart(document.getElementById('priceChart').getContext('2d'), {
+    ...chartCfg('价格', '#58a6ff'),
+    data: { ...chartCfg('价格', '#58a6ff').data, datasets: [
+      { label: '价格', data: [], borderColor: '#58a6ff', tension: 0.3, fill: true, backgroundColor: 'rgba(88,166,255,0.1)', pointRadius: 0 }
+    ]}
+  });
+
+  const emotionChart = new Chart(document.getElementById('emotionChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label: 'Greed', data: [], borderColor: '#3fb950', tension: 0.3, pointRadius: 0 },
+        { label: 'Fear', data: [], borderColor: '#f85149', tension: 0.3, pointRadius: 0 }
+      ]
+    },
+    options: { responsive: true, animation: false, scales: { x: { display: false }, y: { min: 0, max: 1 } } }
+  });
+
+  const riskChart = new Chart(document.getElementById('riskChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label: 'Bubble', data: [], borderColor: '#d29922', tension: 0.3, fill: true, backgroundColor: 'rgba(210,153,34,0.2)', pointRadius: 0 },
+        { label: 'Panic', data: [], borderColor: '#f85149', tension: 0.3, fill: true, backgroundColor: 'rgba(248,81,73,0.2)', pointRadius: 0 }
+      ]
+    },
+    options: { responsive: true, animation: false, scales: { x: { display: false }, y: { min: 0, max: 1 } } }
+  });
+
+  const refChart = new Chart(document.getElementById('refChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label: 'Reflexivity', data: [], borderColor: '#a371f7', tension: 0.3, fill: true, backgroundColor: 'rgba(163,113,247,0.2)', pointRadius: 0 }
+      ]
+    },
+    options: { responsive: true, animation: false, scales: { x: { display: false }, y: { min: 0, max: 1 } } }
+  });
+
+  // ============ WebSocket ============
+  let ws = null;
+
+  function connect() {
+    ws = new WebSocket('ws://localhost:8765/ws');
+    ws.onopen = () => {
+      document.getElementById('wsStatus').classList.add('connected');
+      document.getElementById('wsLabel').textContent = '已连接';
+    };
+    ws.onclose = () => {
+      document.getElementById('wsStatus').classList.remove('connected');
+      document.getElementById('wsLabel').textContent = '断开';
+      setTimeout(connect, 3000);
+    };
+    ws.onerror = () => ws.close();
+    ws.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (data.type === 'heartbeat' || data.type === 'pong') return;
+      updateDashboard(data);
+    };
+  }
+  connect();
+
+  function updateDashboard(d) {
+    // Stats
+    document.getElementById('price').textContent = d.price ? d.price.toFixed(2) : '--';
+    document.getElementById('greed').textContent = d.greed ? d.greed.toFixed(3) : '--';
+    document.getElementById('fear').textContent = d.fear ? d.fear.toFixed(3) : '--';
+    document.getElementById('reflexivity').textContent = d.reflexivity_index ? d.reflexivity_index.toFixed(3) : '--';
+    document.getElementById('bubble').textContent = d.bubble_risk ? d.bubble_risk.toFixed(3) : '--';
+    document.getElementById('panic').textContent = d.panic_risk ? d.panic_risk.toFixed(3) : '--';
+    document.getElementById('step').textContent = d.step || '--';
+    document.getElementById('regime').textContent = d.regime || '--';
+
+    // Narrative log
+    if (d.narrative_event) {
+      const log = document.getElementById('logContainer');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry ' + (d.narrative_event.type || '');
+      entry.innerHTML = `<span class="time">[${d.step}]</span> ${d.narrative_event.name || JSON.stringify(d.narrative_event)}`;
+      log.prepend(entry);
+      if (log.children.length > 50) log.lastChild.remove();
+    }
+
+    // Charts (append only, limit to 200)
+    const push = (chart, value) => {
+      chart.data.labels.push(d.step);
+      chart.data.datasets.forEach(ds => ds.data.push(Array.isArray(value) ? value[ds.datasetIndex] : value));
+      if (chart.data.labels.length > 200) {
+        chart.data.labels.shift();
+        chart.data.datasets.forEach(ds => ds.data.shift());
+      }
+      chart.update('none');
+    };
+
+    if (d.price) push(priceChart, d.price);
+    if (d.greed !== undefined) push(emotionChart, [d.greed, d.fear || 0]);
+    if (d.bubble_risk !== undefined) push(riskChart, [d.bubble_risk, d.panic_risk || 0]);
+    if (d.reflexivity_index !== undefined) push(refChart, d.reflexivity_index);
+
+    // Regime bar
+    const regimes = ['normal', 'bubble_forming', 'bubble_peak', 'crash', 'panic_spread'];
+    const segs = document.querySelectorAll('.regime-segment');
+    segs.forEach(s => s.classList.remove('active'));
+    if (d.regime && regimes.includes(d.regime)) {
+      segs[regimes.indexOf(d.regime)]?.classList.add('active');
+    }
+  }
+
+  function clearData() {
+    [priceChart, emotionChart, riskChart, refChart].forEach(c => {
+      c.data.labels = [];
+      c.data.datasets.forEach(d => d.data = []);
+      c.update();
+    });
+    document.getElementById('logContainer').innerHTML = '';
+  }
+
+  function startDemo(n) {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'start_demo', demo: n }));
+    }
+  }
+</script>
+</body>
+</html>

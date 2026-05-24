@@ -1,0 +1,980 @@
+{
+  "meta": {
+    "n_scenarios": 5,
+    "n_runs": 10,
+    "steps": 200,
+    "reversal_injection_step": 120,
+    "scenarios": {
+      "normal_propagation": {
+        "label": "Normal Propagation (Baseline)",
+        "use_regulator": false
+      },
+      "coordinated_kol": {
+        "label": "Coordinated KOL Amplification",
+        "use_regulator": false
+      },
+      "fomo_surge": {
+        "label": "FOMO Surge + Price Self-Validation",
+        "use_regulator": false
+      },
+      "narrative_reversal": {
+        "label": "Narrative Reversal + Bubble Burst",
+        "use_regulator": false
+      },
+      "regulatory_suppression": {
+        "label": "Coordinated KOL + Regulatory Suppression",
+        "use_regulator": true
+      }
+    }
+  },
+  "regulation_effectiveness": 0.025,
+  "scenarios": {
+    "normal_propagation": {
+      "label": "Normal Propagation (Baseline)",
+      "aggregate": {
+        "avg_reflexivity_index": {
+          "mean": 0.2582,
+          "std": 0.0002,
+          "min": 0.2579,
+          "max": 0.2587,
+          "raw": [
+            0.258,
+            0.2583,
+            0.2579,
+            0.2583,
+            0.258,
+            0.258,
+            0.2582,
+            0.2583,
+            0.2587,
+            0.2585
+          ]
+        },
+        "bubble_risk_peak": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "raw": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "manipulation_detection_rate": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "raw": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "peak_manipulation_risk": {
+          "mean": 0.105,
+          "std": 0.0,
+          "min": 0.105,
+          "max": 0.105,
+          "raw": [
+            0.105,
+            0.105,
+            0.105,
+            0.105,
+            0.105,
+            0.105,
+            0.105,
+            0.105,
+            0.105,
+            0.105
+          ]
+        }
+      }
+    },
+    "coordinated_kol": {
+      "label": "Coordinated KOL Amplification",
+      "aggregate": {
+        "avg_reflexivity_index": {
+          "mean": 0.2789,
+          "std": 0.001,
+          "min": 0.2771,
+          "max": 0.2808,
+          "raw": [
+            0.2779,
+            0.2808,
+            0.278,
+            0.2791,
+            0.279,
+            0.2785,
+            0.2791,
+            0.279,
+            0.2801,
+            0.2771
+          ]
+        },
+        "bubble_risk_peak": {
+          "mean": 0.0921,
+          "std": 0.0081,
+          "min": 0.0761,
+          "max": 0.1072,
+          "raw": [
+            0.0856,
+            0.1072,
+            0.0862,
+            0.0939,
+            0.0992,
+            0.0888,
+            0.0952,
+            0.092,
+            0.0966,
+            0.0761
+          ]
+        },
+        "manipulation_detection_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "raw": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "peak_manipulation_risk": {
+          "mean": 0.504,
+          "std": 0.0,
+          "min": 0.504,
+          "max": 0.504,
+          "raw": [
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504
+          ]
+        }
+      }
+    },
+    "fomo_surge": {
+      "label": "FOMO Surge + Price Self-Validation",
+      "aggregate": {
+        "avg_reflexivity_index": {
+          "mean": 0.2799,
+          "std": 0.0011,
+          "min": 0.278,
+          "max": 0.2819,
+          "raw": [
+            0.2789,
+            0.2819,
+            0.279,
+            0.2802,
+            0.2799,
+            0.2796,
+            0.2801,
+            0.28,
+            0.2812,
+            0.278
+          ]
+        },
+        "bubble_risk_peak": {
+          "mean": 0.1005,
+          "std": 0.0088,
+          "min": 0.0826,
+          "max": 0.1168,
+          "raw": [
+            0.0931,
+            0.1168,
+            0.095,
+            0.1025,
+            0.1075,
+            0.0975,
+            0.104,
+            0.1003,
+            0.1055,
+            0.0826
+          ]
+        },
+        "manipulation_detection_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "raw": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "peak_manipulation_risk": {
+          "mean": 0.696,
+          "std": 0.0,
+          "min": 0.696,
+          "max": 0.696,
+          "raw": [
+            0.696,
+            0.696,
+            0.696,
+            0.696,
+            0.696,
+            0.696,
+            0.696,
+            0.696,
+            0.696,
+            0.696
+          ]
+        }
+      }
+    },
+    "narrative_reversal": {
+      "label": "Narrative Reversal + Bubble Burst",
+      "aggregate": {
+        "avg_reflexivity_index": {
+          "mean": 0.3031,
+          "std": 0.0012,
+          "min": 0.3011,
+          "max": 0.3054,
+          "raw": [
+            0.302,
+            0.3054,
+            0.3021,
+            0.3035,
+            0.3031,
+            0.3029,
+            0.3033,
+            0.3033,
+            0.3045,
+            0.3011
+          ]
+        },
+        "bubble_risk_peak": {
+          "mean": 0.8354,
+          "std": 0.0987,
+          "min": 0.6674,
+          "max": 1.0,
+          "raw": [
+            0.7416,
+            1.0,
+            0.7872,
+            0.8618,
+            0.8414,
+            0.7796,
+            0.8333,
+            0.8415,
+            1.0,
+            0.6674
+          ]
+        },
+        "manipulation_detection_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "raw": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "peak_manipulation_risk": {
+          "mean": 0.333,
+          "std": 0.0,
+          "min": 0.333,
+          "max": 0.333,
+          "raw": [
+            0.333,
+            0.333,
+            0.333,
+            0.333,
+            0.333,
+            0.333,
+            0.333,
+            0.333,
+            0.333,
+            0.333
+          ]
+        }
+      }
+    },
+    "regulatory_suppression": {
+      "label": "Coordinated KOL + Regulatory Suppression",
+      "aggregate": {
+        "avg_reflexivity_index": {
+          "mean": 0.2789,
+          "std": 0.001,
+          "min": 0.2771,
+          "max": 0.2808,
+          "raw": [
+            0.2779,
+            0.2808,
+            0.278,
+            0.2791,
+            0.279,
+            0.2785,
+            0.2791,
+            0.279,
+            0.2801,
+            0.2771
+          ]
+        },
+        "bubble_risk_peak": {
+          "mean": 0.0898,
+          "std": 0.0079,
+          "min": 0.074,
+          "max": 0.1046,
+          "raw": [
+            0.0834,
+            0.1046,
+            0.084,
+            0.0916,
+            0.0966,
+            0.0867,
+            0.0928,
+            0.0898,
+            0.0942,
+            0.074
+          ]
+        },
+        "manipulation_detection_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "raw": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "peak_manipulation_risk": {
+          "mean": 0.504,
+          "std": 0.0,
+          "min": 0.504,
+          "max": 0.504,
+          "raw": [
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504,
+            0.504
+          ]
+        }
+      }
+    }
+  },
+  "raw_runs": {
+    "normal_propagation": [
+      {
+        "run": 1,
+        "seed": 42,
+        "avg_reflexivity_index": 0.258,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 265.71,
+        "price_change_pct": 1.6571,
+        "reflexivity_std": 0.0191
+      },
+      {
+        "run": 2,
+        "seed": 179,
+        "avg_reflexivity_index": 0.2583,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 267.56,
+        "price_change_pct": 1.6756,
+        "reflexivity_std": 0.0192
+      },
+      {
+        "run": 3,
+        "seed": 316,
+        "avg_reflexivity_index": 0.2579,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 259.08,
+        "price_change_pct": 1.5908,
+        "reflexivity_std": 0.0191
+      },
+      {
+        "run": 4,
+        "seed": 453,
+        "avg_reflexivity_index": 0.2583,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 265.72,
+        "price_change_pct": 1.6572,
+        "reflexivity_std": 0.0192
+      },
+      {
+        "run": 5,
+        "seed": 590,
+        "avg_reflexivity_index": 0.258,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 262.61,
+        "price_change_pct": 1.6261,
+        "reflexivity_std": 0.0192
+      },
+      {
+        "run": 6,
+        "seed": 727,
+        "avg_reflexivity_index": 0.258,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 265.18,
+        "price_change_pct": 1.6518,
+        "reflexivity_std": 0.0192
+      },
+      {
+        "run": 7,
+        "seed": 864,
+        "avg_reflexivity_index": 0.2582,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 267.35,
+        "price_change_pct": 1.6735,
+        "reflexivity_std": 0.0192
+      },
+      {
+        "run": 8,
+        "seed": 1001,
+        "avg_reflexivity_index": 0.2583,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 252.43,
+        "price_change_pct": 1.5243,
+        "reflexivity_std": 0.0191
+      },
+      {
+        "run": 9,
+        "seed": 1138,
+        "avg_reflexivity_index": 0.2587,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 260.49,
+        "price_change_pct": 1.6049,
+        "reflexivity_std": 0.0193
+      },
+      {
+        "run": 10,
+        "seed": 1275,
+        "avg_reflexivity_index": 0.2585,
+        "bubble_risk_peak": 0.0,
+        "manipulation_detection_rate": 0.0,
+        "peak_manipulation_risk": 0.105,
+        "final_price": 259.66,
+        "price_change_pct": 1.5966,
+        "reflexivity_std": 0.0191
+      }
+    ],
+    "coordinated_kol": [
+      {
+        "run": 1,
+        "seed": 42,
+        "avg_reflexivity_index": 0.2779,
+        "bubble_risk_peak": 0.0856,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 265.71,
+        "price_change_pct": 1.6571,
+        "reflexivity_std": 0.0339
+      },
+      {
+        "run": 2,
+        "seed": 179,
+        "avg_reflexivity_index": 0.2808,
+        "bubble_risk_peak": 0.1072,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 267.56,
+        "price_change_pct": 1.6756,
+        "reflexivity_std": 0.0335
+      },
+      {
+        "run": 3,
+        "seed": 316,
+        "avg_reflexivity_index": 0.278,
+        "bubble_risk_peak": 0.0862,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 259.08,
+        "price_change_pct": 1.5908,
+        "reflexivity_std": 0.034
+      },
+      {
+        "run": 4,
+        "seed": 453,
+        "avg_reflexivity_index": 0.2791,
+        "bubble_risk_peak": 0.0939,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 265.72,
+        "price_change_pct": 1.6572,
+        "reflexivity_std": 0.0337
+      },
+      {
+        "run": 5,
+        "seed": 590,
+        "avg_reflexivity_index": 0.279,
+        "bubble_risk_peak": 0.0992,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 262.61,
+        "price_change_pct": 1.6261,
+        "reflexivity_std": 0.034
+      },
+      {
+        "run": 6,
+        "seed": 727,
+        "avg_reflexivity_index": 0.2785,
+        "bubble_risk_peak": 0.0888,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 265.18,
+        "price_change_pct": 1.6518,
+        "reflexivity_std": 0.0339
+      },
+      {
+        "run": 7,
+        "seed": 864,
+        "avg_reflexivity_index": 0.2791,
+        "bubble_risk_peak": 0.0952,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 267.35,
+        "price_change_pct": 1.6735,
+        "reflexivity_std": 0.0338
+      },
+      {
+        "run": 8,
+        "seed": 1001,
+        "avg_reflexivity_index": 0.279,
+        "bubble_risk_peak": 0.092,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 252.43,
+        "price_change_pct": 1.5243,
+        "reflexivity_std": 0.0337
+      },
+      {
+        "run": 9,
+        "seed": 1138,
+        "avg_reflexivity_index": 0.2801,
+        "bubble_risk_peak": 0.0966,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 260.49,
+        "price_change_pct": 1.6049,
+        "reflexivity_std": 0.0336
+      },
+      {
+        "run": 10,
+        "seed": 1275,
+        "avg_reflexivity_index": 0.2771,
+        "bubble_risk_peak": 0.0761,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 259.66,
+        "price_change_pct": 1.5966,
+        "reflexivity_std": 0.034
+      }
+    ],
+    "fomo_surge": [
+      {
+        "run": 1,
+        "seed": 42,
+        "avg_reflexivity_index": 0.2789,
+        "bubble_risk_peak": 0.0931,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 265.71,
+        "price_change_pct": 1.6571,
+        "reflexivity_std": 0.035
+      },
+      {
+        "run": 2,
+        "seed": 179,
+        "avg_reflexivity_index": 0.2819,
+        "bubble_risk_peak": 0.1168,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 267.56,
+        "price_change_pct": 1.6756,
+        "reflexivity_std": 0.0346
+      },
+      {
+        "run": 3,
+        "seed": 316,
+        "avg_reflexivity_index": 0.279,
+        "bubble_risk_peak": 0.095,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 259.08,
+        "price_change_pct": 1.5908,
+        "reflexivity_std": 0.0351
+      },
+      {
+        "run": 4,
+        "seed": 453,
+        "avg_reflexivity_index": 0.2802,
+        "bubble_risk_peak": 0.1025,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 265.72,
+        "price_change_pct": 1.6572,
+        "reflexivity_std": 0.0348
+      },
+      {
+        "run": 5,
+        "seed": 590,
+        "avg_reflexivity_index": 0.2799,
+        "bubble_risk_peak": 0.1075,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 262.61,
+        "price_change_pct": 1.6261,
+        "reflexivity_std": 0.0351
+      },
+      {
+        "run": 6,
+        "seed": 727,
+        "avg_reflexivity_index": 0.2796,
+        "bubble_risk_peak": 0.0975,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 265.18,
+        "price_change_pct": 1.6518,
+        "reflexivity_std": 0.035
+      },
+      {
+        "run": 7,
+        "seed": 864,
+        "avg_reflexivity_index": 0.2801,
+        "bubble_risk_peak": 0.104,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 267.35,
+        "price_change_pct": 1.6735,
+        "reflexivity_std": 0.0349
+      },
+      {
+        "run": 8,
+        "seed": 1001,
+        "avg_reflexivity_index": 0.28,
+        "bubble_risk_peak": 0.1003,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 252.43,
+        "price_change_pct": 1.5243,
+        "reflexivity_std": 0.0348
+      },
+      {
+        "run": 9,
+        "seed": 1138,
+        "avg_reflexivity_index": 0.2812,
+        "bubble_risk_peak": 0.1055,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 260.49,
+        "price_change_pct": 1.6049,
+        "reflexivity_std": 0.0346
+      },
+      {
+        "run": 10,
+        "seed": 1275,
+        "avg_reflexivity_index": 0.278,
+        "bubble_risk_peak": 0.0826,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.696,
+        "final_price": 259.66,
+        "price_change_pct": 1.5966,
+        "reflexivity_std": 0.0351
+      }
+    ],
+    "narrative_reversal": [
+      {
+        "run": 1,
+        "seed": 42,
+        "avg_reflexivity_index": 0.302,
+        "bubble_risk_peak": 0.7416,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 191.58,
+        "price_change_pct": 0.9158,
+        "reflexivity_std": 0.0369
+      },
+      {
+        "run": 2,
+        "seed": 179,
+        "avg_reflexivity_index": 0.3054,
+        "bubble_risk_peak": 1.0,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 191.82,
+        "price_change_pct": 0.9182,
+        "reflexivity_std": 0.0369
+      },
+      {
+        "run": 3,
+        "seed": 316,
+        "avg_reflexivity_index": 0.3021,
+        "bubble_risk_peak": 0.7872,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 185.1,
+        "price_change_pct": 0.851,
+        "reflexivity_std": 0.0369
+      },
+      {
+        "run": 4,
+        "seed": 453,
+        "avg_reflexivity_index": 0.3035,
+        "bubble_risk_peak": 0.8618,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 189.92,
+        "price_change_pct": 0.8992,
+        "reflexivity_std": 0.037
+      },
+      {
+        "run": 5,
+        "seed": 590,
+        "avg_reflexivity_index": 0.3031,
+        "bubble_risk_peak": 0.8414,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 187.48,
+        "price_change_pct": 0.8748,
+        "reflexivity_std": 0.0368
+      },
+      {
+        "run": 6,
+        "seed": 727,
+        "avg_reflexivity_index": 0.3029,
+        "bubble_risk_peak": 0.7796,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 191.06,
+        "price_change_pct": 0.9106,
+        "reflexivity_std": 0.0372
+      },
+      {
+        "run": 7,
+        "seed": 864,
+        "avg_reflexivity_index": 0.3033,
+        "bubble_risk_peak": 0.8333,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 192.36,
+        "price_change_pct": 0.9236,
+        "reflexivity_std": 0.0371
+      },
+      {
+        "run": 8,
+        "seed": 1001,
+        "avg_reflexivity_index": 0.3033,
+        "bubble_risk_peak": 0.8415,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 180.16,
+        "price_change_pct": 0.8016,
+        "reflexivity_std": 0.0363
+      },
+      {
+        "run": 9,
+        "seed": 1138,
+        "avg_reflexivity_index": 0.3045,
+        "bubble_risk_peak": 1.0,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 185.68,
+        "price_change_pct": 0.8568,
+        "reflexivity_std": 0.0366
+      },
+      {
+        "run": 10,
+        "seed": 1275,
+        "avg_reflexivity_index": 0.3011,
+        "bubble_risk_peak": 0.6674,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.333,
+        "final_price": 186.35,
+        "price_change_pct": 0.8635,
+        "reflexivity_std": 0.0366
+      }
+    ],
+    "regulatory_suppression": [
+      {
+        "run": 1,
+        "seed": 42,
+        "avg_reflexivity_index": 0.2779,
+        "bubble_risk_peak": 0.0834,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 265.71,
+        "price_change_pct": 1.6571,
+        "reflexivity_std": 0.0339
+      },
+      {
+        "run": 2,
+        "seed": 179,
+        "avg_reflexivity_index": 0.2808,
+        "bubble_risk_peak": 0.1046,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 267.56,
+        "price_change_pct": 1.6756,
+        "reflexivity_std": 0.0335
+      },
+      {
+        "run": 3,
+        "seed": 316,
+        "avg_reflexivity_index": 0.278,
+        "bubble_risk_peak": 0.084,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 259.08,
+        "price_change_pct": 1.5908,
+        "reflexivity_std": 0.034
+      },
+      {
+        "run": 4,
+        "seed": 453,
+        "avg_reflexivity_index": 0.2791,
+        "bubble_risk_peak": 0.0916,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 265.72,
+        "price_change_pct": 1.6572,
+        "reflexivity_std": 0.0337
+      },
+      {
+        "run": 5,
+        "seed": 590,
+        "avg_reflexivity_index": 0.279,
+        "bubble_risk_peak": 0.0966,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 262.61,
+        "price_change_pct": 1.6261,
+        "reflexivity_std": 0.034
+      },
+      {
+        "run": 6,
+        "seed": 727,
+        "avg_reflexivity_index": 0.2785,
+        "bubble_risk_peak": 0.0867,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 265.18,
+        "price_change_pct": 1.6518,
+        "reflexivity_std": 0.0339
+      },
+      {
+        "run": 7,
+        "seed": 864,
+        "avg_reflexivity_index": 0.2791,
+        "bubble_risk_peak": 0.0928,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 267.35,
+        "price_change_pct": 1.6735,
+        "reflexivity_std": 0.0338
+      },
+      {
+        "run": 8,
+        "seed": 1001,
+        "avg_reflexivity_index": 0.279,
+        "bubble_risk_peak": 0.0898,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 252.43,
+        "price_change_pct": 1.5243,
+        "reflexivity_std": 0.0337
+      },
+      {
+        "run": 9,
+        "seed": 1138,
+        "avg_reflexivity_index": 0.2801,
+        "bubble_risk_peak": 0.0942,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 260.49,
+        "price_change_pct": 1.6049,
+        "reflexivity_std": 0.0336
+      },
+      {
+        "run": 10,
+        "seed": 1275,
+        "avg_reflexivity_index": 0.2771,
+        "bubble_risk_peak": 0.074,
+        "manipulation_detection_rate": 1.0,
+        "peak_manipulation_risk": 0.504,
+        "final_price": 259.66,
+        "price_change_pct": 1.5966,
+        "reflexivity_std": 0.034
+      }
+    ]
+  }
+}

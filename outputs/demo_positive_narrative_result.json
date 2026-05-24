@@ -1,0 +1,15 @@
+{
+  "demo": "positive_narrative_bubble",
+  "description": "AI??????????",
+  "final_price": 260.67,
+  "price_change_pct": 1.5424,
+  "final_reflexivity_index": 0.2572,
+  "final_bubble_risk": 0.0,
+  "peak_bubble_risk": 0.0001,
+  "bubble_peak_count": 0,
+  "critical_alerts": 0,
+  "regime_distribution": {
+    "normal": 260,
+    "recovery": 40
+  }
+}

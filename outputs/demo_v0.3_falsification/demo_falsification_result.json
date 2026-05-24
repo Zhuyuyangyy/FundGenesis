@@ -1,0 +1,26 @@
+{
+  "demo": "falsification_trust_collapse",
+  "v0.3_trust": true,
+  "description": "High trust bubble -> falsification -> trust collapse -> crash",
+  "initial_price": 102.53151205244289,
+  "pre_falsification_price": 259.03,
+  "post_fals_peak": 259.73,
+  "post_fals_min": 183.64,
+  "final_price": 190.19,
+  "collapse_occurred": true,
+  "trust_at_falsification": 0.0969,
+  "trust_at_end": 0.0979,
+  "final_reflexivity_index": 0.2563,
+  "peak_bubble_risk": 0.0007,
+  "regime_distribution": {
+    "normal": 224,
+    "recovery": 76
+  },
+  "verification_summary": {
+    "total": 1,
+    "confirm": 1,
+    "reject": 0,
+    "neutral": 0,
+    "confirm_rate": 1.0
+  }
+}

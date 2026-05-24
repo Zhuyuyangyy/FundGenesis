@@ -1,0 +1,25 @@
+{
+  "demo": "high_trust_consensus_ignition",
+  "v0.3_trust": true,
+  "description": "High trust KOL: fast consensus -> accelerated bubble",
+  "initial_price": 102.53151205244289,
+  "final_price": 263.53,
+  "price_peak": 272.42,
+  "price_peak_step": 75,
+  "v0.2_baseline_peak_step": 100,
+  "acceleration": true,
+  "price_change_pct": 1.5702,
+  "final_reflexivity_index": 0.259,
+  "peak_bubble_risk": 0.0001,
+  "trust_summary": {
+    "mean_trust": 0.3231121890645746,
+    "std_trust": 0.21456858963748926,
+    "min_trust": 0.11437559131285314,
+    "max_trust": 0.742557553023916,
+    "kol_count": 17
+  },
+  "regime_distribution": {
+    "normal": 265,
+    "recovery": 35
+  }
+}

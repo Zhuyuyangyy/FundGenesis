@@ -1,0 +1,27 @@
+{
+  "demo": "narrative_reversal_bubble_burst",
+  "description": "??????????",
+  "initial_price": 102.53,
+  "peak_price": 276.1,
+  "peak_price_step": 106,
+  "final_price": 214.55,
+  "peak_bubble_risk": 0.0016,
+  "peak_panic_risk": 0.0074,
+  "final_reflexivity_index": 0.2587,
+  "regime_distribution": {
+    "normal": 290,
+    "recovery": 110
+  },
+  "narrative_log": [
+    {
+      "step": 60,
+      "event": "positive",
+      "name": "AI???????????????"
+    },
+    {
+      "step": 200,
+      "event": "reversal",
+      "name": "AI????????????????"
+    }
+  ]
+}

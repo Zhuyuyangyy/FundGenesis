@@ -1,0 +1,25 @@
+{
+  "demo": "low_trust_propagation_failure",
+  "v0.3_trust": true,
+  "description": "Low trust KOL: narrative cannot propagate -> no bubble",
+  "initial_price": 102.53151205244289,
+  "final_price": 262.9,
+  "price_change_pct": 1.564,
+  "v0.2_baseline_change": 1.76,
+  "propagation_suppressed": false,
+  "final_effective_trust": 0.0161,
+  "final_reflexivity_index": 0.2554,
+  "final_bubble_risk": 0.0,
+  "peak_bubble_risk": 0.0002,
+  "trust_summary": {
+    "mean_trust": 0.016141004714753306,
+    "std_trust": 0.0060818493173823785,
+    "min_trust": 0.01,
+    "max_trust": 0.027532153658283993,
+    "kol_count": 17
+  },
+  "regime_distribution": {
+    "normal": 257,
+    "recovery": 43
+  }
+}

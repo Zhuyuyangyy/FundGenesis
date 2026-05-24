@@ -1,0 +1,14 @@
+{
+  "demo": "regulatory_shock_panic",
+  "description": "????????",
+  "pre_shock_price": 232.62,
+  "final_price": 202.22,
+  "price_change_pct": -0.1307,
+  "final_panic_risk": 0.0,
+  "peak_panic_risk": 0.0065,
+  "final_reflexivity_index": 0.2567,
+  "regime_distribution": {
+    "normal": 281,
+    "recovery": 19
+  }
+}

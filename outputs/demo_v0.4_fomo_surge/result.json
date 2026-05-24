@@ -1,0 +1,19 @@
+{
+  "demo": "fomo_surge_price_self_validation",
+  "v0.4_risk_agent": true,
+  "description": "FOMO surge + price self-validation -> HIGH manipulation risk",
+  "steps": 200,
+  "peak_manipulation_risk": 0.58,
+  "avg_manipulation_risk": 0.3017,
+  "high_risk_steps": 12,
+  "fomo_pattern_detected": true,
+  "self_validation_pattern_detected": true,
+  "final_price": 302.14,
+  "price_change_pct": 2.0214,
+  "verification": {
+    "peak_risk_gte_0.50": true,
+    "fomo_pattern_found": true,
+    "self_validation_found": true,
+    "demo_sensitive_thresholds_used": true
+  }
+}
