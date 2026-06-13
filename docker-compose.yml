@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  # ── Main Application ──────────────────────────────────────────
+  fundgenesis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fundgenesis-app
+    ports:
+      - "8765:8765"
+    environment:
+      - LOG_LEVEL=info
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./outputs:/app/outputs
+      - ./config:/app/config:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8765/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "2.0"
+        reservations:
+          memory: 512M
+          cpus: "0.5"
+
+  # ── Development Mode ──────────────────────────────────────────
+  fundgenesis-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fundgenesis-dev
+    ports:
+      - "8766:8765"
+    environment:
+      - LOG_LEVEL=debug
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app
+      - ./outputs:/app/outputs
+    command: ["python", "dashboard/app.py", "--port", "8765", "--reload"]
+    profiles:
+      - dev
+
+  # ── Test Runner ───────────────────────────────────────────────
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fundgenesis-test
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./tests:/app/tests
+    command: ["pytest", "tests/", "-v", "--tb=short", "--cov=core", "--cov=agents", "--cov=narrative", "--cov=social", "--cov=trust", "--cov=risk", "--cov-report=term-missing"]
+    profiles:
+      - test

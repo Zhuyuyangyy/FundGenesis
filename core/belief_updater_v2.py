@@ -115,12 +115,17 @@ class BeliefUpdaterV2:
         delta = cfg.social_pressure_weight * agent.config.herding_coefficient
         theta = cfg.contradiction_penalty * agent.config.confirmation_bias
 
+        # 先验偏误：Agent特定的信念倾向（价值投资者偏向负面，情绪化散户偏向正面）
+        epsilon = 0.05 * agent.config.emotional_sensitivity
+        prior_bias = agent.config.confirmation_bias * 0.1 * (1.0 if old_belief >= 0 else -1.0)
+
         belief_change = (
             alpha * old_belief
             + beta * narrative_shift
             + gamma * price_confirmation
             + delta * social_pressure
             - theta * contradiction_signal
+            + epsilon * prior_bias
         )
 
         # 约束单步最大变化

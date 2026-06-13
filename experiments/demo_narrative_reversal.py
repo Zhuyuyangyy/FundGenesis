@@ -19,10 +19,13 @@ Demo 3???????????
 import os
 import sys
 import json
+import logging
 import numpy as np
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+logger = logging.getLogger('FundGenesis.experiments.narrative_reversal')
 
 from core.creator_controller import CreatorController, MarketConfig
 from core.market_environment import MarketEnvironment
@@ -47,6 +50,7 @@ def run_demo_narrative_reversal(output_dir: str = None, steps: int = 400):
         )
     os.makedirs(output_dir, exist_ok=True)
 
+    logger.info("Starting Demo 3: Narrative Reversal - Bubble Burst")
     print("=" * 60)
     print("Demo 3: Narrative Reversal -- Bubble Burst")
     print("=" * 60)
@@ -112,6 +116,7 @@ def run_demo_narrative_reversal(output_dir: str = None, steps: int = 400):
             )
             narrative_engine.inject(narrative)
             propagator.inject_narrative(narrative)
+            logger.info(f"Step {step}: Positive narrative injected - {narrative.name}")
             print(f"\n[Step {step}] [NARR] Positive narrative injected: {narrative.name}")
             narrative_log.append({"step": step, "event": "positive", "name": narrative.name})
 
@@ -130,6 +135,7 @@ def run_demo_narrative_reversal(output_dir: str = None, steps: int = 400):
             )
             narrative_engine.inject(reversal_narrative)
             propagator.inject_narrative(reversal_narrative)
+            logger.warning(f"Step {step}: NARRATIVE REVERSAL - {reversal_narrative.name}")
             print(f"\n[Step {step}] [REVR] NARRATIVE REVERSAL: {reversal_narrative.name}")
             narrative_log.append({"step": step, "event": "reversal", "name": reversal_narrative.name})
 
@@ -170,6 +176,7 @@ def run_demo_narrative_reversal(output_dir: str = None, steps: int = 400):
         })
 
         if step % 40 == 0:
+            logger.debug(f"Step {step}: Price={market.price:.2f}, Greed={emotion.greed:.3f}, Fear={emotion.fear:.3f}, RefIdx={metrics.reflexivity_index:.3f}, Bubble={metrics.bubble_risk_score:.3f}, Panic={metrics.panic_risk_score:.3f}")
             print(f"  Step {step:3d} | Price: {market.price:7.2f} | "
                   f"Greed: {emotion.greed:.3f} | Fear: {emotion.fear:.3f} | "
                   f"RefIdx: {metrics.reflexivity_index:.3f} | "
@@ -204,6 +211,7 @@ def run_demo_narrative_reversal(output_dir: str = None, steps: int = 400):
     with open(result_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
 
+    logger.info(f"Demo 3 completed: final_price={result['final_price']}, peak_price={result['peak_price']}, peak_bubble={result['peak_bubble_risk']}")
     print("\n" + "=" * 60)
     print("RESULT SUMMARY")
     print("=" * 60)

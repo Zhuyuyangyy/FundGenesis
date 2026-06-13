@@ -16,6 +16,15 @@ FundGenesis V0.2 ? ReflexMarket-AI
 
 import sys
 import os
+import logging
+
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger('FundGenesis')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,34 +35,41 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     if "--all" in args:
+        logger.info("Starting all experiments (V0.1 + V0.2)")
         print("=" * 60)
         print("FundGenesis V0.2 ? ReflexMarket-AI")
         print("Running ALL Experiments (V0.1 + V0.2)")
         print("=" * 60)
 
         # V0.1 experiments
+        logger.info("Running V0.1 emotion shock experiment")
         from experiments.emotion_shock import run_emotion_shock_experiment
         run_emotion_shock_experiment(output_dir=output_dir)
 
         # V0.2 Demo 1
         print("\n" + "=" * 60)
+        logger.info("Running Demo 1: Positive Narrative Bubble")
         from experiments.demo_positive_narrative import run_demo_positive_narrative
         run_demo_positive_narrative(output_dir=output_dir, steps=300)
 
         # V0.2 Demo 2
         print("\n" + "=" * 60)
+        logger.info("Running Demo 2: Regulatory Shock & Panic")
         from experiments.demo_regulatory_shock import run_demo_regulatory_shock
         run_demo_regulatory_shock(output_dir=output_dir, steps=300)
 
         # V0.2 Demo 3
         print("\n" + "=" * 60)
+        logger.info("Running Demo 3: Narrative Reversal & Bubble Burst")
         from experiments.demo_narrative_reversal import run_demo_narrative_reversal
         run_demo_narrative_reversal(output_dir=output_dir, steps=400)
 
+        logger.info("All V0.2 experiments completed successfully")
         print("\n[OK] All V0.2 experiments complete!")
         print(f"[DIR] Results saved to: {output_dir}/")
 
     elif "--v02" in args:
+        logger.info("Starting V0.2 ReflexMarket-AI Demos")
         print("=" * 60)
         print("FundGenesis V0.2 ? ReflexMarket-AI Demos")
         print("=" * 60)
@@ -62,14 +78,18 @@ def main():
         from experiments.demo_narrative_reversal import run_demo_narrative_reversal
 
         print("\n>> Demo 1: Positive Narrative Bubble")
+        logger.info("Running Demo 1: Positive Narrative Bubble")
         run_demo_positive_narrative(output_dir=output_dir, steps=300)
 
         print("\n>> Demo 2: Regulatory Shock & Panic")
+        logger.info("Running Demo 2: Regulatory Shock & Panic")
         run_demo_regulatory_shock(output_dir=output_dir, steps=300)
 
         print("\n>> Demo 3: Narrative Reversal & Bubble Burst")
+        logger.info("Running Demo 3: Narrative Reversal & Bubble Burst")
         run_demo_narrative_reversal(output_dir=output_dir, steps=400)
 
+        logger.info("All V0.2 demos completed successfully")
         print("\n[OK] All V0.2 demos complete!")
         print(f"[DIR] Results saved to: {output_dir}/")
 
@@ -91,18 +111,22 @@ def main():
 
         if idx and idx in demos:
             name, module, func_name, steps = demos[idx]
+            logger.info(f"Running Demo {idx}: {name}")
             print(f">> Running Demo {idx}: {name}")
             mod = __import__(module, fromlist=[func_name])
             getattr(mod, func_name)(output_dir=output_dir, steps=steps)
         else:
+            logger.warning("Invalid demo index specified")
             print("Available demos: --demo 1 / --demo 2 / --demo 3")
             print("Or use --v02 to run all V0.2 demos")
 
     elif "--herding" in args:
+        logger.info("Running herding ablation experiment")
         from experiments.herding_ablation import run_herding_experiment
         run_herding_experiment(output_dir=output_dir)
 
     elif "--blackswan" in args:
+        logger.info("Running black swan experiment")
         from experiments.black_swan import run_black_swan_experiment
         run_black_swan_experiment(output_dir=output_dir)
 
@@ -111,12 +135,14 @@ def main():
 
     else:
         # ???? V0.1 ??????
+        logger.info("Running default V0.1 emotion shock experiment")
         print("=" * 60)
         print("FundGenesis V0.1 ? Running Default (Emotion Shock)")
         print("(Use --v02 for ReflexMarket-AI demos)")
         print("=" * 60)
         from experiments.emotion_shock import run_emotion_shock_experiment
         run_emotion_shock_experiment(output_dir=output_dir)
+        logger.info(f"Results saved to: {output_dir}/")
         print(f"\n[OK] Results saved to: {output_dir}/")
 
 

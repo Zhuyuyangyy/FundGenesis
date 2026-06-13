@@ -147,10 +147,19 @@ class KOLNetwork:
         """市场信念统计"""
         beliefs = [n.belief_state for n in self._nodes.values()]
         exposures = [n.narrative_exposure for n in self._nodes.values()]
+        if not beliefs:
+            return {
+                "mean_belief": 0.0,
+                "belief_std": 0.0,
+                "belief_concentration": 0.0,
+                "mean_exposure": 0.0,
+                "kol_count": len(self.get_kols()),
+                "retail_count": len(self.get_retail()),
+            }
         return {
-            "mean_belief": float(np.mean(beliefs)) if beliefs else 0.0,
-            "belief_std": float(np.std(beliefs)) if beliefs else 0.0,
-            "belief_concentration": float(np.mean([abs(b) for b in beliefs])) if beliefs else 0.0,
+            "mean_belief": float(np.mean(beliefs)),
+            "belief_std": float(np.std(beliefs)),
+            "belief_concentration": float(np.mean([abs(b) for b in beliefs])),
             "mean_exposure": float(np.mean(exposures)) if exposures else 0.0,
             "kol_count": len(self.get_kols()),
             "retail_count": len(self.get_retail()),

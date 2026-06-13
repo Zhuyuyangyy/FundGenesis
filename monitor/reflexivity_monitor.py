@@ -15,12 +15,15 @@ Reflexivity Monitor：实时监控泡沫风险与反身性强度。
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 from enum import Enum
+import logging
 import numpy as np
 
 from core.market_environment import MarketEnvironment
 from core.emotion_field import EmotionField
 from social.kol_network import KOLNetwork
 from narrative.narrative_engine import NarrativeEngine
+
+logger = logging.getLogger('FundGenesis.monitor')
 
 
 class MarketRegime(Enum):
@@ -103,7 +106,7 @@ class ReflexivityMonitor:
                 agents=agents,
             )
             if metrics.bubble_risk_score > 0.7:
-                print("ALERT: Bubble risk!")
+                logger.warning("ALERT: Bubble risk detected!")
     """
 
     # 指标权重（用于计算 reflexivity_index）

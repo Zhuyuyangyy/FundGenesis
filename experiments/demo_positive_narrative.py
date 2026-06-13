@@ -20,10 +20,13 @@ Demo 1?????????
 import os
 import sys
 import json
+import logging
 import numpy as np
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+logger = logging.getLogger('FundGenesis.experiments.positive_narrative')
 
 from core.creator_controller import CreatorController, MarketConfig, ShockConfig
 from core.market_environment import MarketEnvironment
@@ -45,6 +48,7 @@ def run_demo_positive_narrative(output_dir: str = None, steps: int = 300):
         )
     os.makedirs(output_dir, exist_ok=True)
 
+    logger.info("Starting Demo 1: Positive Narrative Bubble Formation")
     print("=" * 60)
     print("Demo 1: Positive Narrative Bubble Formation")
     print("=" * 60)
@@ -124,6 +128,7 @@ def run_demo_positive_narrative(output_dir: str = None, steps: int = 300):
             )
             narrative_engine.inject(narrative)
             propagator.inject_narrative(narrative)
+            logger.info(f"Step {step}: Narrative injected - {narrative.name} (polarity={narrative.polarity.value}, intensity={narrative.intensity})")
             print(f"\n[Step {step}] [NARR] Narrative injected: {narrative.name}")
             print(f"    polarity={narrative.polarity.value}, intensity={narrative.intensity}")
 
@@ -179,6 +184,7 @@ def run_demo_positive_narrative(output_dir: str = None, steps: int = 300):
         })
 
         if step % 30 == 0:
+            logger.debug(f"Step {step}: Price={market.price:.2f}, Greed={emotion.greed:.3f}, Fear={emotion.fear:.3f}, RefIdx={metrics.reflexivity_index:.3f}, Bubble={metrics.bubble_risk_score:.3f}")
             print(f"  Step {step:3d} | Price: {market.price:7.2f} | "
                   f"Greed: {emotion.greed:.3f} | Fear: {emotion.fear:.3f} | "
                   f"RefIdx: {metrics.reflexivity_index:.3f} | "
@@ -213,6 +219,7 @@ def run_demo_positive_narrative(output_dir: str = None, steps: int = 300):
     with open(result_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
 
+    logger.info(f"Demo 1 completed: final_price={result['final_price']}, bubble_risk={result['final_bubble_risk']}")
     print("\n" + "=" * 60)
     print("RESULT SUMMARY")
     print("=" * 60)
