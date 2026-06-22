@@ -77,6 +77,8 @@ class PropagationModel:
 
         for narrative in expired:
             self._active_narratives.remove(narrative)
+            # 清理已过期叙事的曝光记录，避免内存泄漏
+            self._narrative_exposure.pop(narrative._id, None)
 
         # 叙事沿图扩散
         current_strengths = {}
@@ -110,9 +112,12 @@ class PropagationModel:
                         narrative_exposure.get(follower_id, 0.0) + propagation
                     )
 
-            # 叙事曝光衰减
-            self.network.reset_exposure_all(decay=0.08)
             current_strengths[nid] = narrative.effective_intensity
+
+        # 叙事曝光衰减在每步只执行一次（不论有几条活跃叙事），
+        # 避免多叙事场景下指数级过度衰减 (1-decay)^N
+        if self._active_narratives:
+            self.network.reset_exposure_all(decay=0.08)
 
         return current_strengths
 

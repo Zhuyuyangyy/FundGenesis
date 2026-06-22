@@ -202,6 +202,11 @@ class MarketEnvironment:
                 self.price, self.fundamental_value),
             fear_greed_index=emotion.fear_greed_index,
             price_efficiency=MarketMetrics.compute_price_efficiency(recent_returns),
+            narrative_price_divergence=MarketMetrics.compute_narrative_price_divergence(
+                recent_returns,
+                emotion.fear_greed_index,
+                abs(emotion.greed - 0.5) + abs(emotion.fear - 0.5),
+            ),
         )
 
     def __repr__(self):

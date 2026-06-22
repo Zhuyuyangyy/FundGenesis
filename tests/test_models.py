@@ -178,6 +178,68 @@ class TestMarketMetrics:
         from core.metrics import MarketMetrics
         assert MarketMetrics.compute_price_efficiency([0.01]) == 1.0
 
+    def test_price_efficiency_flat_returns_no_volatility(self):
+        """完全平坦序列 (std=0, mean=0) 应返回 1.0（无波动=完全有效）"""
+        from core.metrics import MarketMetrics
+        assert MarketMetrics.compute_price_efficiency([0.0, 0.0, 0.0, 0.0]) == 1.0
+
+    def test_price_efficiency_constant_nonzero_returns(self):
+        """std=0 但 mean != 0 应返回 0.0（无波动但有方向=信息可疑）"""
+        from core.metrics import MarketMetrics
+        assert MarketMetrics.compute_price_efficiency([0.01, 0.01, 0.01, 0.01]) == 0.0
+
+    def test_narrative_price_divergence_confirming(self):
+        """正收益+正叙事=确认态，divergence 接近 0"""
+        from core.metrics import MarketMetrics
+        d = MarketMetrics.compute_narrative_price_divergence(
+            recent_returns=[0.02, 0.01, 0.03],
+            narrative_polarity=1.0,
+            narrative_strength=0.8,
+        )
+        # 价格上行 + 强正叙事 → 确认（divergence 低/负）
+        assert d < 0.1
+
+    def test_narrative_price_divergence_contradicting(self):
+        """负收益+正叙事=背离态，divergence 接近 +1"""
+        from core.metrics import MarketMetrics
+        d = MarketMetrics.compute_narrative_price_divergence(
+            recent_returns=[-0.02, -0.03, -0.04],
+            narrative_polarity=1.0,
+            narrative_strength=0.8,
+        )
+        # 价格下行 + 强正叙事 → 强背离
+        assert d > 0.5
+
+    def test_narrative_price_divergence_bounded(self):
+        """divergence 输出应在 [0, 1]"""
+        from core.metrics import MarketMetrics
+        d = MarketMetrics.compute_narrative_price_divergence(
+            recent_returns=[-0.10, -0.20, -0.30],
+            narrative_polarity=1.0,
+            narrative_strength=1.0,
+        )
+        assert 0.0 <= d <= 1.0
+
+    def test_narrative_price_divergence_no_data(self):
+        """无数据时返回 0.5（中性）"""
+        from core.metrics import MarketMetrics
+        d = MarketMetrics.compute_narrative_price_divergence(
+            recent_returns=[],
+            narrative_polarity=1.0,
+            narrative_strength=0.8,
+        )
+        assert d == 0.5
+
+    def test_narrative_price_divergence_no_narrative(self):
+        """无叙事时返回 0.5（中性）"""
+        from core.metrics import MarketMetrics
+        d = MarketMetrics.compute_narrative_price_divergence(
+            recent_returns=[0.01, 0.02, 0.03],
+            narrative_polarity=0.0,
+            narrative_strength=0.0,
+        )
+        assert d == 0.5
+
 
 # ── MarketSnapshot 测试 ─────────────────────────────────────────
 

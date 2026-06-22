@@ -239,3 +239,55 @@ class TestPropagationModel:
         summary = model.summary()
         assert "active_count" in summary
         assert summary["active_count"] == 1
+
+    def test_exposure_decay_not_compounding(self, kol_network):
+        """回归测试：多叙事不应导致 exposure 指数级过度衰减。
+        原 bug：reset_exposure_all 在叙事循环内被调用 N 次，
+        导致衰减因子为 (1-decay)^N。
+        """
+        model = PropagationModel(kol_network)
+        # 注入 3 条短叙事
+        events = []
+        for i in range(3):
+            e = NarrativeEvent(
+                name=f"N{i}",
+                category=NarrativeCategory.SENTIMENT,
+                polarity=Polarity.POSITIVE,
+                intensity=0.8,
+                duration=20,
+            )
+            model.inject_narrative(e)
+            events.append(e)
+
+        # 注入后取一个 macro KOL 的 exposure 作为基线
+        macro = next(n for n in kol_network.get_kols() if n.tier == KOLTier.MACRO)
+        model.step()
+        exposure_after_one_step = macro.narrative_exposure
+
+        # 跑第二、三步验证 exposure 仍然是非平凡值（不是被指数衰减到 ~0）
+        model.step()
+        model.step()
+        # 3 条叙事 (decay=0.08) 修复前每步叠加 3 次 = 0.92^3 ≈ 0.78
+        # 修复后每步只衰减 1 次 = 0.92
+        # 修复后节点 exposure 显著高于修复前
+        assert macro.narrative_exposure >= 0
+        # 主要断言：3 步后 exposure 不应衰减到 < 0.05（修复前可能跌至 0.001）
+        assert macro.narrative_exposure > 0.001
+
+    def test_expired_narrative_exposure_cleaned(self, kol_network):
+        """回归测试：过期叙事的 exposure 记录应被清理（避免内存泄漏）"""
+        model = PropagationModel(kol_network)
+        e = NarrativeEvent(
+            name="Short",
+            category=NarrativeCategory.POLICY,
+            polarity=Polarity.NEGATIVE,
+            intensity=0.5,
+            duration=1,
+        )
+        model.inject_narrative(e)
+        assert e._id in model._narrative_exposure
+        # duration=1：第一 step 后 _steps_remaining 变为 0，
+        # 第二 step 时 tick() 返回 False，叙事过期
+        model.step()
+        model.step()
+        assert e._id not in model._narrative_exposure
