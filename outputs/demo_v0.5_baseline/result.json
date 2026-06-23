@@ -3,16 +3,16 @@
   "v0.5_regulator": true,
   "description": "No regulatory intervention - abnormal narrative propagates freely",
   "steps": 200,
-  "peak_manipulation_risk": 0.504,
-  "peak_bubble_risk": 0.3792,
-  "high_risk_steps": 12,
-  "final_price": 264.33,
-  "price_peak": 274.57,
-  "final_drawdown_pct": -3.73,
-  "price_change_pct": 164.33,
+  "peak_manipulation_risk": 0.9858,
+  "peak_bubble_risk": 0.3157,
+  "high_risk_steps": 37,
+  "final_price": 145.12,
+  "price_peak": 151.54,
+  "final_drawdown_pct": -4.23,
+  "price_change_pct": 45.12,
   "verification": {
     "peak_risk_gte_0.50": true,
-    "high_risk_steps_gte_20": false,
+    "high_risk_steps_gte_20": true,
     "no_intervention_confirmed": true
   }
 }

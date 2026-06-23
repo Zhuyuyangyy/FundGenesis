@@ -220,10 +220,10 @@ class KOLNetwork:
                 trust_level=np.random.uniform(0.7, 0.9),
                 susceptibility=0.1,
                 confirmation_bias=np.random.uniform(0.2, 0.4),
-                # P0.4: Macro KOL 信念形成较慢（更理性）
+                # P0.4: Macro KOL 信念形成较慢（更理性），但需可观测
                 exposure_gain=1.5,
-                belief_decay=0.97,
-                max_belief_delta=0.2,
+                belief_decay=0.95,
+                max_belief_delta=0.20,
             )
             kol_ids["macro"].append(self.add_node(node).node_id)
 
@@ -236,8 +236,8 @@ class KOLNetwork:
                 susceptibility=0.3,
                 confirmation_bias=np.random.uniform(0.3, 0.6),
                 # P0.4: Influencer 信念形成中等速度
-                exposure_gain=2.0,
-                belief_decay=0.95,
+                exposure_gain=1.8,
+                belief_decay=0.93,
                 max_belief_delta=0.25,
             )
             kol_ids["influencer"].append(self.add_node(node).node_id)
@@ -251,9 +251,9 @@ class KOLNetwork:
                 susceptibility=0.5,
                 confirmation_bias=np.random.uniform(0.4, 0.7),
                 # P0.4: Micro KOL 信念形成较快（更情绪化）
-                exposure_gain=2.5,
-                belief_decay=0.93,
-                max_belief_delta=0.3,
+                exposure_gain=2.0,
+                belief_decay=0.92,
+                max_belief_delta=0.28,
             )
             kol_ids["micro"].append(self.add_node(node).node_id)
 
@@ -267,9 +267,9 @@ class KOLNetwork:
                 confirmation_bias=np.random.uniform(0.3, 0.7),
                 risk_preference=np.random.uniform(0.3, 0.8),
                 # P0.4: Retail 信念形成最快（最情绪化）
-                exposure_gain=3.0,
+                exposure_gain=2.5,
                 belief_decay=0.90,
-                max_belief_delta=0.3,
+                max_belief_delta=0.30,
             )
             kol_ids["retail"].append(self.add_node(node).node_id)
 

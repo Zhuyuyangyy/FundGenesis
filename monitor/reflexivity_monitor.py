@@ -256,10 +256,12 @@ class ReflexivityMonitor:
         # 叙事强度因子（受 narrative_throttle 干预影响）
         narrative_factor = min(narrative_strength / 2.0, 1.0)
 
-        # 信念集中度：KOL belief修复后从 ~0.004 → 0.04，belief_boost 从 0.1 → 1.0
-        belief_boost = belief_concentration * 30.0
+        # P0.6 修复 D：降低系数避免 bubble_risk 饱和到 1.0
+        # 原系数 30.0/4.0 导致典型泡沫期 risk 轻易触顶 1.0，无法体现干预差异
+        # 降至 10.0/2.0，使峰值在 0.5-0.8 区间，干预后可降至 0.2-0.4
+        belief_boost = belief_concentration * 10.0
         # 情绪放大系数
-        emotion_boost = emotion_amplification * 4.0
+        emotion_boost = emotion_amplification * 2.0
         # 资金流入归一化：使用 sqrt 缩放避免 ci=0 时彻底杀风险
         # ci=0 → cap=0.1（最小基线，允许其他因子主导风险）
         # ci=5 → cap=1.0（最大归一化）

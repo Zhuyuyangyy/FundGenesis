@@ -113,7 +113,7 @@ class PropagationModel:
                         node.narrative_exposure
                         * node.influence_score
                         * follower.susceptibility
-                        * 0.3  # 每次传播只传递30%，避免瞬间全覆盖
+                        * 0.3  # 传播系数
                     )
 
                     follower.receive_exposure(
