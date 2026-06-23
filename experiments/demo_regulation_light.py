@@ -185,12 +185,14 @@ def run_demo_light(output_dir: str = None, steps: int = 200):
         price_change = market.price_change_pct if market.price_history else 0.0
         narrative_engine.propagate_to_emotion(emotion, price_change_pct=price_change)
 
+        market.begin_step()  # P0.2: reset step volumes
         for agent in agents:
             action = agent.decide(market.get_snapshot(), emotion)
             volume = agent.get_trade_volume()
             market.submit_order(agent.agent_id, action.value, volume)
 
         market.update_price(emotion)
+        market.end_step()  # P0.2: record step statistics
         emotion.decay_toward_neutral(inertia=0.90)
 
         metrics = reflexivity_monitor.observe(
@@ -204,6 +206,14 @@ def run_demo_light(output_dir: str = None, steps: int = 200):
             narrative_engine=narrative_engine, propagation_model=propagation,
             agents=agents,
         )
+
+        # P0.3: FOMO → EmotionField 闭环
+        if risk_report.fomo_score > 0.3:
+            emotion.apply_fomo_signal(
+                intensity=risk_report.fomo_score,
+                source="manipulation_risk_agent",
+                decay=0.85,
+            )
 
         # RegulatorAgent 干预决策
         manipulation_flags = {

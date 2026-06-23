@@ -173,7 +173,8 @@ class ReflexivityMonitor:
         )
 
         # --- 资金流 ---
-        capital_imbalance = market.net_demand / max(market.total_agents, 1) if hasattr(market, 'net_demand') else 0.0
+        # P0.2: 使用 step_net_demand 而非 net_demand，避免跨步累积
+        capital_imbalance = market.step_net_demand / max(market.total_agents, 1) if hasattr(market, 'step_net_demand') else (market.net_demand / max(market.total_agents, 1) if hasattr(market, 'net_demand') else 0.0)
 
         # --- 价格层 ---
         price_change_pct = market.price_change_pct if market.price_history else 0.0

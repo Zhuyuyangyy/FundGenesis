@@ -435,7 +435,7 @@ class SimulationRunner:
         )
 
         # ── 6. Agent decisions ──
-        market.reset_volumes()
+        market.begin_step()  # P0.2: 使用 begin_step() 替代 reset_volumes()
         buy_count = 0
         sell_count = 0
         hold_count = 0
@@ -456,6 +456,9 @@ class SimulationRunner:
 
         # ── 7. Update price ──
         market.update_price(emotion)
+
+        # ── 7.5 Record step statistics ──
+        market.end_step()  # P0.2: 记录 step_net_demand 到 cumulative
 
         # ── 8. Update emotion ──
         emotion.apply_price_change(market.price_change_pct)
@@ -480,6 +483,15 @@ class SimulationRunner:
             market=market, narrative_engine=narrative_engine,
             propagation_model=propagation_model, agents=agents,
         )
+
+        # ── 11.5 P0.3: FOMO → EmotionField 闭环 ──
+        # 当 risk_agent 检测到 FOMO surge 时，将 fomo_score 传导到情绪场
+        if risk_report.fomo_score > 0.3:
+            emotion.apply_fomo_signal(
+                intensity=risk_report.fomo_score,
+                source="manipulation_risk_agent",
+                decay=0.85,
+            )
 
         # ── 12. Regulator ──
         if regulator is not None:

@@ -28,6 +28,9 @@ class KOLTier(Enum):
 class KOLNode:
     """
     图中的单个节点（可以是KOL或普通投资者）。
+
+    P0.4 修复：belief_state 使用累积曝光 + tanh 激活 + 信念衰减，
+    使社会传播可观测。
     """
     node_id: str = field(default_factory=lambda: str(uuid.uuid4())[:8])
     tier: KOLTier = KOLTier.RETAIL
@@ -37,46 +40,69 @@ class KOLNode:
     influence_score: float = 0.1      # [0, 1] 对他人的影响力
     trust_level: float = 0.5           # [0, 1] 自身被信任程度
     susceptibility: float = 0.6         # [0, 1] 对他人影响的敏感度
-    confirmation_bias: float = 0.3     # [0, 1] 确认偏误程度（越容易相信符合自己信念的信息）
-    risk_preference: float = 0.5        # [0, 1] 风险偏好（越高越倾向于高风险投资）
+    confirmation_bias: float = 0.3     # [0, 1] 确认偏误程度
+    risk_preference: float = 0.5        # [0, 1] 风险偏好
 
     # 状态
     belief_state: float = 0.0           # [-1, 1] 当前信念方向
     narrative_exposure: float = 0.0     # [0, 1] 当前叙事的曝光程度
-    is_active: bool = True             # 节点是否活跃（有的投资者不说话不表态）
+    is_active: bool = True             # 节点是否活跃
+
+    # P0.4: 累积曝光和信念衰减
+    cumulative_exposure: float = 0.0    # 累积叙事曝光（非瞬时）
+    exposure_gain: float = 2.0          # tanh 激活增益
+    belief_decay: float = 0.95          # 信念自然衰减率
+    max_belief_delta: float = 0.3       # 单步最大信念变化
 
     # 传播相关
-    followers: List[str] = field(default_factory=list)  # 关注者 node_id 列表
-    following: List[str] = field(default_factory=list)  # 关注对象 node_id 列表
+    followers: List[str] = field(default_factory=list)
+    following: List[str] = field(default_factory=list)
 
     @property
     def is_kol(self) -> bool:
         return self.tier != KOLTier.RETAIL
 
-    def receive_exposure(self, exposure: float):
-        """接收叙事曝光，belief_state也随之被影响"""
+    def receive_exposure(self, exposure: float, source_trust: float = 1.0,
+                         narrative_strength: float = 1.0):
+        """
+        P0.4: 接收叙事曝光，使用累积曝光 + tanh 激活 + 信任加权。
+
+        公式：
+          raw_exposure = exposure * source_trust * narrative_strength
+          cumulative_exposure += raw_exposure
+          belief_delta = tanh(exposure_gain * cumulative_exposure)
+          belief_state = clip(belief_state * belief_decay + belief_delta, -1, 1)
+
+        Args:
+            exposure: 曝光强度 [0, 1]
+            source_trust: 来源信任度 [0, 1]
+            narrative_strength: 叙事强度 [0, 1]
+        """
+        # 1. 计算原始曝光（信任加权）
+        raw_exposure = exposure * source_trust * narrative_strength
+        self.cumulative_exposure += raw_exposure
+
+        # 2. 更新瞬时曝光（用于传播模型兼容）
         self.narrative_exposure = np.clip(
             self.narrative_exposure + exposure * self.susceptibility,
             0.0, 1.0
         )
-        # 确认偏误：信念强化方向取决于暴露内容和已有信念
-        if self.confirmation_bias > 0:
-            # 当belief_state接近0时，用正向作为默认方向（符合"业绩超预期"类正面叙事）
-            # 降低阈值从0.1到0.05，让节点更容易在早期产生信念
-            if abs(self.belief_state) > 0.05:
-                direction = np.sign(self.belief_state)
-            else:
-                direction = 1.0
-            # belief_shift = exposure * confirmation_bias * direction * 1.0
-            # 核心修复：0.1 → 1.0（10倍放大），使 KOL belief_state 能真实积累
-            # 原始设计衰减太快（每曝光最多 +0.03），需 33 次曝光才能从 0 到 1
-            # 修复后在 5-8 次强曝光内即可形成有意义信念（belief 0.1-0.3），10-15 次后显著（0.3-0.7）
-            belief_shift = exposure * self.confirmation_bias * direction * 1.0
-            self.belief_state = np.clip(self.belief_state + belief_shift, -1.0, 1.0)
+
+        # 3. tanh 激活：累积曝光 → 信念增量
+        belief_delta = float(np.tanh(self.exposure_gain * self.cumulative_exposure))
+        belief_delta = np.clip(belief_delta, -self.max_belief_delta, self.max_belief_delta)
+
+        # 4. 信念衰减 + 增量
+        self.belief_state = float(np.clip(
+            self.belief_state * self.belief_decay + belief_delta,
+            -1.0, 1.0
+        ))
 
     def reset_exposure(self, decay: float = 0.1):
-        """叙事曝光随时间衰减"""
+        """叙事曝光随时间衰减，同时衰减累积曝光"""
         self.narrative_exposure *= (1.0 - decay)
+        # P0.4: 累积曝光也衰减（避免无限累积）
+        self.cumulative_exposure *= (1.0 - decay * 0.5)
 
     def influence_on(self, target: "KOLNode", narrative_strength: float) -> float:
         """
@@ -194,6 +220,10 @@ class KOLNetwork:
                 trust_level=np.random.uniform(0.7, 0.9),
                 susceptibility=0.1,
                 confirmation_bias=np.random.uniform(0.2, 0.4),
+                # P0.4: Macro KOL 信念形成较慢（更理性）
+                exposure_gain=1.5,
+                belief_decay=0.97,
+                max_belief_delta=0.2,
             )
             kol_ids["macro"].append(self.add_node(node).node_id)
 
@@ -205,6 +235,10 @@ class KOLNetwork:
                 trust_level=np.random.uniform(0.5, 0.7),
                 susceptibility=0.3,
                 confirmation_bias=np.random.uniform(0.3, 0.6),
+                # P0.4: Influencer 信念形成中等速度
+                exposure_gain=2.0,
+                belief_decay=0.95,
+                max_belief_delta=0.25,
             )
             kol_ids["influencer"].append(self.add_node(node).node_id)
 
@@ -216,6 +250,10 @@ class KOLNetwork:
                 trust_level=np.random.uniform(0.3, 0.5),
                 susceptibility=0.5,
                 confirmation_bias=np.random.uniform(0.4, 0.7),
+                # P0.4: Micro KOL 信念形成较快（更情绪化）
+                exposure_gain=2.5,
+                belief_decay=0.93,
+                max_belief_delta=0.3,
             )
             kol_ids["micro"].append(self.add_node(node).node_id)
 
@@ -228,6 +266,10 @@ class KOLNetwork:
                 susceptibility=np.random.uniform(0.5, 0.8),
                 confirmation_bias=np.random.uniform(0.3, 0.7),
                 risk_preference=np.random.uniform(0.3, 0.8),
+                # P0.4: Retail 信念形成最快（最情绪化）
+                exposure_gain=3.0,
+                belief_decay=0.90,
+                max_belief_delta=0.3,
             )
             kol_ids["retail"].append(self.add_node(node).node_id)
 

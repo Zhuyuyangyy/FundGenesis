@@ -60,6 +60,23 @@ class InterventionEffect:
 
 
 @dataclass
+class InterventionEffectReport:
+    """
+    P0.5: 干预效果验证报告。
+
+    每个干预动作必须能回答：
+    改了谁？改了什么字段？改前是多少？改后是多少？是否影响后续step？
+    """
+    action: str
+    targets: int
+    field_changed: str
+    before_mean: float
+    after_mean: float
+    verified: bool
+    step: int
+
+
+@dataclass
 class RegulatorState:
     """监管状态机"""
     narrative_cap: float = 1.0          # 叙事生成上限倍率
@@ -160,12 +177,14 @@ class RegulatorAgent:
     def __init__(self):
         self.state = RegulatorState()
         self.history: List[InterventionEffect] = []
+        self.effect_reports: List[InterventionEffectReport] = []  # P0.5
         self.current_intensity = InterventionIntensity.NONE
         self._step_count = 0
 
     def reset(self):
         self.state = RegulatorState()
         self.history.clear()
+        self.effect_reports.clear()  # P0.5
         self.current_intensity = InterventionIntensity.NONE
         self._step_count = 0
 
@@ -262,32 +281,113 @@ class RegulatorAgent:
             effect.fomo_reduction = risk_score * 0.30
 
     def _apply_to_narrative_engine(self, engine, risk_score: float):
-        """将叙事限流应用到NarrativeEngine"""
-        # narrative_throttle: 直接写入 engine.narrative_strength_multiplier
-        # Strong 模式下 risk_score≈0.50，narrative_cap=0.60-0.72
-        # narrative_strength_multiplier 被压至 0.60，bubble_risk 中的
-        # narrative_factor 降至 0.48，使 Strong < Light < Baseline
+        """
+        P0.5: 将叙事限流应用到NarrativeEngine，并生成效果验证报告。
+
+        narrative_throttle: 直接写入 engine.narrative_strength_multiplier
+        """
+        before_multiplier = engine.narrative_strength_multiplier
         engine.narrative_strength_multiplier = self.state.narrative_cap
+        after_multiplier = engine.narrative_strength_multiplier
+
+        # P0.5: 生成效果验证报告
+        report = InterventionEffectReport(
+            action="narrative_throttle",
+            targets=1,
+            field_changed="narrative_strength_multiplier",
+            before_mean=round(before_multiplier, 4),
+            after_mean=round(after_multiplier, 4),
+            verified=(after_multiplier < before_multiplier),
+            step=self._step_count,
+        )
+        self.effect_reports.append(report)
 
     def _apply_to_kol_network(self, network, risk_score: float):
-        """将KOL降权应用到KOLNetwork"""
-        for kol in network.get_kols():
-            if hasattr(kol, 'influence_weight'):
-                kol.influence_weight *= self.state.kol_penalty
-            if hasattr(kol, 'trust_level'):
-                kol.trust_level *= self.state.kol_penalty
+        """
+        P0.5: 将KOL降权应用到KOLNetwork，并生成效果验证报告。
+
+        修复：使用正确的字段名 influence_score（而非 influence_weight），
+        并记录干预前后的值变化。
+        """
+        kols = network.get_kols()
+        if not kols:
+            return
+
+        # 记录干预前
+        before_influence = float(np.mean([k.influence_score for k in kols]))
+        before_trust = float(np.mean([k.trust_level for k in kols]))
+
+        for kol in kols:
+            # P0.5 修复：使用正确的字段名 influence_score
+            kol.influence_score *= self.state.kol_penalty
+            kol.trust_level *= self.state.kol_penalty
+
+        # 记录干预后
+        after_influence = float(np.mean([k.influence_score for k in kols]))
+        after_trust = float(np.mean([k.trust_level for k in kols]))
+
+        # P0.5: 生成效果验证报告
+        report = InterventionEffectReport(
+            action="kol_downweight",
+            targets=len(kols),
+            field_changed="influence_score, trust_level",
+            before_mean=round(before_influence, 4),
+            after_mean=round(after_influence, 4),
+            verified=(after_influence < before_influence),
+            step=self._step_count,
+        )
+        self.effect_reports.append(report)
 
     def _apply_to_agents(self, agents: List, risk_score: float):
-        """将交易冷却应用到Agent列表"""
+        """
+        P0.5: 将交易冷却应用到Agent列表，并生成效果验证报告。
+        """
         slowdown = self.state.trading_slowdown
-        if slowdown <= 0:
+        if slowdown <= 0 and not self.state.warning_active:
             return
+
+        # 记录干预前
+        before_trade_freq = []
+        before_fomo_sens = []
+        for agent in agents:
+            if hasattr(agent, 'trade_frequency'):
+                before_trade_freq.append(agent.trade_frequency)
+            if hasattr(agent, 'fomo_sensitivity'):
+                before_fomo_sens.append(agent.fomo_sensitivity)
+
         for agent in agents:
             if hasattr(agent, 'trade_frequency'):
                 agent.trade_frequency *= (1.0 - slowdown)
             if hasattr(agent, 'fomo_sensitivity') and self.state.warning_active:
                 # 风险警告时，散户FOMO敏感度降低
                 agent.fomo_sensitivity *= (1.0 - self.state.investor_fear_factor * 0.5)
+
+        # P0.5: 生成效果验证报告
+        if before_trade_freq:
+            after_trade_freq = [a.trade_frequency for a in agents if hasattr(a, 'trade_frequency')]
+            report = InterventionEffectReport(
+                action="trading_cooldown",
+                targets=len(before_trade_freq),
+                field_changed="trade_frequency",
+                before_mean=round(float(np.mean(before_trade_freq)), 4),
+                after_mean=round(float(np.mean(after_trade_freq)), 4) if after_trade_freq else 0.0,
+                verified=(len(after_trade_freq) > 0 and float(np.mean(after_trade_freq)) < float(np.mean(before_trade_freq))),
+                step=self._step_count,
+            )
+            self.effect_reports.append(report)
+
+        if before_fomo_sens and self.state.warning_active:
+            after_fomo_sens = [a.fomo_sensitivity for a in agents if hasattr(a, 'fomo_sensitivity')]
+            report = InterventionEffectReport(
+                action="risk_warning",
+                targets=len(before_fomo_sens),
+                field_changed="fomo_sensitivity",
+                before_mean=round(float(np.mean(before_fomo_sens)), 4),
+                after_mean=round(float(np.mean(after_fomo_sens)), 4) if after_fomo_sens else 0.0,
+                verified=(len(after_fomo_sens) > 0 and float(np.mean(after_fomo_sens)) < float(np.mean(before_fomo_sens))),
+                step=self._step_count,
+            )
+            self.effect_reports.append(report)
 
     def _apply_deescalation(self, new_intensity: InterventionIntensity):
         """干预降级：逐步撤销干预动作"""

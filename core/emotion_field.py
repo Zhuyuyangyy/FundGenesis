@@ -79,6 +79,33 @@ class EmotionField:
             self.uncertainty = clamp(self.uncertainty + abs(shock_magnitude) * 0.3, 0.0, 1.0)
         self.normalize()
 
+    def apply_fomo_signal(self, intensity: float, source: str = "manipulation_risk_agent",
+                          decay: float = 0.85):
+        """
+        P0.3: FOMO 信号接入情绪场。
+
+        闭环路径：
+        FOMO detected → greed 上升 → retail buy pressure 上升
+        → order imbalance 上升 → price momentum 上升 → bubble risk 上升
+
+        Args:
+            intensity: FOMO 强度 [0, 1]
+            source: 信号来源标识
+            decay: 衰减系数，控制 FOMO 对贪婪的持续影响
+        """
+        if intensity <= 0:
+            return
+        # FOMO 直接推高贪婪
+        greed_boost = intensity * 0.4 * decay
+        self.greed = clamp(self.greed + greed_boost, 0.0, 1.0)
+        # FOMO 同时降低恐惧（害怕错过 > 害怕亏损）
+        fear_reduction = intensity * 0.2 * decay
+        self.fear = clamp(self.fear - fear_reduction, 0.0, 1.0)
+        # FOMO 增加信心（"大家都在买"效应）
+        confidence_boost = intensity * 0.1 * decay
+        self.confidence = clamp(self.confidence + confidence_boost, 0.0, 1.0)
+        self.normalize()
+
     def decay_toward_neutral(self, inertia: float = 0.95):
         """
         每步自然衰减向中性值回归（情绪不会永远持续）。
