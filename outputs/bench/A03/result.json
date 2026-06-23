@@ -1,0 +1,20 @@
+{
+  "case_id": "A03",
+  "name": "narrative_decay",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 80,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.06651027939176014,
+    "high_risk_steps": 0,
+    "final_price": 106.11088241282161,
+    "price_peak": 213.5087090107326,
+    "final_drawdown_pct": -50.30137978704763,
+    "price_change_pct": 8.79709219005569,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

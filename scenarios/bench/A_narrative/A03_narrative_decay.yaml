@@ -1,0 +1,45 @@
+id: A03
+name: narrative_decay
+description: "Single narrative injected at step 10 with no further injections. Tests that the narrative effect decays over time: price should peak around step 20-30 then decline toward baseline."
+category: narrative_propagation
+steps: 80
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "One-shot narrative then silence"
+    category: fintech
+    polarity: positive
+    intensity: 0.70
+    credibility: 0.60
+    target_sector: ""
+
+expected:
+  price_peak_min: 104

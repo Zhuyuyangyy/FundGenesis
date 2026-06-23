@@ -1,0 +1,20 @@
+{
+  "case_id": "D10",
+  "name": "multi_pattern_risk",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.16032500000000002,
+    "peak_bubble_risk": 1.0,
+    "high_risk_steps": 0,
+    "final_price": 140.02345647849688,
+    "price_peak": 225.01940517796484,
+    "final_drawdown_pct": -37.77271948268008,
+    "price_change_pct": 43.568167155497164,
+    "narrative_penetration": 0.03
+  },
+  "validation": {
+    "manipulation_risk_peak_min": true
+  }
+}

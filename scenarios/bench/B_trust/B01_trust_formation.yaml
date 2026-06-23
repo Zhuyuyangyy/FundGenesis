@@ -1,0 +1,44 @@
+id: B01
+name: trust_formation
+description: "Trust formation — A highly credible narrative (credibility=0.8) injected at step 10. Tests that trust builds over time as the narrative proves accurate and price validates it."
+category: trust_evolution
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Credible earnings narrative"
+    category: earnings
+    polarity: positive
+    intensity: 0.7
+    credibility: 0.8
+
+expected:
+  price_peak_min: 110

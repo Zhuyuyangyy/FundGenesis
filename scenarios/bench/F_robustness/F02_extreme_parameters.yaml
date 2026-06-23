@@ -1,0 +1,44 @@
+id: F02
+name: extreme_parameters
+description: "Extreme market parameters — Very high price impact sensitivity (impact_coefficient=1.0) with near-zero noise (noise_std=0.001). Tests system behavior under extreme price impact where trades move the price strongly."
+category: robustness_stress
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 1.0
+  noise_std: 0.001
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Positive narrative under extreme price impact"
+    category: fintech
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+
+expected:
+  price_peak_min: 110

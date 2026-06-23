@@ -1,0 +1,66 @@
+id: D10
+name: multi_pattern_risk
+description: "Scenario designed to trigger multiple risk patterns simultaneously: coordinated KOL amplification (narratives at steps 10, 12, 14), FOMO (high intensity), and self-validation (a follow-up narrative at step 20 referencing the price increase). Tests that the risk agent detects overlapping manipulation patterns."
+category: risk_identification
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Coordinated KOL push — macro tier"
+    category: manipulation
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.75
+    target_sector: ""
+  - step: 12
+    name: "Coordinated KOL push — influencer tier"
+    category: manipulation
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.72
+    target_sector: ""
+  - step: 14
+    name: "Coordinated KOL push — micro tier"
+    category: manipulation
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.68
+    target_sector: ""
+  - step: 20
+    name: "Self-validating FOMO narrative referencing price surge"
+    category: sentiment
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.70
+    target_sector: ""
+
+expected:
+  manipulation_risk_peak_min: 0.15

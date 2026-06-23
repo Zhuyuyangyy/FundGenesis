@@ -1,0 +1,21 @@
+{
+  "case_id": "C03",
+  "name": "bubble_formation",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.17808,
+    "peak_bubble_risk": 0.6680592220203769,
+    "high_risk_steps": 0,
+    "final_price": 217.180853787699,
+    "price_peak": 220.90921516048712,
+    "final_drawdown_pct": -1.6877346515760006,
+    "price_change_pct": 122.67881327693297,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true,
+    "bubble_risk_peak_min": true
+  }
+}

@@ -1,0 +1,46 @@
+id: A01
+name: positive_narrative_bubble
+description: "Single strong positive narrative injection. Tests that a positive narrative causes a measurable price increase and elevates bubble risk."
+category: narrative_propagation
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Strong positive growth narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.75
+    target_sector: ""
+
+expected:
+  price_peak_min: 115
+  bubble_risk_peak_min: 0.10

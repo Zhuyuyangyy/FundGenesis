@@ -1,0 +1,21 @@
+{
+  "case_id": "E03",
+  "name": "strong_intervention_effectiveness",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 200,
+    "peak_manipulation_risk": 0.17808,
+    "peak_bubble_risk": 0.3141136931294982,
+    "high_risk_steps": 0,
+    "final_price": 100.0,
+    "price_peak": 110.51709180756478,
+    "final_drawdown_pct": -9.51625819640406,
+    "price_change_pct": 2.531512052442886,
+    "narrative_penetration": 0.03
+  },
+  "validation": {
+    "bubble_risk_peak_max": true,
+    "high_risk_steps_max": true
+  }
+}

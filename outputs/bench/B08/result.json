@@ -1,0 +1,20 @@
+{
+  "case_id": "B08",
+  "name": "trust_with_price_falsification",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.06651027939176014,
+    "high_risk_steps": 0,
+    "final_price": 112.48845735874666,
+    "price_peak": 208.74548452257315,
+    "final_drawdown_pct": -46.11214819040435,
+    "price_change_pct": 15.336116214390415,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_max": true
+  }
+}

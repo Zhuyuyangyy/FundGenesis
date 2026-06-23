@@ -1,0 +1,20 @@
+{
+  "case_id": "B03",
+  "name": "trust_collapse",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.21714615115166572,
+    "high_risk_steps": 0,
+    "final_price": 98.67509517991847,
+    "price_peak": 212.65969512297443,
+    "final_drawdown_pct": -53.59953134379425,
+    "price_change_pct": 1.1730671071575882,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

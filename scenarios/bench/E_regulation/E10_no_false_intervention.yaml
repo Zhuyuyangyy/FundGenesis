@@ -1,0 +1,54 @@
+id: E10
+name: no_false_intervention
+description: "No False Intervention — Neutral narrative with light regulation. Tests that the regulator does NOT intervene on benign narratives, keeping high-risk steps minimal."
+category: regulatory_intervention
+steps: 200
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: light
+  force_strong_at_step: 30
+  monitor_threshold: 0.15
+  human_review_threshold: 0.25
+  block_threshold: 0.60
+
+narratives:
+  - step: 25
+    name: "Neutral macro update"
+    category: macro
+    polarity: neutral
+    intensity: 0.40
+    credibility: 0.60
+  - step: 50
+    name: "Neutral sector report"
+    category: sector
+    polarity: neutral
+    intensity: 0.35
+    credibility: 0.55
+
+expected:
+  high_risk_steps_max: 5

@@ -1,0 +1,59 @@
+id: D01
+name: kol_coordination_detection
+description: "Multiple narratives from different KOL tiers injected in quick succession (steps 10, 12, 14). Tests detection of coordinated KOL amplification across macro, influencer, and micro tiers."
+category: risk_identification
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Macro KOL coordinated push"
+    category: manipulation
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.75
+    target_sector: ""
+  - step: 12
+    name: "Influencer tier amplification"
+    category: manipulation
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+    target_sector: ""
+  - step: 14
+    name: "Micro tier retail mobilization"
+    category: manipulation
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.65
+    target_sector: ""
+
+expected:
+  manipulation_risk_peak_min: 0.15

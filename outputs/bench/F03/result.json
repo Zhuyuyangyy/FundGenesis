@@ -1,0 +1,20 @@
+{
+  "case_id": "F03",
+  "name": "sparse_market",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.05373016794843197,
+    "high_risk_steps": 0,
+    "final_price": 100.93579361081139,
+    "price_peak": 213.50870901073293,
+    "final_drawdown_pct": -52.725210096353756,
+    "price_change_pct": 3.4909953912979574,
+    "narrative_penetration": 0.05
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

@@ -303,6 +303,12 @@ class StepEngine:
         prices = [s.market.price for s in self.snapshots]
         high_risk_steps = sum(1 for r in risk_scores if r >= 0.25)
 
+        # P2: 叙事渗透率（活跃叙事数 / 总Agent数）
+        max_active_narratives = 0
+        if self.snapshots:
+            max_active_narratives = max(len(s.narratives) for s in self.snapshots)
+        narrative_penetration = max_active_narratives / max(self.config.total_agents, 1)
+
         return {
             "steps": len(self.snapshots),
             "peak_manipulation_risk": max(risk_scores) if risk_scores else 0.0,
@@ -312,4 +318,5 @@ class StepEngine:
             "price_peak": max(prices) if prices else 0.0,
             "final_drawdown_pct": (prices[-1] / max(prices) - 1) * 100 if prices else 0.0,
             "price_change_pct": (prices[-1] / prices[0] - 1) * 100 if prices else 0.0,
+            "narrative_penetration": narrative_penetration,
         }

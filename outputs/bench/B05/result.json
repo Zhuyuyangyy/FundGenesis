@@ -1,0 +1,20 @@
+{
+  "case_id": "B05",
+  "name": "low_trust_kol_effect",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.17808,
+    "peak_bubble_risk": 0.025315712611724318,
+    "high_risk_steps": 0,
+    "final_price": 100.0,
+    "price_peak": 105.12710963760242,
+    "final_drawdown_pct": -4.87705754992861,
+    "price_change_pct": 2.531512052442886,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_max": true
+  }
+}

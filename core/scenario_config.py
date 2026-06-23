@@ -102,6 +102,7 @@ class ExpectedMetrics:
     bubble_risk_peak_min: Optional[float] = None
     bubble_risk_peak_max: Optional[float] = None
     manipulation_risk_peak_min: Optional[float] = None
+    manipulation_risk_peak_max: Optional[float] = None
     high_risk_steps_min: Optional[int] = None
     high_risk_steps_max: Optional[int] = None
     narrative_penetration_min: Optional[float] = None
@@ -205,9 +206,13 @@ class ScenarioConfig:
             checks["bubble_risk_peak_max"] = results.get("peak_bubble_risk", 0) <= e.bubble_risk_peak_max
         if e.manipulation_risk_peak_min is not None:
             checks["manipulation_risk_peak_min"] = results.get("peak_manipulation_risk", 0) >= e.manipulation_risk_peak_min
+        if e.manipulation_risk_peak_max is not None:
+            checks["manipulation_risk_peak_max"] = results.get("peak_manipulation_risk", 0) <= e.manipulation_risk_peak_max
         if e.high_risk_steps_min is not None:
             checks["high_risk_steps_min"] = results.get("high_risk_steps", 0) >= e.high_risk_steps_min
         if e.high_risk_steps_max is not None:
             checks["high_risk_steps_max"] = results.get("high_risk_steps", 0) <= e.high_risk_steps_max
+        if e.narrative_penetration_min is not None:
+            checks["narrative_penetration_min"] = results.get("narrative_penetration", 0) >= e.narrative_penetration_min
 
         return checks

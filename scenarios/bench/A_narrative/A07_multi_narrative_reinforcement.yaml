@@ -1,0 +1,60 @@
+id: A07
+name: multi_narrative_reinforcement
+description: "Three positive narratives injected at steps 10, 20, and 30. Tests the reinforcement effect: successive reinforcing narratives should compound, driving a larger price peak and higher bubble risk than a single narrative."
+category: narrative_propagation
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "First reinforcing positive narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.65
+    target_sector: ""
+  - step: 20
+    name: "Second reinforcing positive narrative"
+    category: sector
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.65
+    target_sector: ""
+  - step: 30
+    name: "Third reinforcing positive narrative"
+    category: earnings
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.65
+    target_sector: ""
+
+expected:
+  price_peak_min: 120
+  bubble_risk_peak_min: 0.15

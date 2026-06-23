@@ -1,0 +1,20 @@
+{
+  "case_id": "C09",
+  "name": "feedback_dampening",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.08550736961889757,
+    "high_risk_steps": 0,
+    "final_price": 140.15955259355013,
+    "price_peak": 143.98558408040483,
+    "final_drawdown_pct": -2.6572323273128196,
+    "price_change_pct": 43.707708560105885,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_max": true
+  }
+}

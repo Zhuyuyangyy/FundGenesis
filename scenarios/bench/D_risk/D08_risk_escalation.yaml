@@ -1,0 +1,73 @@
+id: D08
+name: risk_escalation
+description: "Multiple strong positive narratives injected at steps 10, 20, 30, 40, and 50. Tests risk escalation over time: successive reinforcing narratives should compound, driving bubble risk steadily upward as the run progresses."
+category: risk_identification
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "First escalating positive narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.82
+    credibility: 0.72
+    target_sector: ""
+  - step: 20
+    name: "Second escalating positive narrative"
+    category: sector
+    polarity: positive
+    intensity: 0.82
+    credibility: 0.72
+    target_sector: ""
+  - step: 30
+    name: "Third escalating positive narrative"
+    category: earnings
+    polarity: positive
+    intensity: 0.82
+    credibility: 0.72
+    target_sector: ""
+  - step: 40
+    name: "Fourth escalating positive narrative"
+    category: sentiment
+    polarity: positive
+    intensity: 0.82
+    credibility: 0.72
+    target_sector: ""
+  - step: 50
+    name: "Fifth escalating positive narrative"
+    category: macro
+    polarity: positive
+    intensity: 0.82
+    credibility: 0.72
+    target_sector: ""
+
+expected:
+  bubble_risk_peak_min: 0.15

@@ -1,0 +1,20 @@
+{
+  "case_id": "E01",
+  "name": "no_intervention_baseline",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 200,
+    "peak_manipulation_risk": 0.19239000000000003,
+    "peak_bubble_risk": 1.0,
+    "high_risk_steps": 0,
+    "final_price": 217.08208638396513,
+    "price_peak": 224.75893742276196,
+    "final_drawdown_pct": -3.4155932248233545,
+    "price_change_pct": 122.57754556446972,
+    "narrative_penetration": 0.03
+  },
+  "validation": {
+    "bubble_risk_peak_min": true
+  }
+}

@@ -1,0 +1,46 @@
+id: A05
+name: cross_tier_propagation
+description: "Narrative injected at the Macro KOL tier only. Tests that the narrative propagates down the KOL network from Macro to Influencer to Micro to Retail, reaching meaningful penetration across the agent population."
+category: narrative_propagation
+steps: 60
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 5
+    name: "Macro KOL origin narrative"
+    category: policy
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.70
+    target_sector: ""
+
+expected:
+  # 跨层传播后正面叙事应推动价格上涨
+  price_peak_min: 115

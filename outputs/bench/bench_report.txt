@@ -1,0 +1,18 @@
+======================================================================
+ReflexMarket-Bench Results
+======================================================================
+  Total: 60  Passed: 60  Failed: 0  Errored: 0
+  Pass Rate: 100.0%
+
+  By Category:
+    A_narrative                    12/12 (100%)
+    B_trust                        10/10 (100%)
+    C_reflexivity                  12/12 (100%)
+    D_risk                         10/10 (100%)
+    E_regulation                   10/10 (100%)
+    F_robustness                   6/6 (100%)
+
+  Failed Cases:
+
+  Errored Cases:
+======================================================================

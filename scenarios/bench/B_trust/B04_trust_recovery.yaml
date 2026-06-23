@@ -1,0 +1,50 @@
+id: B04
+name: trust_recovery
+description: "Trust recovery — A negative narrative at step 10 shocks the market, then a positive narrative at step 30 tests trust recovery after a negative shock. Expected: price recovers above 100 by end of run."
+category: trust_evolution
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Negative earnings shock"
+    category: earnings
+    polarity: negative
+    intensity: 0.7
+    credibility: 0.7
+  - step: 30
+    name: "Positive recovery narrative"
+    category: earnings
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.75
+
+expected:
+  price_peak_min: 100

@@ -1,0 +1,20 @@
+{
+  "case_id": "E04",
+  "name": "early_vs_late_intervention",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 200,
+    "peak_manipulation_risk": 0.14372314750267265,
+    "peak_bubble_risk": 0.0037277418510688683,
+    "high_risk_steps": 0,
+    "final_price": 105.12710963760242,
+    "price_peak": 107.78841508846317,
+    "final_drawdown_pct": -2.4690087971667385,
+    "price_change_pct": 7.788415088463174,
+    "narrative_penetration": 0.03
+  },
+  "validation": {
+    "bubble_risk_peak_max": true
+  }
+}

@@ -1,0 +1,45 @@
+id: C09
+name: feedback_dampening
+description: "Dampened price feedback — Positive narrative at step 10 with low impact_coefficient (0.2) dampens the reflexivity feedback loop."
+category: reflexivity_dynamics
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.2
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Positive narrative with dampened feedback"
+    category: fintech
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+
+expected:
+  # 低impact_coefficient仍会产生中等泡沫
+  price_peak_max: 150

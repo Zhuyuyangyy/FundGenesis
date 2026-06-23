@@ -1,0 +1,20 @@
+{
+  "case_id": "D07",
+  "name": "manipulation_pattern_detection",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.19239000000000003,
+    "peak_bubble_risk": 0.7679412102887435,
+    "high_risk_steps": 0,
+    "final_price": 218.63579052527774,
+    "price_peak": 221.89388249710015,
+    "final_drawdown_pct": -1.4683108588471327,
+    "price_change_pct": 124.17058191337892,
+    "narrative_penetration": 0.02
+  },
+  "validation": {
+    "manipulation_risk_peak_min": true
+  }
+}

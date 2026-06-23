@@ -1,0 +1,50 @@
+id: B07
+name: trust_with_price_validation
+description: "Trust with price validation — A positive narrative at step 10 drives price up, which validates the narrative and creates a self-reinforcing trust loop. A reinforcing narrative at step 25 sustains the loop."
+category: trust_evolution
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Credible positive earnings narrative"
+    category: earnings
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.8
+  - step: 25
+    name: "Price-validation reinforcing narrative"
+    category: earnings
+    polarity: positive
+    intensity: 0.7
+    credibility: 0.75
+
+expected:
+  price_peak_min: 115
