@@ -283,7 +283,7 @@ def run_demo_fomo_surge_risk(output_dir: str = None, steps: int = 200):
     all_pass = all(result["verification"].values())
     print(f"\n  {'PASS' if all_pass else 'FAIL'}: "
           f"{'FOMO + Self-Validation detected at HIGH risk' if all_pass else 'Test criteria not met'}")
-    print(f"  demo_sensitive_thresholds_used: True")
+    print("  demo_sensitive_thresholds_used: True")
     print(f"\n  Results saved to: {output_dir}/")
     return result
 

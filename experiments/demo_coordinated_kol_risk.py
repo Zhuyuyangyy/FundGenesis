@@ -254,11 +254,10 @@ def run_demo_coordinated_kol_risk(output_dir: str = None, steps: int = 200):
     print(f"  peak_manipulation_risk: {peak_risk:.4f} (target >= 0.50)")
     print(f"  coordinated_pattern_detected: {coordinated_detected}")
     print(f"  high_risk_steps: {high_risk_steps}")
-    print(f"  demo_sensitive_thresholds_used: True")
+    print("  demo_sensitive_thresholds_used: True")
     all_pass = all(result["verification"].values())
     print(f"\n  {'PASS' if all_pass else 'FAIL'}: "
           f"{'Coordinated amplification + HIGH risk' if all_pass else 'Test criteria not met'}")
-    print(f"  demo_sensitive_thresholds_used: True")
     print(f"\n  Results saved to: {output_dir}/")
     return result
 
