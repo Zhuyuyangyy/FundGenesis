@@ -1,0 +1,20 @@
+{
+  "case_id": "F06",
+  "name": "mixed_polarity_stress",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.35297999999999996,
+    "peak_bubble_risk": 0.6895088450515223,
+    "high_risk_steps": 2,
+    "final_price": 206.06047680116788,
+    "price_peak": 224.96257567905693,
+    "final_drawdown_pct": -8.402330396881542,
+    "price_change_pct": 111.27692260671074,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_max": true
+  }
+}

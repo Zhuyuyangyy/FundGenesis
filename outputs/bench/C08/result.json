@@ -1,0 +1,20 @@
+{
+  "case_id": "C08",
+  "name": "feedback_amplification",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.08550736961889757,
+    "high_risk_steps": 0,
+    "final_price": 209.8052385061936,
+    "price_peak": 290.4986915054636,
+    "final_drawdown_pct": -27.777561606590695,
+    "price_change_pct": 115.11648340563445,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

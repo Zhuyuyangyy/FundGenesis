@@ -1,0 +1,20 @@
+{
+  "case_id": "A10",
+  "name": "high_credibility_vs_low_credibility",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.06651027939176014,
+    "high_risk_steps": 0,
+    "final_price": 100.93579361081116,
+    "price_peak": 213.5087090107326,
+    "final_drawdown_pct": -52.725210096353806,
+    "price_change_pct": 3.490995391297713,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

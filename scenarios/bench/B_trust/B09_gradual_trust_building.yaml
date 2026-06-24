@@ -1,0 +1,62 @@
+id: B09
+name: gradual_trust_building
+description: "Gradual trust building — Multiple weak positive narratives at steps 10, 25, 40, 55 (intensity=0.4, credibility=0.5). Tests gradual trust accumulation over time from repeated weak signals."
+category: trust_evolution
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Weak positive signal 1"
+    category: sector
+    polarity: positive
+    intensity: 0.4
+    credibility: 0.5
+  - step: 25
+    name: "Weak positive signal 2"
+    category: sector
+    polarity: positive
+    intensity: 0.4
+    credibility: 0.5
+  - step: 40
+    name: "Weak positive signal 3"
+    category: sector
+    polarity: positive
+    intensity: 0.4
+    credibility: 0.5
+  - step: 55
+    name: "Weak positive signal 4"
+    category: sector
+    polarity: positive
+    intensity: 0.4
+    credibility: 0.5
+
+expected:
+  price_peak_min: 105

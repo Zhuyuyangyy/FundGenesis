@@ -1,0 +1,73 @@
+id: E03
+name: strong_intervention_effectiveness
+description: "Strong Intervention — Same narratives as E01 but with strong regulation (mode=strong, force_strong_at_step=30). Tests that strong intervention reduces risk more than light."
+category: regulatory_intervention
+steps: 200
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: strong
+  force_strong_at_step: 30
+  monitor_threshold: 0.15
+  human_review_threshold: 0.25
+  block_threshold: 0.60
+
+narratives:
+  - step: 25
+    name: "Macro KOL positive narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.88
+    credibility: 0.72
+  - step: 28
+    name: "Influencer amplification"
+    category: fintech
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.65
+  - step: 33
+    name: "Micro KOL cross-tier amplification"
+    category: sentiment
+    polarity: positive
+    intensity: 0.70
+    credibility: 0.60
+  - step: 45
+    name: "Price self-validation event"
+    category: earnings
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+  - step: 55
+    name: "Retail FOMO surge"
+    category: sentiment
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.50
+
+expected:
+  bubble_risk_peak_max: 0.40
+  high_risk_steps_max: 35

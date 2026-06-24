@@ -1,0 +1,20 @@
+{
+  "case_id": "E05",
+  "name": "late_intervention_limitation",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 200,
+    "peak_manipulation_risk": 0.19239000000000003,
+    "peak_bubble_risk": 1.0,
+    "high_risk_steps": 0,
+    "final_price": 103.79296610335571,
+    "price_peak": 215.16738751692955,
+    "final_drawdown_pct": -51.76175753159191,
+    "price_change_pct": 6.420497549850124,
+    "narrative_penetration": 0.03
+  },
+  "validation": {
+    "bubble_risk_peak_min": true
+  }
+}

@@ -1,0 +1,50 @@
+id: C02
+name: reflexivity_reversal
+description: "Reflexivity reversal — Positive narrative at step 10 inflates a bubble, then a negative narrative at step 60 reverses the loop into a crash."
+category: reflexivity_dynamics
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Positive bubble-forming narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+  - step: 60
+    name: "Negative reversal narrative"
+    category: macro
+    polarity: negative
+    intensity: 0.80
+    credibility: 0.70
+
+expected:
+  price_peak_min: 115

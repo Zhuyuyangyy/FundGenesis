@@ -142,7 +142,7 @@ def run_scenario(scenario_name, intervention_step, intervention_intensity_overri
 
         # Show key steps
         if step >= 35 and step % 10 == 0 or step in [40, 45, 55, 60, 65, 70]:
-            print(f"{step:>4} | {market.price:>7.2f} | {risk_score:>6.3f} | {bubble_score:>6.4f} | {ns_raw:>6.4f} | {ns_eff:>6.4f} | {multiplier:>9.3f} | {regulator.state.narrative_cap:>8.3f} | {','.join(actions_taken) if actions_taken else '-'}")
+            print(f"{step:>4} | {market.price:>7.2f} | {risk_score:>6.3f} | {bubble_score:>6.4f} | {ns_raw:>6.4f} | {ns_eff:>6.4f} | {multiplier:>9.3f} | {regulator.state.narrative_cap:>8.3f} | {[...]
     
     print(f"\nSUMMARY: peak_bubble={peak_bubble:.4f} peak_manip={peak_manip:.4f} high_risk_steps={high_risk_steps}")
     return peak_bubble, peak_manip, high_risk_steps
@@ -163,4 +163,4 @@ print(f"  Baseline={b:.4f} Light={l_b:.4f} Strong={s_b:.4f}")
 if s_b < l_b < b:
     print("  ✅ PASS: Strong < Light < Baseline")
 else:
-    print(f"  ❌ FAIL: Not ordered correctly")
+    print("  ❌ FAIL: Not ordered correctly")

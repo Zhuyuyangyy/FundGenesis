@@ -1,0 +1,45 @@
+id: D02
+name: fomo_surge_detection
+description: "Strong positive narrative (intensity=0.9) causing rapid price increase. Tests FOMO detection: the surge in greed-driven buying should elevate bubble risk as trend followers and emotional retail pile in."
+category: risk_identification
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Strong FOMO-inducing positive narrative"
+    category: sentiment
+    polarity: positive
+    intensity: 0.90
+    credibility: 0.75
+    target_sector: ""
+
+expected:
+  bubble_risk_peak_min: 0.10

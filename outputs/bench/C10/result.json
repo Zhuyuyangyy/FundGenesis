@@ -1,0 +1,20 @@
+{
+  "case_id": "C10",
+  "name": "reflexivity_with_high_noise",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.08550736961889757,
+    "high_risk_steps": 0,
+    "final_price": 117.18101193727209,
+    "price_peak": 213.51772489968846,
+    "final_drawdown_pct": -45.11883639059744,
+    "price_change_pct": 20.147463377638665,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

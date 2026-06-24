@@ -1,0 +1,45 @@
+id: A10
+name: high_credibility_vs_low_credibility
+description: "High credibility (0.9) narrative. Tests that a high-credibility narrative has a stronger price effect than an equivalent low-credibility (0.2) narrative would. Compare against a low-credibility control to confirm credibility amplifies propagation."
+category: narrative_propagation
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "High-credibility positive narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.70
+    credibility: 0.90
+    target_sector: ""
+
+expected:
+  price_peak_min: 115

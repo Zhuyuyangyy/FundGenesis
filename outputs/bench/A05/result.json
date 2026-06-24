@@ -1,0 +1,20 @@
+{
+  "case_id": "A05",
+  "name": "cross_tier_propagation",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 60,
+    "peak_manipulation_risk": 0.17808,
+    "peak_bubble_risk": 0.07575888382189672,
+    "high_risk_steps": 0,
+    "final_price": 174.94726888677926,
+    "price_peak": 213.5087090107326,
+    "final_drawdown_pct": -18.06082773045803,
+    "price_change_pct": 79.37608008406774,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

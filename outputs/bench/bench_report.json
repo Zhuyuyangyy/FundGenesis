@@ -1,0 +1,1675 @@
+{
+  "total": 60,
+  "passed": 60,
+  "failed": 0,
+  "errored": 0,
+  "pass_rate": 100.0,
+  "by_category": {
+    "A_narrative": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "errored": 0
+    },
+    "B_trust": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0,
+      "errored": 0
+    },
+    "C_reflexivity": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "errored": 0
+    },
+    "D_risk": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0,
+      "errored": 0
+    },
+    "E_regulation": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0,
+      "errored": 0
+    },
+    "F_robustness": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "errored": 0
+    }
+  },
+  "results": [
+    {
+      "case_id": "A01",
+      "name": "positive_narrative_bubble",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.10627432624525156,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true,
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A01/timeline.json",
+        "result": "outputs/bench/A01/result.json"
+      },
+      "duration_sec": 0.35,
+      "error": null
+    },
+    {
+      "case_id": "A02",
+      "name": "negative_narrative_crash",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.04044484414102282,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": -4.87705754992861,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A02/timeline.json",
+        "result": "outputs/bench/A02/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "A03",
+      "name": "narrative_decay",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 80,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.06651027939176014,
+        "high_risk_steps": 0,
+        "final_price": 106.11088241282161,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -50.30137978704763,
+        "price_change_pct": 8.79709219005569,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A03/timeline.json",
+        "result": "outputs/bench/A03/result.json"
+      },
+      "duration_sec": 0.27,
+      "error": null
+    },
+    {
+      "case_id": "A04",
+      "name": "narrative_reversal",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.22540176785251373,
+        "high_risk_steps": 0,
+        "final_price": 98.70086994719478,
+        "price_peak": 212.71281291804226,
+        "final_drawdown_pct": -53.5990011164847,
+        "price_change_pct": 1.199494365774001,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A04/timeline.json",
+        "result": "outputs/bench/A04/result.json"
+      },
+      "duration_sec": 0.37,
+      "error": null
+    },
+    {
+      "case_id": "A05",
+      "name": "cross_tier_propagation",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 60,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.07575888382189672,
+        "high_risk_steps": 0,
+        "final_price": 174.94726888677926,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -18.06082773045803,
+        "price_change_pct": 79.37608008406774,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A05/timeline.json",
+        "result": "outputs/bench/A05/result.json"
+      },
+      "duration_sec": 0.21,
+      "error": null
+    },
+    {
+      "case_id": "A06",
+      "name": "weak_narrative_no_effect",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.00015560923291428727,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": -4.87705754992861,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A06/timeline.json",
+        "result": "outputs/bench/A06/result.json"
+      },
+      "duration_sec": 0.3,
+      "error": null
+    },
+    {
+      "case_id": "A07",
+      "name": "multi_narrative_reinforcement",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.37555038836050314,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true,
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A07/timeline.json",
+        "result": "outputs/bench/A07/result.json"
+      },
+      "duration_sec": 0.41,
+      "error": null
+    },
+    {
+      "case_id": "A08",
+      "name": "conflicting_narratives",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.310006584973398,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.02
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A08/timeline.json",
+        "result": "outputs/bench/A08/result.json"
+      },
+      "duration_sec": 0.36,
+      "error": null
+    },
+    {
+      "case_id": "A09",
+      "name": "late_narrative_injection",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.10627432624525156,
+        "high_risk_steps": 0,
+        "final_price": 168.76804430253878,
+        "price_peak": 212.82530417187934,
+        "final_drawdown_pct": -20.701137978292085,
+        "price_change_pct": 73.0404276847297,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A09/timeline.json",
+        "result": "outputs/bench/A09/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "A10",
+      "name": "high_credibility_vs_low_credibility",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.06651027939176014,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A10/timeline.json",
+        "result": "outputs/bench/A10/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "A11",
+      "name": "sector_specific_narrative",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.07575888382189672,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A11/timeline.json",
+        "result": "outputs/bench/A11/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "A12",
+      "name": "narrative_with_neutral_polarity",
+      "category": "A_narrative",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.02531487677133086,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": -4.87705754992861,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/A12/timeline.json",
+        "result": "outputs/bench/A12/result.json"
+      },
+      "duration_sec": 0.35,
+      "error": null
+    },
+    {
+      "case_id": "B01",
+      "name": "trust_formation",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.06651027939176014,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B01/timeline.json",
+        "result": "outputs/bench/B01/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "B02",
+      "name": "trust_weakening",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.06651027939176014,
+        "high_risk_steps": 0,
+        "final_price": 97.30546364760185,
+        "price_peak": 214.65629816838958,
+        "final_drawdown_pct": -54.66917836658607,
+        "price_change_pct": -0.23123681247366745,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B02/timeline.json",
+        "result": "outputs/bench/B02/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "B03",
+      "name": "trust_collapse",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.21714615115166572,
+        "high_risk_steps": 0,
+        "final_price": 98.67509517991847,
+        "price_peak": 212.65969512297443,
+        "final_drawdown_pct": -53.59953134379425,
+        "price_change_pct": 1.1730671071575882,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B03/timeline.json",
+        "result": "outputs/bench/B03/result.json"
+      },
+      "duration_sec": 0.37,
+      "error": null
+    },
+    {
+      "case_id": "B04",
+      "name": "trust_recovery",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.26147826024860166,
+        "high_risk_steps": 0,
+        "final_price": 116.62159721435599,
+        "price_peak": 217.11939840851005,
+        "final_drawdown_pct": -46.28688266953812,
+        "price_change_pct": 19.573887003588798,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B04/timeline.json",
+        "result": "outputs/bench/B04/result.json"
+      },
+      "duration_sec": 0.37,
+      "error": null
+    },
+    {
+      "case_id": "B05",
+      "name": "low_trust_kol_effect",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.025315712611724318,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": -4.87705754992861,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B05/timeline.json",
+        "result": "outputs/bench/B05/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "B06",
+      "name": "high_trust_amplification",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.10665217687965052,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true,
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B06/timeline.json",
+        "result": "outputs/bench/B06/result.json"
+      },
+      "duration_sec": 0.34,
+      "error": null
+    },
+    {
+      "case_id": "B07",
+      "name": "trust_with_price_validation",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.2471446361355647,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B07/timeline.json",
+        "result": "outputs/bench/B07/result.json"
+      },
+      "duration_sec": 0.37,
+      "error": null
+    },
+    {
+      "case_id": "B08",
+      "name": "trust_with_price_falsification",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.06651027939176014,
+        "high_risk_steps": 0,
+        "final_price": 112.48845735874666,
+        "price_peak": 208.74548452257315,
+        "final_drawdown_pct": -46.11214819040435,
+        "price_change_pct": 15.336116214390415,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B08/timeline.json",
+        "result": "outputs/bench/B08/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "B09",
+      "name": "gradual_trust_building",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.18619042291166882,
+        "high_risk_steps": 0,
+        "final_price": 97.56807103690132,
+        "price_peak": 212.74054256395345,
+        "final_drawdown_pct": -54.13752834273671,
+        "price_change_pct": 0.03801851453650862,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B09/timeline.json",
+        "result": "outputs/bench/B09/result.json"
+      },
+      "duration_sec": 0.41,
+      "error": null
+    },
+    {
+      "case_id": "B10",
+      "name": "trust_vs_uncertainty",
+      "category": "B_trust",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.06651027939176014,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081116,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.725210096353806,
+        "price_change_pct": 3.490995391297713,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/B10/timeline.json",
+        "result": "outputs/bench/B10/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "C01",
+      "name": "self_reinforcing_loop",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.10627432624525156,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true,
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C01/timeline.json",
+        "result": "outputs/bench/C01/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C02",
+      "name": "reflexivity_reversal",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.10663336357011634,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C02/timeline.json",
+        "result": "outputs/bench/C02/result.json"
+      },
+      "duration_sec": 0.53,
+      "error": null
+    },
+    {
+      "case_id": "C03",
+      "name": "bubble_formation",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.6680592220203769,
+        "high_risk_steps": 0,
+        "final_price": 217.180853787699,
+        "price_peak": 220.90921516048712,
+        "final_drawdown_pct": -1.6877346515760006,
+        "price_change_pct": 122.67881327693297,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true,
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C03/timeline.json",
+        "result": "outputs/bench/C03/result.json"
+      },
+      "duration_sec": 0.61,
+      "error": null
+    },
+    {
+      "case_id": "C04",
+      "name": "panic_formation",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.04045130545286642,
+        "high_risk_steps": 0,
+        "final_price": 105.12710963760242,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": 0.0,
+        "price_change_pct": 7.788415088463174,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C04/timeline.json",
+        "result": "outputs/bench/C04/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C05",
+      "name": "slow_bubble",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 120,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.12366494313443153,
+        "high_risk_steps": 0,
+        "final_price": 102.46087785897986,
+        "price_peak": 212.68091213376047,
+        "final_drawdown_pct": -51.824130886489904,
+        "price_change_pct": 5.054687331018726,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C05/timeline.json",
+        "result": "outputs/bench/C05/result.json"
+      },
+      "duration_sec": 0.53,
+      "error": null
+    },
+    {
+      "case_id": "C06",
+      "name": "rapid_bubble",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.13001060963409403,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true,
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C06/timeline.json",
+        "result": "outputs/bench/C06/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C07",
+      "name": "bubble_burst",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.2671222849274056,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C07/timeline.json",
+        "result": "outputs/bench/C07/result.json"
+      },
+      "duration_sec": 0.54,
+      "error": null
+    },
+    {
+      "case_id": "C08",
+      "name": "feedback_amplification",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.08550736961889757,
+        "high_risk_steps": 0,
+        "final_price": 209.8052385061936,
+        "price_peak": 290.4986915054636,
+        "final_drawdown_pct": -27.777561606590695,
+        "price_change_pct": 115.11648340563445,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C08/timeline.json",
+        "result": "outputs/bench/C08/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C09",
+      "name": "feedback_dampening",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.08550736961889757,
+        "high_risk_steps": 0,
+        "final_price": 140.15955259355013,
+        "price_peak": 143.98558408040483,
+        "final_drawdown_pct": -2.6572323273128196,
+        "price_change_pct": 43.707708560105885,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C09/timeline.json",
+        "result": "outputs/bench/C09/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C10",
+      "name": "reflexivity_with_high_noise",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.08550736961889757,
+        "high_risk_steps": 0,
+        "final_price": 117.18101193727209,
+        "price_peak": 213.51772489968846,
+        "final_drawdown_pct": -45.11883639059744,
+        "price_change_pct": 20.147463377638665,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C10/timeline.json",
+        "result": "outputs/bench/C10/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C11",
+      "name": "reflexivity_with_low_noise",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.08550736961889757,
+        "high_risk_steps": 0,
+        "final_price": 148.71267637333784,
+        "price_peak": 213.1095476686461,
+        "final_drawdown_pct": -30.21773167828026,
+        "price_change_pct": 52.47735569923928,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C11/timeline.json",
+        "result": "outputs/bench/C11/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "C12",
+      "name": "extended_reflexivity",
+      "category": "C_reflexivity",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.08550736961889757,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081109,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -52.72521009635383,
+        "price_change_pct": 3.4909953912976466,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/C12/timeline.json",
+        "result": "outputs/bench/C12/result.json"
+      },
+      "duration_sec": 0.66,
+      "error": null
+    },
+    {
+      "case_id": "D01",
+      "name": "kol_coordination_detection",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.19239000000000003,
+        "peak_bubble_risk": 0.8581676451971153,
+        "high_risk_steps": 0,
+        "final_price": 138.15383249235833,
+        "price_peak": 225.01940517796484,
+        "final_drawdown_pct": -38.603591817739314,
+        "price_change_pct": 41.651213412814144,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "manipulation_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D01/timeline.json",
+        "result": "outputs/bench/D01/result.json"
+      },
+      "duration_sec": 0.57,
+      "error": null
+    },
+    {
+      "case_id": "D02",
+      "name": "fomo_surge_detection",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.11851401922175307,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D02/timeline.json",
+        "result": "outputs/bench/D02/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "D03",
+      "name": "price_narrative_self_validation",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.2531175578954534,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "manipulation_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D03/timeline.json",
+        "result": "outputs/bench/D03/result.json"
+      },
+      "duration_sec": 0.53,
+      "error": null
+    },
+    {
+      "case_id": "D04",
+      "name": "abnormal_trust_building",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.07575888382189672,
+        "high_risk_steps": 0,
+        "final_price": 96.01309686793466,
+        "price_peak": 213.5087090107326,
+        "final_drawdown_pct": -55.030828806562496,
+        "price_change_pct": -1.5563200129299015,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "manipulation_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D04/timeline.json",
+        "result": "outputs/bench/D04/result.json"
+      },
+      "duration_sec": 0.48,
+      "error": null
+    },
+    {
+      "case_id": "D05",
+      "name": "false_positive_control_weak",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.00015561402541699204,
+        "high_risk_steps": 0,
+        "final_price": 105.12710963760242,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": 0.0,
+        "price_change_pct": 7.788415088463174,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "manipulation_risk_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D05/timeline.json",
+        "result": "outputs/bench/D05/result.json"
+      },
+      "duration_sec": 0.47,
+      "error": null
+    },
+    {
+      "case_id": "D06",
+      "name": "false_positive_control_neutral",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.02531589372637974,
+        "high_risk_steps": 0,
+        "final_price": 105.12710963760242,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": 0.0,
+        "price_change_pct": 7.788415088463174,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "manipulation_risk_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D06/timeline.json",
+        "result": "outputs/bench/D06/result.json"
+      },
+      "duration_sec": 0.48,
+      "error": null
+    },
+    {
+      "case_id": "D07",
+      "name": "manipulation_pattern_detection",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.19239000000000003,
+        "peak_bubble_risk": 0.7679412102887435,
+        "high_risk_steps": 0,
+        "final_price": 218.63579052527774,
+        "price_peak": 221.89388249710015,
+        "final_drawdown_pct": -1.4683108588471327,
+        "price_change_pct": 124.17058191337892,
+        "narrative_penetration": 0.02
+      },
+      "validation": {
+        "manipulation_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D07/timeline.json",
+        "result": "outputs/bench/D07/result.json"
+      },
+      "duration_sec": 0.57,
+      "error": null
+    },
+    {
+      "case_id": "D08",
+      "name": "risk_escalation",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17490000000000003,
+        "peak_bubble_risk": 0.7148866088479423,
+        "high_risk_steps": 0,
+        "final_price": 113.11079134198926,
+        "price_peak": 225.01941205911982,
+        "final_drawdown_pct": -49.732874018766246,
+        "price_change_pct": 15.97420465742525,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D08/timeline.json",
+        "result": "outputs/bench/D08/result.json"
+      },
+      "duration_sec": 0.65,
+      "error": null
+    },
+    {
+      "case_id": "D09",
+      "name": "risk_with_high_noise",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.10627432624525156,
+        "high_risk_steps": 0,
+        "final_price": 117.18101193727209,
+        "price_peak": 213.51772489968846,
+        "final_drawdown_pct": -45.11883639059744,
+        "price_change_pct": 20.147463377638665,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "manipulation_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D09/timeline.json",
+        "result": "outputs/bench/D09/result.json"
+      },
+      "duration_sec": 0.49,
+      "error": null
+    },
+    {
+      "case_id": "D10",
+      "name": "multi_pattern_risk",
+      "category": "D_risk",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.16032500000000002,
+        "peak_bubble_risk": 1.0,
+        "high_risk_steps": 0,
+        "final_price": 140.02345647849688,
+        "price_peak": 225.01940517796484,
+        "final_drawdown_pct": -37.77271948268008,
+        "price_change_pct": 43.568167155497164,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "manipulation_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/D10/timeline.json",
+        "result": "outputs/bench/D10/result.json"
+      },
+      "duration_sec": 0.62,
+      "error": null
+    },
+    {
+      "case_id": "E01",
+      "name": "no_intervention_baseline",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.19239000000000003,
+        "peak_bubble_risk": 1.0,
+        "high_risk_steps": 0,
+        "final_price": 217.08208638396513,
+        "price_peak": 224.75893742276196,
+        "final_drawdown_pct": -3.4155932248233545,
+        "price_change_pct": 122.57754556446972,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E01/timeline.json",
+        "result": "outputs/bench/E01/result.json"
+      },
+      "duration_sec": 0.81,
+      "error": null
+    },
+    {
+      "case_id": "E02",
+      "name": "light_intervention_effectiveness",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.19239000000000003,
+        "peak_bubble_risk": 1.0,
+        "high_risk_steps": 0,
+        "final_price": 217.08208638396513,
+        "price_peak": 224.75893742276196,
+        "final_drawdown_pct": -3.4155932248233545,
+        "price_change_pct": 122.57754556446972,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "bubble_risk_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E02/timeline.json",
+        "result": "outputs/bench/E02/result.json"
+      },
+      "duration_sec": 0.83,
+      "error": null
+    },
+    {
+      "case_id": "E03",
+      "name": "strong_intervention_effectiveness",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.3141136931294982,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 110.51709180756478,
+        "final_drawdown_pct": -9.51625819640406,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "bubble_risk_peak_max": true,
+        "high_risk_steps_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E03/timeline.json",
+        "result": "outputs/bench/E03/result.json"
+      },
+      "duration_sec": 0.85,
+      "error": null
+    },
+    {
+      "case_id": "E04",
+      "name": "early_vs_late_intervention",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.14372314750267265,
+        "peak_bubble_risk": 0.0037277418510688683,
+        "high_risk_steps": 0,
+        "final_price": 105.12710963760242,
+        "price_peak": 107.78841508846317,
+        "final_drawdown_pct": -2.4690087971667385,
+        "price_change_pct": 7.788415088463174,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "bubble_risk_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E04/timeline.json",
+        "result": "outputs/bench/E04/result.json"
+      },
+      "duration_sec": 0.7,
+      "error": null
+    },
+    {
+      "case_id": "E05",
+      "name": "late_intervention_limitation",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.19239000000000003,
+        "peak_bubble_risk": 1.0,
+        "high_risk_steps": 0,
+        "final_price": 103.79296610335571,
+        "price_peak": 215.16738751692955,
+        "final_drawdown_pct": -51.76175753159191,
+        "price_change_pct": 6.420497549850124,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "bubble_risk_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E05/timeline.json",
+        "result": "outputs/bench/E05/result.json"
+      },
+      "duration_sec": 0.85,
+      "error": null
+    },
+    {
+      "case_id": "E06",
+      "name": "intervention_side_effects",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.1454400536055759,
+        "peak_bubble_risk": 0.035697486600949145,
+        "high_risk_steps": 0,
+        "final_price": 105.12710963760242,
+        "price_peak": 107.78841508846317,
+        "final_drawdown_pct": -2.4690087971667385,
+        "price_change_pct": 7.788415088463174,
+        "narrative_penetration": 0.03
+      },
+      "validation": {
+        "high_risk_steps_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E06/timeline.json",
+        "result": "outputs/bench/E06/result.json"
+      },
+      "duration_sec": 0.75,
+      "error": null
+    },
+    {
+      "case_id": "E07",
+      "name": "light_vs_strong_comparison",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.5714830301902006,
+        "high_risk_steps": 0,
+        "final_price": 98.0126660733409,
+        "price_peak": 222.22615569104627,
+        "final_drawdown_pct": -55.8950809509549,
+        "price_change_pct": 0.49386852790811453,
+        "narrative_penetration": 0.02
+      },
+      "validation": {
+        "bubble_risk_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E07/timeline.json",
+        "result": "outputs/bench/E07/result.json"
+      },
+      "duration_sec": 0.74,
+      "error": null
+    },
+    {
+      "case_id": "E08",
+      "name": "intervention_with_weak_narrative",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.0016745304310695893,
+        "high_risk_steps": 0,
+        "final_price": 105.12710963760242,
+        "price_peak": 107.78841508846317,
+        "final_drawdown_pct": -2.4690087971667385,
+        "price_change_pct": 7.788415088463174,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "high_risk_steps_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E08/timeline.json",
+        "result": "outputs/bench/E08/result.json"
+      },
+      "duration_sec": 0.67,
+      "error": null
+    },
+    {
+      "case_id": "E09",
+      "name": "repeated_intervention_cycles",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 150,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.6599093883301649,
+        "high_risk_steps": 0,
+        "final_price": 195.62347785638138,
+        "price_peak": 222.63173089045034,
+        "final_drawdown_pct": -12.13135833155734,
+        "price_change_pct": 100.57570977572361,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "high_risk_steps_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E09/timeline.json",
+        "result": "outputs/bench/E09/result.json"
+      },
+      "duration_sec": 0.64,
+      "error": null
+    },
+    {
+      "case_id": "E10",
+      "name": "no_false_intervention",
+      "category": "E_regulation",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 200,
+        "peak_manipulation_risk": 0.17808,
+        "peak_bubble_risk": 0.012826610506243393,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": -4.87705754992861,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "high_risk_steps_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/E10/timeline.json",
+        "result": "outputs/bench/E10/result.json"
+      },
+      "duration_sec": 0.66,
+      "error": null
+    },
+    {
+      "case_id": "F01",
+      "name": "extreme_noise",
+      "category": "F_robustness",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.10627432624525156,
+        "high_risk_steps": 0,
+        "final_price": 130.85080385512202,
+        "price_peak": 190.38679620509305,
+        "final_drawdown_pct": -31.271072120902875,
+        "price_change_pct": 34.16330772543284,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/F01/timeline.json",
+        "result": "outputs/bench/F01/result.json"
+      },
+      "duration_sec": 0.33,
+      "error": null
+    },
+    {
+      "case_id": "F02",
+      "name": "extreme_parameters",
+      "category": "F_robustness",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.08550736961889757,
+        "high_risk_steps": 0,
+        "final_price": 155.62788358220075,
+        "price_peak": 335.1116995686242,
+        "final_drawdown_pct": -53.55940010971438,
+        "price_change_pct": 59.56762221204595,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/F02/timeline.json",
+        "result": "outputs/bench/F02/result.json"
+      },
+      "duration_sec": 0.34,
+      "error": null
+    },
+    {
+      "case_id": "F03",
+      "name": "sparse_market",
+      "category": "F_robustness",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.1484,
+        "peak_bubble_risk": 0.05373016794843197,
+        "high_risk_steps": 0,
+        "final_price": 100.93579361081139,
+        "price_peak": 213.50870901073293,
+        "final_drawdown_pct": -52.725210096353756,
+        "price_change_pct": 3.4909953912979574,
+        "narrative_penetration": 0.05
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/F03/timeline.json",
+        "result": "outputs/bench/F03/result.json"
+      },
+      "duration_sec": 0.11,
+      "error": null
+    },
+    {
+      "case_id": "F04",
+      "name": "no_narrative_baseline",
+      "category": "F_robustness",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.09275,
+        "peak_bubble_risk": 0.0,
+        "high_risk_steps": 0,
+        "final_price": 100.0,
+        "price_peak": 105.12710963760242,
+        "final_drawdown_pct": -4.87705754992861,
+        "price_change_pct": 2.531512052442886,
+        "narrative_penetration": 0.0
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/F04/timeline.json",
+        "result": "outputs/bench/F04/result.json"
+      },
+      "duration_sec": 0.3,
+      "error": null
+    },
+    {
+      "case_id": "F05",
+      "name": "narrative_saturation",
+      "category": "F_robustness",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.3338999999999999,
+        "peak_bubble_risk": 1.0,
+        "high_risk_steps": 1,
+        "final_price": 212.97952103105007,
+        "price_peak": 225.01941205911982,
+        "final_drawdown_pct": -5.350601051657922,
+        "price_change_pct": 118.37112327518624,
+        "narrative_penetration": 0.02
+      },
+      "validation": {
+        "price_peak_min": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/F05/timeline.json",
+        "result": "outputs/bench/F05/result.json"
+      },
+      "duration_sec": 0.69,
+      "error": null
+    },
+    {
+      "case_id": "F06",
+      "name": "mixed_polarity_stress",
+      "category": "F_robustness",
+      "seed": 42,
+      "passed": true,
+      "metrics": {
+        "steps": 100,
+        "peak_manipulation_risk": 0.35297999999999996,
+        "peak_bubble_risk": 0.6895088450515223,
+        "high_risk_steps": 2,
+        "final_price": 206.06047680116788,
+        "price_peak": 224.96257567905693,
+        "final_drawdown_pct": -8.402330396881542,
+        "price_change_pct": 111.27692260671074,
+        "narrative_penetration": 0.01
+      },
+      "validation": {
+        "price_peak_max": true
+      },
+      "artifacts": {
+        "timeline": "outputs/bench/F06/timeline.json",
+        "result": "outputs/bench/F06/result.json"
+      },
+      "duration_sec": 0.53,
+      "error": null
+    }
+  ],
+  "timestamp": "2026-06-23 10:22:39"
+}

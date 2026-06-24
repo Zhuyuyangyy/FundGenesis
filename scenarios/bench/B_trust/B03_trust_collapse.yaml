@@ -1,0 +1,50 @@
+id: B03
+name: trust_collapse
+description: "Trust collapse — A positive high-credibility narrative at step 10 builds trust, then a strongly negative narrative at step 40 triggers trust collapse. Tests the breakdown of accumulated trust under a contradictory shock."
+category: trust_evolution
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Credible positive macro narrative"
+    category: macro
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.8
+  - step: 40
+    name: "Strongly negative regulatory shock"
+    category: regulatory
+    polarity: negative
+    intensity: 0.85
+    credibility: 0.8
+
+expected:
+  price_peak_min: 110

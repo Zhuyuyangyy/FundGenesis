@@ -49,7 +49,12 @@ class PropagationModel:
             total_influence = sum(k.influence_score for k in macro_kols)
             for kol in macro_kols:
                 exposure = narrative.effective_intensity * (kol.influence_score / total_influence)
-                kol.receive_exposure(exposure)
+                # P0.4: 初始注入也传递 source_trust
+                kol.receive_exposure(
+                    exposure,
+                    source_trust=kol.trust_level,
+                    narrative_strength=narrative.effective_intensity,
+                )
                 self._narrative_exposure[nid][kol.node_id] = exposure
         else:
             # 没有macro则从所有KOL开始
@@ -58,7 +63,11 @@ class PropagationModel:
                 total_influence = sum(k.influence_score for k in kols)
                 for kol in kols:
                     exposure = narrative.effective_intensity * (kol.influence_score / total_influence)
-                    kol.receive_exposure(exposure)
+                    kol.receive_exposure(
+                        exposure,
+                        source_trust=kol.trust_level,
+                        narrative_strength=narrative.effective_intensity,
+                    )
                     self._narrative_exposure[nid][kol.node_id] = exposure
 
     def step(self) -> Dict[str, float]:
@@ -98,16 +107,20 @@ class PropagationModel:
                     if follower is None:
                         continue
 
-                    # 传播量 = 节点影响力 × 叙事强度 × (1 - 距离衰减)
-                    # 这里简化为：节点已接收的exposure × influence × susceptibility
+                    # P0.4: 传播量 = 节点影响力 × 叙事强度 × (1 - 距离衰减)
+                    # 传递 source_trust 使信念更新考虑来源信任度
                     propagation = (
                         node.narrative_exposure
                         * node.influence_score
                         * follower.susceptibility
-                        * 0.3  # 每次传播只传递30%，避免瞬间全覆盖
+                        * 0.3  # 传播系数
                     )
 
-                    follower.receive_exposure(propagation)
+                    follower.receive_exposure(
+                        propagation,
+                        source_trust=node.trust_level,
+                        narrative_strength=narrative.effective_intensity,
+                    )
                     narrative_exposure[follower_id] = (
                         narrative_exposure.get(follower_id, 0.0) + propagation
                     )

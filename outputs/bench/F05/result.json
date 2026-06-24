@@ -1,0 +1,20 @@
+{
+  "case_id": "F05",
+  "name": "narrative_saturation",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.3338999999999999,
+    "peak_bubble_risk": 1.0,
+    "high_risk_steps": 1,
+    "final_price": 212.97952103105007,
+    "price_peak": 225.01941205911982,
+    "final_drawdown_pct": -5.350601051657922,
+    "price_change_pct": 118.37112327518624,
+    "narrative_penetration": 0.02
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

@@ -1,0 +1,69 @@
+id: E01
+name: regulation_baseline
+description: "Baseline — No regulatory intervention. Abnormal narrative propagation scenario with KOL coordination + price self-validation + FOMO."
+
+steps: 200
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 25
+    name: "Macro KOL positive narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.88
+    credibility: 0.72
+  - step: 28
+    name: "Influencer amplification"
+    category: fintech
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.65
+  - step: 33
+    name: "Micro KOL cross-tier amplification"
+    category: sentiment
+    polarity: positive
+    intensity: 0.70
+    credibility: 0.60
+  - step: 45
+    name: "Price self-validation event"
+    category: earnings
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+  - step: 55
+    name: "Retail FOMO surge"
+    category: sentiment
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.50
+
+expected:
+  manipulation_risk_peak_min: 0.50
+  high_risk_steps_min: 20

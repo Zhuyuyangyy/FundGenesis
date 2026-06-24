@@ -1,0 +1,20 @@
+{
+  "case_id": "A09",
+  "name": "late_narrative_injection",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.10627432624525156,
+    "high_risk_steps": 0,
+    "final_price": 168.76804430253878,
+    "price_peak": 212.82530417187934,
+    "final_drawdown_pct": -20.701137978292085,
+    "price_change_pct": 73.0404276847297,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

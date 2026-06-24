@@ -1,0 +1,20 @@
+{
+  "case_id": "C12",
+  "name": "extended_reflexivity",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 200,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.08550736961889757,
+    "high_risk_steps": 0,
+    "final_price": 100.93579361081109,
+    "price_peak": 213.5087090107326,
+    "final_drawdown_pct": -52.72521009635383,
+    "price_change_pct": 3.4909953912976466,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

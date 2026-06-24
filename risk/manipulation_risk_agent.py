@@ -247,6 +247,41 @@ class ManipulationRiskAgent:
             for p in patterns
         )
 
+        # P0.6 修复 A：让风险分读取干预修改的字段
+        # 干预修改的字段 → 风险公式应感知的变化：
+        #   narrative_throttle → narrative_strength_multiplier ↓ → 叙事传播减弱 → 风险↓
+        #   kol_downweight → kol.influence_score ↓ → KOL 协同放大减弱 → 风险↓
+        #   trading_cooldown → agent.trade_frequency ↓ → FOMO 买入压力减弱 → 风险↓
+        #   risk_warning → agent.fomo_sensitivity ↓ → FOMO 情绪减弱 → 风险↓
+        intervention_factor = 1.0  # 1.0 = 无干预效果，<1.0 = 干预降低风险
+
+        if narrative_engine is not None:
+            # narrative_throttle 将 narrative_strength_multiplier 从 1.0 压到 0.6-0.72
+            nsm = getattr(narrative_engine, 'narrative_strength_multiplier', 1.0)
+            intervention_factor *= (0.5 + 0.5 * nsm)  # nsm=1.0→1.0, nsm=0.6→0.8
+
+        if kol_network is not None:
+            # kol_downweight 降低了 KOL influence_score，降低协同放大风险
+            kols = kol_network.get_kols()
+            if kols:
+                avg_influence = sum(k.influence_score for k in kols) / len(kols)
+                # 正常 avg_influence ~0.3-0.5；干预后下降
+                # 用 influence 衰减 coordinated 和 fomo 的贡献
+                influence_ratio = min(1.0, avg_influence / 0.3)  # 0.3 为基准
+                intervention_factor *= (0.6 + 0.4 * influence_ratio)
+
+        if agents is not None and len(agents) > 0:
+            # trading_cooldown + risk_warning 降低了 agent 活跃度
+            trade_freqs = [getattr(a, 'trade_frequency', 1.0) for a in agents]
+            fomo_senss = [getattr(a, 'fomo_sensitivity', 1.0) for a in agents]
+            avg_tf = sum(trade_freqs) / len(trade_freqs)
+            avg_fs = sum(fomo_senss) / len(fomo_senss)
+            # 正常 avg_tf ~1.0, avg_fs ~1.0；干预后下降
+            agent_factor = (0.7 + 0.3 * avg_tf) * (0.8 + 0.2 * avg_fs)
+            intervention_factor *= agent_factor
+
+        total_score *= intervention_factor
+
         # 加速度惩罚：如果风险在短时间内快速上升
         if len(self._risk_history) >= 3:
             recent = self._risk_history[-3:]
@@ -319,7 +354,8 @@ class ManipulationRiskAgent:
         active_narratives = list(narrative_engine.registry.active)[:5]
 
         for narrative in active_narratives:
-            nid = id(narrative)
+            # P0.6 修复 C：使用 narrative._id 而非 id(narrative)，与 record_kol_spread 的键一致
+            nid = narrative._id
             if nid not in self._kol_spread_map:
                 self._kol_spread_map[nid] = []
 

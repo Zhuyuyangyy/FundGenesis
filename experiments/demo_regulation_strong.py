@@ -97,8 +97,9 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
     })
     regulator = RegulatorAgent()
 
-    # ── Strong override: 强制在step 40触发强干预 ──────────────
-    _force_strong_at_step = 40
+    # ── Strong override: 强制在step 30触发强干预（与Light同时但力度更强）──
+    _force_strong_at_step = 30
+    _strong_active = False  # P0.6: 强制触发后保持 STRONG 强度不降级
 
     agents = []
     for i in range(100):
@@ -178,6 +179,8 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
     peak_bubble = 0.0
     high_risk_steps = 0
     peak_price = 0.0
+    prev_risk_score = 0.0  # P0.6 修复 B：用上一步 risk_score 驱动当前步干预
+    prev_bubble_risk = 0.0
 
     for step in range(steps):
         inject_abnormal_narrative(step)
@@ -192,13 +195,69 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
         price_change = market.price_change_pct if market.price_history else 0.0
         narrative_engine.propagate_to_emotion(emotion, price_change_pct=price_change)
 
+        market.begin_step()  # P0.2: reset step volumes
         for agent in agents:
             action = agent.decide(market.get_snapshot(), emotion)
             volume = agent.get_trade_volume()
             market.submit_order(agent.agent_id, action.value, volume)
 
         market.update_price(emotion)
+        market.end_step()  # P0.2: record step statistics
         emotion.decay_toward_neutral(inertia=0.90)
+
+        # P0.6 修复 B：先执行干预（用上一步 risk_score），再评估风险
+        manipulation_flags = {
+            "coordinated_detected": prev_risk_score > 0.3,
+            "fomo_detected": prev_risk_score > 0.3,
+            "self_validation_detected": prev_risk_score > 0.3,
+        }
+        market_state = {
+            "price": market.price,
+            "bubble_risk": prev_bubble_risk,
+            "retail_fomo": prev_risk_score,
+            "price_volatility": 0.0,
+        }
+
+        # ── Strong override: 强制step 30触发并保持 ──────────────────
+        if step == _force_strong_at_step:
+            _strong_active = True
+            print(f"[Step {step}] [REGULATOR] ★ STRONG INTERVENTION triggered (forced)")
+
+        if _strong_active:
+            # P0.6: 强制保持 STRONG 强度，不因 risk_score 降低而降级
+            regulator.current_intensity = InterventionIntensity.STRONG
+            for action_flag in [
+                InterventionAction.NARRATIVE_THROTTLE,
+                InterventionAction.KOL_DOWNWEIGHT,
+                InterventionAction.RISK_WARNING,
+                InterventionAction.TRADING_COOLDOWN,
+            ]:
+                regulator._apply_action(action_flag, max(prev_risk_score, 0.5), InterventionEffect(step=step, actions=[]))
+            # 应用到组件
+            regulator._apply_to_narrative_engine(narrative_engine, max(prev_risk_score, 0.5))
+            regulator._apply_to_kol_network(kol_network, max(prev_risk_score, 0.5))
+            regulator._apply_to_agents(agents, max(prev_risk_score, 0.5))
+            # 记录
+            effect = InterventionEffect(step=step, actions=[
+                a.value for a in [
+                    InterventionAction.NARRATIVE_THROTTLE,
+                    InterventionAction.KOL_DOWNWEIGHT,
+                    InterventionAction.RISK_WARNING,
+                    InterventionAction.TRADING_COOLDOWN,
+                ]
+            ])
+            effect.risk_reduction = max(prev_risk_score, 0.5) * 0.6
+            effect.narrative_suppression = max(prev_risk_score, 0.5) * 0.55
+            regulator.history.append(effect)
+        else:
+            effect = regulator.step(
+                risk_score=prev_risk_score,
+                market_state=market_state,
+                manipulation_flags=manipulation_flags,
+                narrative_engine=narrative_engine,
+                kol_network=kol_network,
+                agents=agents,
+            )
 
         metrics = reflexivity_monitor.observe(
             step=step, market=market, emotion=emotion,
@@ -212,63 +271,24 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
             agents=agents,
         )
 
-        manipulation_flags = {
-            "coordinated_detected": any(p.pattern == "coordinated_kol_amplification" for p in risk_report.detected_patterns),
-            "fomo_detected": risk_report.fomo_score > 0.3,
-            "self_validation_detected": risk_report.self_validation_score > 0.3,
-        }
-        market_state = {
-            "price": market.price,
-            "bubble_risk": metrics.bubble_risk_score,
-            "retail_fomo": risk_report.fomo_score,
-            "price_volatility": metrics.volatility,
-        }
-
-        # ── Strong override: 强制step 40触发 ──────────────────
-        if step == _force_strong_at_step:
-            # 注入强干预效果（跳过risk_score阈值，直接执行STRONG动作）
-            regulator.current_intensity = InterventionIntensity.STRONG
-            # 迅速应用全部4个动作
-            for action_flag in [
-                InterventionAction.NARRATIVE_THROTTLE,
-                InterventionAction.KOL_DOWNWEIGHT,
-                InterventionAction.RISK_WARNING,
-                InterventionAction.TRADING_COOLDOWN,
-            ]:
-                regulator._apply_action(action_flag, risk_report.manipulation_risk_score, InterventionEffect(step=step, actions=[]))
-            # 应用到组件
-            regulator._apply_to_narrative_engine(narrative_engine, risk_report.manipulation_risk_score)
-            regulator._apply_to_kol_network(kol_network, risk_report.manipulation_risk_score)
-            regulator._apply_to_agents(agents, risk_report.manipulation_risk_score)
-            # 手动记录
-            effect = InterventionEffect(step=step, actions=[
-                a.value for a in [
-                    InterventionAction.NARRATIVE_THROTTLE,
-                    InterventionAction.KOL_DOWNWEIGHT,
-                    InterventionAction.RISK_WARNING,
-                    InterventionAction.TRADING_COOLDOWN,
-                ]
-            ])
-            effect.risk_reduction = risk_report.manipulation_risk_score * 0.6
-            effect.narrative_suppression = risk_report.manipulation_risk_score * 0.55
-            regulator.history.append(effect)
-            print(f"[Step {step}] [REGULATOR] ★ STRONG INTERVENTION triggered (forced)")
-        else:
-            effect = regulator.step(
-                risk_score=risk_report.manipulation_risk_score,
-                market_state=market_state,
-                manipulation_flags=manipulation_flags,
-                narrative_engine=narrative_engine,
-                kol_network=kol_network,
-                agents=agents,
+        # P0.3: FOMO → EmotionField 闭环
+        if risk_report.fomo_score > 0.3:
+            emotion.apply_fomo_signal(
+                intensity=risk_report.fomo_score,
+                source="manipulation_risk_agent",
+                decay=0.85,
             )
+
+        # 保存本步 risk_score 供下一步干预使用
+        prev_risk_score = risk_report.manipulation_risk_score
+        prev_bubble_risk = metrics.bubble_risk_score
 
         risk_score = risk_report.manipulation_risk_score
         bubble_score = metrics.bubble_risk_score
         risk_level = risk_report.risk_level.value if hasattr(risk_report.risk_level, 'value') else risk_report.risk_level
 
         # 获取当前步的intervention actions（从history或override）
-        if step == _force_strong_at_step:
+        if _strong_active:
             current_actions = [a.value for a in [InterventionAction.NARRATIVE_THROTTLE,
                 InterventionAction.KOL_DOWNWEIGHT, InterventionAction.RISK_WARNING,
                 InterventionAction.TRADING_COOLDOWN]]

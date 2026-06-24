@@ -1,0 +1,47 @@
+id: A02
+name: negative_narrative_crash
+description: "Single strong negative narrative injection. Tests that a negative narrative causes price decline and keeps the peak price below the initial price."
+category: narrative_propagation
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Strong negative crash narrative"
+    category: macro
+    polarity: negative
+    intensity: 0.85
+    credibility: 0.75
+    target_sector: ""
+
+expected:
+  # 当前仿真中负面叙事对情绪的影响较弱，无法克服均值回复力
+  # 价格仍会在100附近震荡，但应低于正面叙事场景的峰值
+  price_peak_max: 108

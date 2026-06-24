@@ -3,23 +3,23 @@
   "v0.5_regulator": true,
   "description": "Light intervention - narrative_throttle + risk_warning",
   "steps": 200,
-  "peak_manipulation_risk": 0.504,
-  "peak_bubble_risk": 0.2954,
-  "high_risk_steps": 12,
-  "final_price": 256.5,
-  "price_peak": 278.14,
-  "final_drawdown_pct": -7.78,
-  "price_change_pct": 156.5,
+  "peak_manipulation_risk": 0.76,
+  "peak_bubble_risk": 0.0918,
+  "high_risk_steps": 37,
+  "final_price": 100.0,
+  "price_peak": 113.31,
+  "final_drawdown_pct": -11.75,
+  "price_change_pct": 0.0,
   "intervention_summary": {
-    "total_interventions": 10,
-    "narrative_throttle_count": 10,
-    "risk_warning_count": 10,
-    "kol_downweight_count": 2,
-    "trading_cooldown_count": 0
+    "total_interventions": 37,
+    "narrative_throttle_count": 37,
+    "risk_warning_count": 37,
+    "kol_downweight_count": 4,
+    "trading_cooldown_count": 1
   },
   "verification": {
     "peak_risk_gte_0.50": true,
-    "high_risk_steps_gte_20": false,
+    "high_risk_steps_gte_20": true,
     "intervention_triggered": true
   }
 }

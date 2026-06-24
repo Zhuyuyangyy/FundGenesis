@@ -47,6 +47,12 @@ class MarketEnvironment:
     sell_volume: float = 0.0
     price_change_pct: float = 0.0  # 最近一次价格变化率
 
+    # P0.2: 区分 step-level 和 cumulative 统计
+    step_net_demand: float = 0.0          # 当前步净需求（每步重置）
+    cumulative_net_demand: float = 0.0    # 历史累计净需求（仅统计用）
+    step_buy_volume: float = 0.0          # 当前步买入量
+    step_sell_volume: float = 0.0         # 当前步卖出量
+
     # 配置参数
     impact_coefficient: float = 0.5  # η：价格对净需求的敏感度
     noise_std: float = 0.01          # ε_t 随机噪声标准差
@@ -65,14 +71,38 @@ class MarketEnvironment:
         self.returns_history = [0.0]
         self.buy_volume = 0.0
         self.sell_volume = 0.0
+        self.step_net_demand = 0.0
+        self.cumulative_net_demand = 0.0
+        self.step_buy_volume = 0.0
+        self.step_sell_volume = 0.0
         self.impact_coefficient = impact_coefficient
         self.noise_std = noise_std
         self.total_agents = total_agents
         self.step_count = 0
 
-    def reset_volumes(self):
+    def begin_step(self):
+        """
+        P0.2: 每步开始时调用，清空当步订单统计。
+        必须在 agents_decide() 之前调用。
+        """
+        self.step_buy_volume = 0.0
+        self.step_sell_volume = 0.0
+        self.step_net_demand = 0.0
+        # 注意：buy_volume/sell_volume 也清空（兼容旧调用方式）
         self.buy_volume = 0.0
         self.sell_volume = 0.0
+
+    def end_step(self):
+        """
+        P0.2: 每步结束时调用，记录当步统计到累计值。
+        必须在 update_price() 之后调用。
+        """
+        self.step_net_demand = self.step_buy_volume - self.step_sell_volume
+        self.cumulative_net_demand += self.step_net_demand
+
+    def reset_volumes(self):
+        """向后兼容：等价于 begin_step() 的清空操作。"""
+        self.begin_step()
 
     def submit_order(self, agent_id: str, action: str, volume: float):
         """
@@ -81,9 +111,13 @@ class MarketEnvironment:
         volume: 交易量（相对于总资金的归一化比例）
         """
         if action == "BUY":
-            self.buy_volume += max(0.0, volume)
+            vol = max(0.0, volume)
+            self.buy_volume += vol
+            self.step_buy_volume += vol
         elif action == "SELL":
-            self.sell_volume += max(0.0, volume)
+            vol = max(0.0, volume)
+            self.sell_volume += vol
+            self.step_sell_volume += vol
 
     def apply_shock(self, magnitude: float):
         """

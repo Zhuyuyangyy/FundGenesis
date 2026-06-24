@@ -1,0 +1,52 @@
+id: D03
+name: price_narrative_self_validation
+description: "Positive narrative at step 10 drives price up, then a second positive narrative at step 30 explicitly references the price increase. Tests self-validation detection: narratives that validate prior price moves form a reflexive loop the risk agent should flag as manipulation."
+category: risk_identification
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Initial positive catalyst narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+    target_sector: ""
+  - step: 30
+    name: "Self-validating narrative referencing price increase"
+    category: manipulation
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+    target_sector: ""
+
+expected:
+  manipulation_risk_peak_min: 0.10

@@ -1,0 +1,20 @@
+{
+  "case_id": "A04",
+  "name": "narrative_reversal",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.22540176785251373,
+    "high_risk_steps": 0,
+    "final_price": 98.70086994719478,
+    "price_peak": 212.71281291804226,
+    "final_drawdown_pct": -53.5990011164847,
+    "price_change_pct": 1.199494365774001,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

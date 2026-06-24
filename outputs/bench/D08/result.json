@@ -1,0 +1,20 @@
+{
+  "case_id": "D08",
+  "name": "risk_escalation",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.17490000000000003,
+    "peak_bubble_risk": 0.7148866088479423,
+    "high_risk_steps": 0,
+    "final_price": 113.11079134198926,
+    "price_peak": 225.01941205911982,
+    "final_drawdown_pct": -49.732874018766246,
+    "price_change_pct": 15.97420465742525,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "bubble_risk_peak_min": true
+  }
+}

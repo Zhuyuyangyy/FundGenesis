@@ -1,0 +1,46 @@
+id: A06
+name: weak_narrative_no_effect
+description: "Very weak narrative (intensity=0.2, credibility=0.3). Tests that weak narratives do not cause significant price movement; peak price should stay close to the initial price."
+category: narrative_propagation
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Weak low-credibility narrative"
+    category: sentiment
+    polarity: positive
+    intensity: 0.20
+    credibility: 0.30
+    target_sector: ""
+
+expected:
+  # 弱叙事不应造成显著价格变动，允许噪声导致的小幅漂移
+  price_peak_max: 108

@@ -1,0 +1,68 @@
+id: C05
+name: slow_bubble
+description: "Slow bubble formation — Weak positive narratives at steps 10, 30, 50, 70, 90 (intensity=0.4) gradually inflate a slow-moving bubble over a 120-step horizon."
+category: reflexivity_dynamics
+steps: 120
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 10
+    name: "Weak positive narrative 1"
+    category: fintech
+    polarity: positive
+    intensity: 0.40
+    credibility: 0.60
+  - step: 30
+    name: "Weak positive narrative 2"
+    category: sector
+    polarity: positive
+    intensity: 0.40
+    credibility: 0.60
+  - step: 50
+    name: "Weak positive narrative 3"
+    category: earnings
+    polarity: positive
+    intensity: 0.40
+    credibility: 0.60
+  - step: 70
+    name: "Weak positive narrative 4"
+    category: sentiment
+    polarity: positive
+    intensity: 0.40
+    credibility: 0.60
+  - step: 90
+    name: "Weak positive narrative 5"
+    category: fintech
+    polarity: positive
+    intensity: 0.40
+    credibility: 0.60
+
+expected:
+  price_peak_min: 108

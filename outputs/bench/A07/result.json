@@ -1,0 +1,21 @@
+{
+  "case_id": "A07",
+  "name": "multi_narrative_reinforcement",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.37555038836050314,
+    "high_risk_steps": 0,
+    "final_price": 100.93579361081116,
+    "price_peak": 213.5087090107326,
+    "final_drawdown_pct": -52.725210096353806,
+    "price_change_pct": 3.490995391297713,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true,
+    "bubble_risk_peak_min": true
+  }
+}

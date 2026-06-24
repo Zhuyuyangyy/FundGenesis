@@ -1,0 +1,20 @@
+{
+  "case_id": "F01",
+  "name": "extreme_noise",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 100,
+    "peak_manipulation_risk": 0.1484,
+    "peak_bubble_risk": 0.10627432624525156,
+    "high_risk_steps": 0,
+    "final_price": 130.85080385512202,
+    "price_peak": 190.38679620509305,
+    "final_drawdown_pct": -31.271072120902875,
+    "price_change_pct": 34.16330772543284,
+    "narrative_penetration": 0.01
+  },
+  "validation": {
+    "price_peak_min": true
+  }
+}

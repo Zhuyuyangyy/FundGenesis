@@ -1,0 +1,20 @@
+{
+  "case_id": "D01",
+  "name": "kol_coordination_detection",
+  "seed": 42,
+  "passed": true,
+  "metrics": {
+    "steps": 150,
+    "peak_manipulation_risk": 0.19239000000000003,
+    "peak_bubble_risk": 0.8581676451971153,
+    "high_risk_steps": 0,
+    "final_price": 138.15383249235833,
+    "price_peak": 225.01940517796484,
+    "final_drawdown_pct": -38.603591817739314,
+    "price_change_pct": 41.651213412814144,
+    "narrative_penetration": 0.03
+  },
+  "validation": {
+    "manipulation_risk_peak_min": true
+  }
+}

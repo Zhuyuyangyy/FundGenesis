@@ -1,0 +1,98 @@
+id: F05
+name: narrative_saturation
+description: "Narrative saturation — Ten positive narrative injections at steps 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 with high intensity (0.85). Tests system behavior under narrative saturation, where repeated reinforcement should drive a strong price response."
+category: robustness_stress
+steps: 100
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: none
+
+narratives:
+  - step: 5
+    name: "Saturation narrative 1"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 10
+    name: "Saturation narrative 2"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 15
+    name: "Saturation narrative 3"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 20
+    name: "Saturation narrative 4"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 25
+    name: "Saturation narrative 5"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 30
+    name: "Saturation narrative 6"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 35
+    name: "Saturation narrative 7"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 40
+    name: "Saturation narrative 8"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 45
+    name: "Saturation narrative 9"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+  - step: 50
+    name: "Saturation narrative 10"
+    category: fintech
+    polarity: positive
+    intensity: 0.85
+    credibility: 0.7
+
+expected:
+  price_peak_min: 115

@@ -1,0 +1,66 @@
+id: E09
+name: repeated_intervention_cycles
+description: "Repeated Intervention Cycles — Multiple narrative waves at steps 10, 40, 70, 100 with light regulation. Tests repeated intervention cycles over an extended horizon."
+category: regulatory_intervention
+steps: 150
+seed: 42
+
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.5
+  noise_std: 0.008
+  total_agents: 100
+
+emotion:
+  initial_fear: 0.3
+  initial_greed: 0.3
+  initial_confidence: 0.5
+  initial_uncertainty: 0.3
+  inertia: 0.90
+
+kol:
+  n_macro: 3
+  n_influencer: 8
+  n_micro: 15
+  n_retail: 100
+
+agents:
+  value_investor_ratio: 0.10
+  trend_follower_ratio: 0.30
+  emotional_retail_ratio: 0.60
+
+regulation:
+  mode: light
+  force_strong_at_step: 30
+  monitor_threshold: 0.15
+  human_review_threshold: 0.25
+  block_threshold: 0.60
+
+narratives:
+  - step: 10
+    name: "Wave 1 — Macro KOL positive narrative"
+    category: fintech
+    polarity: positive
+    intensity: 0.80
+    credibility: 0.70
+  - step: 40
+    name: "Wave 2 — Influencer amplification"
+    category: fintech
+    polarity: positive
+    intensity: 0.78
+    credibility: 0.65
+  - step: 70
+    name: "Wave 3 — Sector momentum narrative"
+    category: sector
+    polarity: positive
+    intensity: 0.75
+    credibility: 0.60
+  - step: 100
+    name: "Wave 4 — Retail FOMO surge"
+    category: sentiment
+    polarity: positive
+    intensity: 0.82
+    credibility: 0.55
+
+expected:
+  high_risk_steps_max: 50

@@ -171,6 +171,8 @@ def run_demo_light(output_dir: str = None, steps: int = 200):
     peak_bubble = 0.0
     high_risk_steps = 0
     peak_price = 0.0
+    prev_risk_score = 0.0  # P0.6 修复 B：用上一步 risk_score 驱动当前步干预
+    prev_bubble_risk = 0.0
 
     for step in range(steps):
         inject_abnormal_narrative(step)
@@ -185,13 +187,36 @@ def run_demo_light(output_dir: str = None, steps: int = 200):
         price_change = market.price_change_pct if market.price_history else 0.0
         narrative_engine.propagate_to_emotion(emotion, price_change_pct=price_change)
 
+        market.begin_step()  # P0.2: reset step volumes
         for agent in agents:
             action = agent.decide(market.get_snapshot(), emotion)
             volume = agent.get_trade_volume()
             market.submit_order(agent.agent_id, action.value, volume)
 
         market.update_price(emotion)
+        market.end_step()  # P0.2: record step statistics
         emotion.decay_toward_neutral(inertia=0.90)
+
+        # P0.6 修复 B：先用上一步的 risk_score 执行干预，使干预在本步 risk 评估前生效
+        manipulation_flags = {
+            "coordinated_detected": prev_risk_score > 0.3,
+            "fomo_detected": prev_risk_score > 0.3,
+            "self_validation_detected": prev_risk_score > 0.3,
+        }
+        market_state = {
+            "price": market.price,
+            "bubble_risk": prev_bubble_risk,
+            "retail_fomo": prev_risk_score,
+            "price_volatility": 0.0,
+        }
+        intervention = regulator.step(
+            risk_score=prev_risk_score,
+            market_state=market_state,
+            manipulation_flags=manipulation_flags,
+            narrative_engine=narrative_engine,
+            kol_network=kol_network,
+            agents=agents,
+        )
 
         metrics = reflexivity_monitor.observe(
             step=step, market=market, emotion=emotion,
@@ -205,26 +230,17 @@ def run_demo_light(output_dir: str = None, steps: int = 200):
             agents=agents,
         )
 
-        # RegulatorAgent 干预决策
-        manipulation_flags = {
-            "coordinated_detected": any(p.pattern == "coordinated_kol_amplification" for p in risk_report.detected_patterns),
-            "fomo_detected": risk_report.fomo_score > 0.3,
-            "self_validation_detected": risk_report.self_validation_score > 0.3,
-        }
-        market_state = {
-            "price": market.price,
-            "bubble_risk": metrics.bubble_risk_score,
-            "retail_fomo": risk_report.fomo_score,
-            "price_volatility": metrics.volatility,
-        }
-        intervention = regulator.step(
-            risk_score=risk_report.manipulation_risk_score,
-            market_state=market_state,
-            manipulation_flags=manipulation_flags,
-            narrative_engine=narrative_engine,
-            kol_network=kol_network,
-            agents=agents,
-        )
+        # P0.3: FOMO → EmotionField 闭环
+        if risk_report.fomo_score > 0.3:
+            emotion.apply_fomo_signal(
+                intensity=risk_report.fomo_score,
+                source="manipulation_risk_agent",
+                decay=0.85,
+            )
+
+        # 保存本步 risk_score 供下一步干预使用
+        prev_risk_score = risk_report.manipulation_risk_score
+        prev_bubble_risk = metrics.bubble_risk_score
 
         risk_score = risk_report.manipulation_risk_score
         bubble_score = metrics.bubble_risk_score
