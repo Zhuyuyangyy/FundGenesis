@@ -48,6 +48,19 @@ class InterventionIntensity(Enum):
 
 
 @dataclass
+class InterventionEffectReport:
+    """Verifiable effect report for a single intervention action"""
+    action: str                          # e.g. "kol_downweight"
+    targets: int                         # Number of targets affected
+    field_changed: str                   # e.g. "influence_score", "trust_level"
+    before_mean: float                   # Mean value before intervention
+    after_mean: float                    # Mean value after intervention
+    verified: bool                       # Whether the change was actually applied
+    step: int                            # Simulation step
+    detail: str = ""                     # Optional detail message
+
+
+@dataclass
 class InterventionEffect:
     """单步干预效果"""
     step: int
@@ -57,6 +70,7 @@ class InterventionEffect:
     fomo_reduction: float = 0.0
     price_volatility_change: float = 0.0
     bubble_risk_delta: float = 0.0
+    effect_reports: List[InterventionEffectReport] = field(default_factory=list)
 
 
 @dataclass
@@ -219,15 +233,19 @@ class RegulatorAgent:
                 continue
             self._apply_action(action, risk_score, effect)
 
-        # 应用到具体组件
+        # Apply to specific components and collect effect reports
         if narrative_engine is not None:
-            self._apply_to_narrative_engine(narrative_engine, risk_score)
+            report = self._apply_to_narrative_engine(narrative_engine, risk_score)
+            effect.effect_reports.append(report)
 
         if kol_network is not None:
-            self._apply_to_kol_network(kol_network, risk_score)
+            report = self._apply_to_kol_network(kol_network, risk_score)
+            effect.effect_reports.append(report)
 
         if agents is not None:
-            self._apply_to_agents(agents, risk_score)
+            report = self._apply_to_agents(agents, risk_score)
+            if report is not None:
+                effect.effect_reports.append(report)
 
         effect.bubble_risk_delta = -effect.risk_reduction * 0.3
         self.history.append(effect)
@@ -261,33 +279,103 @@ class RegulatorAgent:
             effect.risk_reduction += risk_score * 0.40
             effect.fomo_reduction = risk_score * 0.30
 
-    def _apply_to_narrative_engine(self, engine, risk_score: float):
-        """将叙事限流应用到NarrativeEngine"""
-        # narrative_throttle: 直接写入 engine.narrative_strength_multiplier
-        # Strong 模式下 risk_score≈0.50，narrative_cap=0.60-0.72
-        # narrative_strength_multiplier 被压至 0.60，bubble_risk 中的
-        # narrative_factor 降至 0.48，使 Strong < Light < Baseline
+    def _apply_to_narrative_engine(self, engine, risk_score: float) -> InterventionEffectReport:
+        """Apply narrative throttle and return verifiable effect report"""
+        before = getattr(engine, 'narrative_strength_multiplier', 1.0)
         engine.narrative_strength_multiplier = self.state.narrative_cap
+        after = engine.narrative_strength_multiplier
+        verified = abs(after - before) > 0.001 or self.state.narrative_cap >= 0.99
 
-    def _apply_to_kol_network(self, network, risk_score: float):
-        """将KOL降权应用到KOLNetwork"""
-        for kol in network.get_kols():
-            if hasattr(kol, 'influence_weight'):
-                kol.influence_weight *= self.state.kol_penalty
-            if hasattr(kol, 'trust_level'):
-                kol.trust_level *= self.state.kol_penalty
+        return InterventionEffectReport(
+            action="narrative_throttle",
+            targets=1,
+            field_changed="narrative_strength_multiplier",
+            before_mean=before,
+            after_mean=after,
+            verified=verified,
+            step=self._step_count,
+        )
 
-    def _apply_to_agents(self, agents: List, risk_score: float):
-        """将交易冷却应用到Agent列表"""
+    def _apply_to_kol_network(self, network, risk_score: float) -> InterventionEffectReport:
+        """Apply KOL downweight and return verifiable effect report"""
+        kols = network.get_kols()
+        if not kols:
+            return InterventionEffectReport(
+                action="kol_downweight",
+                targets=0,
+                field_changed="trust_level",
+                before_mean=0.0,
+                after_mean=0.0,
+                verified=False,
+                step=self._step_count,
+                detail="No KOLs in network",
+            )
+
+        before_trusts = [k.trust_level for k in kols]
+        before_mean = float(np.mean(before_trusts))
+
+        targets_affected = 0
+        for kol in kols:
+            kol.trust_level = float(np.clip(kol.trust_level * self.state.kol_penalty, 0.0, 1.0))
+            targets_affected += 1
+
+        after_trusts = [k.trust_level for k in kols]
+        after_mean = float(np.mean(after_trusts))
+
+        verified = abs(after_mean - before_mean) > 0.001 or self.state.kol_penalty >= 0.99
+
+        return InterventionEffectReport(
+            action="kol_downweight",
+            targets=targets_affected,
+            field_changed="trust_level",
+            before_mean=round(before_mean, 6),
+            after_mean=round(after_mean, 6),
+            verified=verified,
+            step=self._step_count,
+        )
+
+    def _apply_to_agents(self, agents: List, risk_score: float) -> Optional[InterventionEffectReport]:
+        """Apply trading cooldown and risk warning effects to agents, return effect report"""
         slowdown = self.state.trading_slowdown
-        if slowdown <= 0:
-            return
+        if slowdown <= 0 and not self.state.warning_active:
+            return None
+
+        if not agents:
+            return None
+
+        targets_affected = 0
+        before_fomo_sensitivities = []
+        after_fomo_sensitivities = []
+
         for agent in agents:
-            if hasattr(agent, 'trade_frequency'):
+            # Trading cooldown: reduce trade frequency
+            if slowdown > 0 and hasattr(agent, 'trade_frequency'):
+                before_fomo_sensitivities.append(getattr(agent, 'trade_frequency', 1.0))
                 agent.trade_frequency *= (1.0 - slowdown)
-            if hasattr(agent, 'fomo_sensitivity') and self.state.warning_active:
-                # 风险警告时，散户FOMO敏感度降低
+                after_fomo_sensitivities.append(agent.trade_frequency)
+                targets_affected += 1
+
+            # Risk warning: reduce FOMO sensitivity
+            if self.state.warning_active and hasattr(agent, 'fomo_sensitivity'):
+                before_fomo_sensitivities.append(getattr(agent, 'fomo_sensitivity', 1.0))
                 agent.fomo_sensitivity *= (1.0 - self.state.investor_fear_factor * 0.5)
+                after_fomo_sensitivities.append(agent.fomo_sensitivity)
+                targets_affected += 1
+
+        before_mean = float(np.mean(before_fomo_sensitivities)) if before_fomo_sensitivities else 0.0
+        after_mean = float(np.mean(after_fomo_sensitivities)) if after_fomo_sensitivities else 0.0
+
+        verified = targets_affected > 0 and abs(after_mean - before_mean) > 0.001
+
+        return InterventionEffectReport(
+            action="trading_cooldown_risk_warning",
+            targets=targets_affected,
+            field_changed="fomo_sensitivity",
+            before_mean=round(before_mean, 6),
+            after_mean=round(after_mean, 6),
+            verified=verified,
+            step=self._step_count,
+        )
 
     def _apply_deescalation(self, new_intensity: InterventionIntensity):
         """干预降级：逐步撤销干预动作"""

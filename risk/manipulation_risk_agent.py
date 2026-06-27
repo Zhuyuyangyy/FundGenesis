@@ -205,6 +205,9 @@ class ManipulationRiskAgent:
         # 手动注入的 trust 建立事件（用于 Demo / 测试）
         self._injected_trust_events: List[dict] = []
 
+        # 最近一次 FOMO 评分（用于 EmotionField 闭环）
+        self._last_fomo_score: float = 0.0
+
     def evaluate(
         self,
         step: int,
@@ -534,6 +537,8 @@ class ManipulationRiskAgent:
                     f"retail_buy_ratio={signal['retail_buy_ratio']:.2f} at step {signal['step']}"
                 )
 
+        self._last_fomo_score = min(score, 1.0)
+
         return PatternDetection(
             pattern=PatternType.RETAIL_FOMO_SURGE,
             score=min(score, 1.0),
@@ -625,6 +630,22 @@ class ManipulationRiskAgent:
             step=step,
         )
 
+    def get_fomo_emotion_impulse(self) -> float:
+        """
+        Return the FOMO signal intensity that should be fed into EmotionField.
+
+        This is called by the simulation main loop after evaluate() to
+        close the FOMO → EmotionField loop.
+
+        Returns:
+            FOMO impulse intensity [0, 1], or 0.0 if no significant FOMO detected.
+        """
+        if not self._risk_history:
+            return 0.0
+        # Use the most recent fomo_score if it exceeds threshold
+        # This is extracted from the last evaluate() call
+        return self._last_fomo_score if hasattr(self, '_last_fomo_score') else 0.0
+
     def _score_to_risk_level(self, score: float) -> RiskLevel:
         if score >= 0.75:
             return RiskLevel.CRITICAL
@@ -658,6 +679,7 @@ class ManipulationRiskAgent:
         self._injected_price_events.clear()
         self._injected_fomo_signals.clear()
         self._injected_trust_events.clear()
+        self._last_fomo_score = 0.0
 
     @property
     def action_thresholds(self) -> dict:

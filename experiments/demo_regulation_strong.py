@@ -177,9 +177,11 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
     peak_risk = 0.0
     peak_bubble = 0.0
     high_risk_steps = 0
+    bubble_high_risk_steps = 0
     peak_price = 0.0
 
     for step in range(steps):
+        market.begin_step()
         inject_abnormal_narrative(step)
         propagation.step()
         narrative_engine.tick()
@@ -199,6 +201,7 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
 
         market.update_price(emotion)
         emotion.decay_toward_neutral(inertia=0.90)
+        kol_network.decay_beliefs_all()
 
         metrics = reflexivity_monitor.observe(
             step=step, market=market, emotion=emotion,
@@ -211,6 +214,11 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
             narrative_engine=narrative_engine, propagation_model=propagation,
             agents=agents,
         )
+
+        # P0 Fix: Close FOMO → EmotionField loop
+        fomo_impulse = risk_agent.get_fomo_emotion_impulse()
+        if fomo_impulse > 0.1:
+            emotion.apply_fomo_signal(fomo_impulse)
 
         manipulation_flags = {
             "coordinated_detected": any(p.pattern == "coordinated_kol_amplification" for p in risk_report.detected_patterns),
@@ -263,6 +271,13 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
                 agents=agents,
             )
 
+        # P0 Fix: risk_warning → EmotionField传导
+        if regulator.state.warning_active:
+            fear_inject = regulator.state.investor_fear_factor * 0.15
+            emotion.fear = min(emotion.fear + fear_inject, 1.0)
+            emotion.uncertainty = min(emotion.uncertainty + fear_inject * 0.5, 1.0)
+            emotion.greed = max(emotion.greed - fear_inject * 0.3, 0.0)
+
         risk_score = risk_report.manipulation_risk_score
         bubble_score = metrics.bubble_risk_score
         risk_level = risk_report.risk_level.value if hasattr(risk_report.risk_level, 'value') else risk_report.risk_level
@@ -296,6 +311,8 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
             peak_bubble = bubble_score
         if risk_score >= 0.25:
             high_risk_steps += 1
+        if metrics.bubble_risk_score >= 0.30:
+            bubble_high_risk_steps += 1
         if market.price > peak_price:
             peak_price = market.price
 
@@ -319,6 +336,7 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
         "peak_manipulation_risk": round(peak_risk, 4),
         "peak_bubble_risk": round(peak_bubble, 4),
         "high_risk_steps": high_risk_steps,
+        "bubble_high_risk_steps": bubble_high_risk_steps,
         "final_price": round(final_price, 2),
         "price_peak": round(peak_price, 2),
         "final_drawdown_pct": round(drawdown_from_peak, 2),
@@ -348,6 +366,7 @@ def run_demo_strong(output_dir: str = None, steps: int = 200):
     print(f"  peak_manipulation_risk: {peak_risk:.4f}")
     print(f"  peak_bubble_risk:      {peak_bubble:.4f}")
     print(f"  high_risk_steps:       {high_risk_steps}")
+    print(f"  bubble_high_risk_steps: {bubble_high_risk_steps}")
     print(f"  final_drawdown:        {drawdown_from_peak:.2f}%")
     print(f"  first_intervention:    step {result['intervention_summary']['first_intervention_step']}")
     print(f"  total_interventions:   {result['intervention_summary']['total_interventions']}")

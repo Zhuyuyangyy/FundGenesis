@@ -1,0 +1,29 @@
+{
+  "experiment": "emotion_shock",
+  "results": {
+    "neutral": {
+      "final_price": 100.0,
+      "max_price": 105.1271,
+      "min_price": 95.1229,
+      "volatility": 0.025003
+    },
+    "greed": {
+      "final_price": 100.1972,
+      "max_price": 127.1124,
+      "min_price": 95.3106,
+      "volatility": 0.025003
+    },
+    "panic": {
+      "final_price": 102.3261,
+      "max_price": 104.9165,
+      "min_price": 68.1276,
+      "volatility": 0.024998
+    },
+    "greed_to_panic": {
+      "final_price": 102.1414,
+      "max_price": 127.1124,
+      "min_price": 70.2007,
+      "volatility": 0.024998
+    }
+  }
+}

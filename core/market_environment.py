@@ -43,8 +43,12 @@ class MarketEnvironment:
     returns_history: list = field(default_factory=list)
 
     # 当步统计
-    buy_volume: float = 0.0
-    sell_volume: float = 0.0
+    step_buy_volume: float = 0.0
+    step_sell_volume: float = 0.0
+    cumulative_buy_volume: float = 0.0
+    cumulative_sell_volume: float = 0.0
+    buy_volume: float = 0.0   # 保留向后兼容
+    sell_volume: float = 0.0  # 保留向后兼容
     price_change_pct: float = 0.0  # 最近一次价格变化率
 
     # 配置参数
@@ -53,6 +57,11 @@ class MarketEnvironment:
     total_agents: int = 100         # Agent 总数（供监控使用）
 
     step_count: int = 0
+
+    def begin_step(self):
+        """Reset step-level order tracking. Must be called at the start of each simulation step."""
+        self.step_buy_volume = 0.0
+        self.step_sell_volume = 0.0
 
     def reset(self, initial_price: float = 100.0,
               impact_coefficient: float = 0.5,
@@ -63,6 +72,10 @@ class MarketEnvironment:
         self.fundamental_value = initial_price
         self.price_history = [initial_price]
         self.returns_history = [0.0]
+        self.step_buy_volume = 0.0
+        self.step_sell_volume = 0.0
+        self.cumulative_buy_volume = 0.0
+        self.cumulative_sell_volume = 0.0
         self.buy_volume = 0.0
         self.sell_volume = 0.0
         self.impact_coefficient = impact_coefficient
@@ -71,6 +84,8 @@ class MarketEnvironment:
         self.step_count = 0
 
     def reset_volumes(self):
+        self.step_buy_volume = 0.0
+        self.step_sell_volume = 0.0
         self.buy_volume = 0.0
         self.sell_volume = 0.0
 
@@ -81,9 +96,15 @@ class MarketEnvironment:
         volume: 交易量（相对于总资金的归一化比例）
         """
         if action == "BUY":
-            self.buy_volume += max(0.0, volume)
+            vol = max(0.0, volume)
+            self.step_buy_volume += vol
+            self.cumulative_buy_volume += vol
+            self.buy_volume += vol
         elif action == "SELL":
-            self.sell_volume += max(0.0, volume)
+            vol = max(0.0, volume)
+            self.step_sell_volume += vol
+            self.cumulative_sell_volume += vol
+            self.sell_volume += vol
 
     def apply_shock(self, magnitude: float):
         """
@@ -96,16 +117,21 @@ class MarketEnvironment:
 
     @property
     def net_demand(self) -> float:
-        """净买入压力"""
-        return self.buy_volume - self.sell_volume
+        """Current step's net buy pressure"""
+        return self.step_buy_volume - self.step_sell_volume
+
+    @property
+    def cumulative_net_demand(self) -> float:
+        """Historical cumulative net demand (for reporting only, NOT for price calculation)"""
+        return self.cumulative_buy_volume - self.cumulative_sell_volume
 
     @property
     def order_imbalance(self) -> float:
-        """订单不平衡度 [-1, 1]"""
-        total = self.buy_volume + self.sell_volume
+        """Step-level order imbalance [-1, 1]"""
+        total = self.step_buy_volume + self.step_sell_volume
         if total == 0:
             return 0.0
-        return (self.buy_volume - self.sell_volume) / total
+        return (self.step_buy_volume - self.step_sell_volume) / total
 
     def update_price(self, emotion: EmotionField, max_step_return: float = 0.025):
         """
@@ -207,4 +233,5 @@ class MarketEnvironment:
     def __repr__(self):
         return (f"Market(price={self.price:.2f}, "
                 f"net_demand={self.net_demand:.4f}, "
+                f"cum_net_demand={self.cumulative_net_demand:.4f}, "
                 f"vol={self.get_volatility():.4f})")

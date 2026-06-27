@@ -43,6 +43,7 @@ class KOLNode:
     # 状态
     belief_state: float = 0.0           # [-1, 1] 当前信念方向
     narrative_exposure: float = 0.0     # [0, 1] 当前叙事的曝光程度
+    cumulative_exposure: float = 0.0   # Accumulated narrative exposure across steps
     is_active: bool = True             # 节点是否活跃（有的投资者不说话不表态）
 
     # 传播相关
@@ -53,46 +54,75 @@ class KOLNode:
     def is_kol(self) -> bool:
         return self.tier != KOLTier.RETAIL
 
-    def receive_exposure(self, exposure: float):
-        """接收叙事曝光，belief_state也随之被影响"""
+    def receive_exposure(self, exposure: float, trust_weight: float = 1.0):
+        """
+        Receive narrative exposure with trust-weighted propagation and
+        bounded nonlinear activation.
+
+        Mechanism:
+        1. exposure accumulation: exposure can accumulate across steps
+        2. trust-weighted propagation: higher trust = stronger propagation
+        3. bounded nonlinear activation: tanh prevents explosion while
+           allowing meaningful belief formation
+
+        Args:
+            exposure: Raw exposure value from propagation
+            trust_weight: Trust-based amplification factor [0, 1]
+        """
+        # Step 1: Accumulate exposure (cross-step accumulation)
+        raw_exposure = exposure * trust_weight
         self.narrative_exposure = np.clip(
-            self.narrative_exposure + exposure * self.susceptibility,
+            self.narrative_exposure + raw_exposure * self.susceptibility,
             0.0, 1.0
         )
-        # 确认偏误：信念强化方向取决于暴露内容和已有信念
-        if self.confirmation_bias > 0:
-            # 当belief_state接近0时，用正向作为默认方向（符合"业绩超预期"类正面叙事）
-            # 降低阈值从0.1到0.05，让节点更容易在早期产生信念
-            if abs(self.belief_state) > 0.05:
-                direction = np.sign(self.belief_state)
-            else:
-                direction = 1.0
-            # belief_shift = exposure * confirmation_bias * direction * 1.0
-            # 核心修复：0.1 → 1.0（10倍放大），使 KOL belief_state 能真实积累
-            # 原始设计衰减太快（每曝光最多 +0.03），需 33 次曝光才能从 0 到 1
-            # 修复后在 5-8 次强曝光内即可形成有意义信念（belief 0.1-0.3），10-15 次后显著（0.3-0.7）
-            belief_shift = exposure * self.confirmation_bias * direction * 1.0
-            self.belief_state = np.clip(self.belief_state + belief_shift, -1.0, 1.0)
+        self.cumulative_exposure += raw_exposure
+
+        # Step 2: Bounded nonlinear activation using tanh
+        # exposure_gain controls how quickly belief forms from cumulative exposure
+        # Higher gain = faster belief formation, but tanh caps at 1.0
+        exposure_gain = 3.0
+        # Higher-influence nodes form beliefs faster (they process info better)
+        influence_factor = 1.0 + self.influence_score
+        belief_delta = np.tanh(exposure_gain * self.cumulative_exposure * self.confirmation_bias) * 0.12 * influence_factor
+
+        # Step 3: Direction from narrative or existing belief
+        if abs(self.belief_state) > 0.05:
+            direction = np.sign(self.belief_state)
+        else:
+            # Default to positive for first exposure (matches typical bullish narrative)
+            direction = 1.0
+
+        self.belief_state = np.clip(
+            self.belief_state + belief_delta * direction,
+            -1.0, 1.0
+        )
+
+    def decay_belief(self, decay: float = 0.96):
+        """Gradual belief decay toward neutral. Called each step."""
+        # Higher-influence nodes decay slower (they hold beliefs longer)
+        effective_decay = decay + (1.0 - decay) * self.influence_score * 0.5
+        self.belief_state *= effective_decay
+        self.cumulative_exposure *= 0.97
 
     def reset_exposure(self, decay: float = 0.1):
-        """叙事曝光随时间衰减"""
+        """Narrative exposure decay per step"""
         self.narrative_exposure *= (1.0 - decay)
+        self.cumulative_exposure *= 0.96
 
-    def influence_on(self, target: "KOLNode", narrative_strength: float) -> float:
+    def influence_on(self, target: "KOLNode", narrative_strength: float, trust_weight: float = 1.0) -> float:
         """
-        计算本节点对目标节点的叙事推动力。
+        Compute narrative push from this node to target node.
 
-        公式：
-        influence = source.influence * target.susceptibility * narrative_strength * trust_level
+        Formula:
+        influence = source.influence * target.susceptibility * narrative_strength * trust_weight
         """
         if not target.is_active:
             return 0.0
-        trust = target.trust_level  # 目标对任何来源的信任水平
         return (
             self.influence_score
             * target.susceptibility
             * narrative_strength
-            * trust
+            * trust_weight
         )
 
     def __repr__(self):
@@ -143,10 +173,28 @@ class KOLNetwork:
         for node in self._nodes.values():
             node.reset_exposure(decay)
 
+    def decay_beliefs_all(self, decay: float = 0.96):
+        """Decay all node beliefs toward neutral"""
+        for node in self._nodes.values():
+            node.decay_belief(decay)
+
     def belief_statistics(self) -> dict:
-        """市场信念统计"""
+        """Market belief statistics with per-tier breakdown"""
         beliefs = [n.belief_state for n in self._nodes.values()]
         exposures = [n.narrative_exposure for n in self._nodes.values()]
+
+        # Per-tier statistics
+        tier_stats = {}
+        for tier in KOLTier:
+            tier_nodes = [n for n in self._nodes.values() if n.tier == tier]
+            if tier_nodes:
+                tier_beliefs = [n.belief_state for n in tier_nodes]
+                tier_stats[tier.value] = {
+                    "mean_belief": float(np.mean(tier_beliefs)),
+                    "mean_abs_belief": float(np.mean([abs(b) for b in tier_beliefs])),
+                    "count": len(tier_nodes),
+                }
+
         return {
             "mean_belief": float(np.mean(beliefs)) if beliefs else 0.0,
             "belief_std": float(np.std(beliefs)) if beliefs else 0.0,
@@ -154,6 +202,7 @@ class KOLNetwork:
             "mean_exposure": float(np.mean(exposures)) if exposures else 0.0,
             "kol_count": len(self.get_kols()),
             "retail_count": len(self.get_retail()),
+            "tier_stats": tier_stats,
         }
 
     def build_default_network(self,
