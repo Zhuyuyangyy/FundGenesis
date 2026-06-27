@@ -1,0 +1,49 @@
+id: A05
+name: delayed_propagation
+category: core_mechanism
+seed: 42
+steps: 120
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.55
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Gradual growth story"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.70
+    credibility: 0.80
+    novelty: 0.60
+    duration: 90
+  - step: 30
+    type: kol_spread
+    kol_ids: ["influencer_0"]
+  - step: 50
+    type: kol_spread
+    kol_ids: ["influencer_1", "influencer_2"]
+  - step: 70
+    type: kol_spread
+    kol_ids: ["micro_0", "micro_1"]
+  - step: 80
+    type: price_feedback
+    price_change: 0.02
+    confirmation_strength: 0.60
+expected:
+  delayed_bubble_formation: true
+failure_modes:
+  - immediate_bubble
+  - no_delayed_effect

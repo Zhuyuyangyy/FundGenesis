@@ -1,0 +1,52 @@
+id: B03
+name: trust_collapse_after_false_prediction
+category: trust_mechanism
+seed: 42
+steps: 120
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.55
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "KOL predicts major rally"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.80
+    novelty: 0.75
+    duration: 60
+  - step: 10
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2"]
+  - step: 40
+    type: price_feedback
+    price_change: -0.02
+    confirmation_strength: 0.30
+  - step: 60
+    type: narrative_inject
+    narrative: "Prediction proven wrong"
+    category: EARNINGS
+    polarity: NEGATIVE
+    sector: tech
+    intensity: 0.75
+    credibility: 0.90
+    novelty: 0.85
+    duration: 40
+expected:
+  trust_decline_after_falsification: true
+failure_modes:
+  - trust_unaffected_by_falsification

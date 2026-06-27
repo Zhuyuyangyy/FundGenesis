@@ -1,0 +1,44 @@
+id: C05
+name: flash_crash
+category: reflexivity
+seed: 42
+steps: 80
+market:
+  initial_price: 120.0
+  impact_coefficient: 0.30
+  noise_std: 0.010
+  total_agents: 100
+emotion:
+  initial_fear: 0.25
+  initial_greed: 0.55
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Flash crash trigger"
+    category: REGULATORY
+    polarity: NEGATIVE
+    sector: tech
+    intensity: 0.92
+    credibility: 0.85
+    novelty: 0.95
+    duration: 30
+  - step: 8
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2", "influencer_3"]
+  - step: 15
+    type: price_feedback
+    price_change: -0.06
+    confirmation_strength: 0.80
+expected:
+  rapid_price_decline: true
+  max_drawdown_min: 3.0
+failure_modes:
+  - price_unaffected
+  - slow_decline

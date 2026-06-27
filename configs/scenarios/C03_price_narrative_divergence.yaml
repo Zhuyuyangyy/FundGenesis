@@ -1,0 +1,42 @@
+id: C03
+name: price_narrative_divergence
+category: reflexivity
+seed: 42
+steps: 100
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.15
+  noise_std: 0.012
+  total_agents: 100
+emotion:
+  initial_fear: 0.20
+  initial_greed: 0.50
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Bullish narrative but weak fundamentals"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.80
+    credibility: 0.60
+    novelty: 0.70
+    duration: 70
+  - step: 15
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1"]
+  - step: 40
+    type: price_feedback
+    price_change: 0.01
+    confirmation_strength: 0.40
+expected:
+  divergence_between_narrative_and_price: true
+failure_modes:
+  - price_perfectly_follows_narrative

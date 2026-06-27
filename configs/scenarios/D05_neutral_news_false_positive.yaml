@@ -1,0 +1,37 @@
+id: D05
+name: neutral_news_false_positive
+category: risk_identification
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.30
+  initial_greed: 0.40
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 10
+    type: narrative_inject
+    narrative: "Routine quarterly report"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.40
+    credibility: 0.85
+    novelty: 0.20
+    duration: 30
+expected:
+  no_false_positive_manipulation: true
+  peak_bubble_risk_max: 0.40
+failure_modes:
+  - false_positive_manipulation_risk
+  - routine_news_triggers_intervention

@@ -1,0 +1,52 @@
+id: E05
+name: late_regulation_failure
+category: regulation
+seed: 42
+steps: 120
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.10
+  initial_greed: 0.65
+regulation:
+  enabled: true
+  mode: light
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Strong bubble-forming narrative"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.90
+    credibility: 0.85
+    novelty: 0.90
+    duration: 90
+  - step: 8
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2"]
+  - step: 15
+    type: kol_spread
+    kol_ids: ["micro_0", "micro_1", "micro_2", "micro_3"]
+  - step: 30
+    type: price_feedback
+    price_change: 0.06
+    confirmation_strength: 0.85
+  - step: 45
+    type: fomo_signal
+    retail_buy_ratio: 0.82
+    greed_level: 0.88
+    belief_concentration: 0.75
+expected:
+  late_intervention_less_effective: true
+  peak_bubble_risk_min: 0.20
+failure_modes:
+  - early_intervention_prevents_all_risk
+  - light_regulation_stops_bubble_completely

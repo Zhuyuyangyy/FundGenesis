@@ -1,0 +1,40 @@
+id: A06
+name: low_credibility_rumor_failure
+category: core_mechanism
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.25
+  initial_greed: 0.40
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Unverified insider tip"
+    category: SENTIMENT
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.45
+    credibility: 0.25
+    novelty: 0.35
+    duration: 40
+  - step: 15
+    type: kol_spread
+    kol_ids: ["micro_0"]
+expected:
+  peak_bubble_risk_max: 0.35
+  no_significant_price_move: true
+failure_modes:
+  - low_credibility_causes_bubble
+  - large_price_move_from_rumor

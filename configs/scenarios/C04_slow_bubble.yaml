@@ -1,0 +1,56 @@
+id: C04
+name: slow_bubble
+category: reflexivity
+seed: 42
+steps: 150
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.15
+  noise_std: 0.005
+  total_agents: 100
+emotion:
+  initial_fear: 0.20
+  initial_greed: 0.55
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Steady growth narrative"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.65
+    credibility: 0.75
+    novelty: 0.55
+    duration: 120
+  - step: 20
+    type: kol_spread
+    kol_ids: ["influencer_0"]
+  - step: 40
+    type: kol_spread
+    kol_ids: ["influencer_1", "influencer_2"]
+  - step: 60
+    type: price_feedback
+    price_change: 0.02
+    confirmation_strength: 0.65
+  - step: 80
+    type: price_feedback
+    price_change: 0.03
+    confirmation_strength: 0.70
+  - step: 100
+    type: fomo_signal
+    retail_buy_ratio: 0.70
+    greed_level: 0.75
+    belief_concentration: 0.60
+expected:
+  gradual_bubble_buildup: true
+  peak_bubble_risk_min: 0.15
+failure_modes:
+  - no_bubble_formation
+  - instant_bubble

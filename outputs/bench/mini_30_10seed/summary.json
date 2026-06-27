@@ -1,0 +1,21 @@
+{
+  "suite": "mini",
+  "timestamp": "2026-06-27T12:48:45.354798",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "total": 250,
+  "passed": 250,
+  "failed": 0,
+  "errors": 0,
+  "scenarios": []
+}

@@ -1,0 +1,46 @@
+id: D04
+name: abnormal_trust_building
+category: risk_identification
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.20
+  initial_greed: 0.50
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Rapidly spreading coordinated message"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.75
+    novelty: 0.80
+    duration: 60
+  - step: 8
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2", "influencer_3", "influencer_4"]
+  - step: 12
+    type: kol_spread
+    kol_ids: ["micro_0", "micro_1", "micro_2", "micro_3", "micro_4", "micro_5"]
+  - step: 25
+    type: price_feedback
+    price_change: 0.04
+    confirmation_strength: 0.70
+expected:
+  manipulation_risk_detected: true
+failure_modes:
+  - no_abnormal_trust_detected
+  - false_negative

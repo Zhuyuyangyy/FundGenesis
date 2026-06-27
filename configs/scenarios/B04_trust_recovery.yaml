@@ -1,0 +1,49 @@
+id: B04
+name: trust_recovery
+category: trust_mechanism
+seed: 42
+steps: 150
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.25
+  initial_greed: 0.45
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Initial wrong prediction"
+    category: SENTIMENT
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.60
+    credibility: 0.50
+    novelty: 0.55
+    duration: 40
+  - step: 50
+    type: narrative_inject
+    narrative: "Correct insightful analysis"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.90
+    novelty: 0.80
+    duration: 70
+  - step: 55
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1"]
+expected:
+  belief_recovery_over_time: true
+failure_modes:
+  - trust_never_recovers
+  - no_differentiation_from_initial

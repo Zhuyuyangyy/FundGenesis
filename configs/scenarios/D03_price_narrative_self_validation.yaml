@@ -1,0 +1,53 @@
+id: D03
+name: price_narrative_self_validation
+category: risk_identification
+seed: 42
+steps: 100
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.22
+  noise_std: 0.006
+  total_agents: 100
+emotion:
+  initial_fear: 0.10
+  initial_greed: 0.60
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "Self-reinforcing growth"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.82
+    credibility: 0.78
+    novelty: 0.75
+    duration: 80
+  - step: 15
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1"]
+  - step: 30
+    type: price_feedback
+    price_change: 0.04
+    confirmation_strength: 0.78
+  - step: 45
+    type: price_feedback
+    price_change: 0.05
+    confirmation_strength: 0.82
+  - step: 55
+    type: fomo_signal
+    retail_buy_ratio: 0.75
+    greed_level: 0.80
+    belief_concentration: 0.65
+expected:
+  self_validation_detected: true
+  peak_bubble_risk_min: 0.25
+failure_modes:
+  - no_self_validation_detected
+  - bubble_risk_never_rises
