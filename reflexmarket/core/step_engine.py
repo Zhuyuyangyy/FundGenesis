@@ -188,7 +188,8 @@ class StepEngine:
             step=world.step, kol_network=world.kol_network,
             trust_engine=world.trust_engine, reflexivity_monitor=world.reflexivity_monitor,
             market=world.market, narrative_engine=world.narrative_engine,
-            propagation_model=world.propagation, agents=world.agents)
+            propagation_model=world.propagation, agents=world.agents,
+            emotion=world.emotion)
         world.current_risk_score = risk_report.manipulation_risk_score
         world.current_manipulation_risk = risk_report.manipulation_risk_score
 

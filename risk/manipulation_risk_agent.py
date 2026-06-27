@@ -208,6 +208,9 @@ class ManipulationRiskAgent:
         # 最近一次 FOMO 评分（用于 EmotionField 闭环）
         self._last_fomo_score: float = 0.0
 
+        # 最近一次 emotion 引用（用于 state-based 评分）
+        self._last_emotion = None
+
     def evaluate(
         self,
         step: int,
@@ -218,6 +221,7 @@ class ManipulationRiskAgent:
         narrative_engine,      # NarrativeEngine
         propagation_model=None,  # PropagationModel (optional)
         agents=None,           # BaseAgent list (optional)
+        emotion=None,          # EmotionField (optional, for state-based scoring)
     ) -> ManipulationRiskReport:
         """
         执行一次风险评估。
@@ -245,10 +249,20 @@ class ManipulationRiskAgent:
         active_patterns = [p for p in patterns if p.score > 0.3]
 
         # ── 2. 综合评分 ────────────────────────────────────
-        total_score = sum(
+        # 2a. Event-based score (from pattern detectors)
+        event_score = sum(
             self.PATTERN_WEIGHTS[p.pattern] * p.score
             for p in patterns
         )
+
+        # 2b. State-based score (from real-time simulation state)
+        state_score = self._compute_state_based_score(
+            step, kol_network, market, emotion, agents,
+        )
+
+        # 2c. Blended score: 35% event-based + 45% state-based + 20% fomo
+        fomo_component = fomo.score * 0.20
+        total_score = 0.35 * event_score + 0.45 * state_score + fomo_component
 
         # 加速度惩罚：如果风险在短时间内快速上升
         if len(self._risk_history) >= 3:
@@ -630,6 +644,83 @@ class ManipulationRiskAgent:
             step=step,
         )
 
+    def _compute_state_based_score(
+        self,
+        step: int,
+        kol_network,
+        market,
+        emotion,
+        agents,
+    ) -> float:
+        """
+        Compute state-based manipulation risk from real-time simulation state.
+
+        This reads actual market/emotion/agent state rather than injected events.
+        After regulation intervention, these state variables should change,
+        causing the manipulation risk to respond.
+
+        Returns:
+            State-based risk score [0, 1]
+        """
+        score = 0.0
+
+        # Factor 1: KOL influence concentration after regulation
+        if kol_network is not None:
+            kols = kol_network.get_kols()
+            if kols:
+                influence_scores = [k.influence_score for k in kols]
+                # High influence concentration = potential coordination
+                if influence_scores:
+                    influence_concentration = float(np.std(influence_scores)) / max(float(np.mean(influence_scores)), 0.01)
+                    if influence_concentration > 2.0:
+                        score += 0.15
+                    elif influence_concentration > 1.0:
+                        score += 0.08
+
+                # Average narrative exposure (high = manipulation environment)
+                avg_exposure = float(np.mean([k.narrative_exposure for k in kols]))
+                score += min(avg_exposure * 0.3, 0.15)
+
+        # Factor 2: Emotion field state
+        if emotion is not None:
+            # Extreme greed + low fear = manipulation-prone environment
+            greed = getattr(emotion, 'greed', 0.5)
+            fear = getattr(emotion, 'fear', 0.3)
+            fomo = getattr(emotion, 'fomo_pressure', 0.0)
+
+            if greed > 0.7 and fear < 0.2:
+                score += 0.15
+            elif greed > 0.6:
+                score += 0.08
+
+            # FOMO pressure directly contributes
+            score += min(fomo * 0.2, 0.10)
+
+        # Factor 3: Order imbalance from market
+        if market is not None:
+            imbalance = abs(getattr(market, 'order_imbalance', 0.0))
+            if imbalance > 0.6:
+                score += 0.10
+            elif imbalance > 0.3:
+                score += 0.05
+
+        # Factor 4: Retail agent behavior
+        if agents is not None:
+            retail_agents = [a for a in agents if 'ER_' in getattr(a, 'agent_id', '')]
+            if retail_agents:
+                buy_count = 0
+                total = len(retail_agents)
+                for a in retail_agents:
+                    if hasattr(a, '_last_action') and a._last_action and a._last_action.value == "BUY":
+                        buy_count += 1
+                retail_buy_ratio = buy_count / max(total, 1)
+                if retail_buy_ratio > 0.7:
+                    score += 0.12
+                elif retail_buy_ratio > 0.5:
+                    score += 0.06
+
+        return min(score, 1.0)
+
     def get_fomo_emotion_impulse(self) -> float:
         """
         Return the FOMO signal intensity that should be fed into EmotionField.
@@ -680,6 +771,7 @@ class ManipulationRiskAgent:
         self._injected_fomo_signals.clear()
         self._injected_trust_events.clear()
         self._last_fomo_score = 0.0
+        self._last_emotion = None
 
     @property
     def action_thresholds(self) -> dict:

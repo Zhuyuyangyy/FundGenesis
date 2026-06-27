@@ -1,0 +1,22 @@
+{
+  "full": {
+    "peak_bubble_risk": 0.39609999999999995,
+    "bubble_high_risk_steps": 19.6,
+    "n": 5
+  },
+  "no_emotion": {
+    "peak_bubble_risk": 0.9166599999999999,
+    "bubble_high_risk_steps": 41.0,
+    "n": 5
+  },
+  "no_kol": {
+    "peak_bubble_risk": 0.0,
+    "bubble_high_risk_steps": 0.0,
+    "n": 5
+  },
+  "no_regulation": {
+    "peak_bubble_risk": 0.39609999999999995,
+    "bubble_high_risk_steps": 19.6,
+    "n": 5
+  }
+}

@@ -1,0 +1,54 @@
+id: ablation_no_kol
+name: no_kol
+category: ablation
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.60
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+ablation:
+  disable_emotion_field: false
+  disable_kol_network: true
+  disable_regulation: false
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "AI medical revolution"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.88
+    credibility: 0.82
+    novelty: 0.90
+    duration: 60
+  - step: 10
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2"]
+  - step: 15
+    type: kol_spread
+    kol_ids: ["micro_0", "micro_1", "micro_2", "micro_3"]
+  - step: 30
+    type: price_feedback
+    price_change: 0.04
+    confirmation_strength: 0.75
+  - step: 45
+    type: fomo_signal
+    retail_buy_ratio: 0.78
+    greed_level: 0.82
+    belief_concentration: 0.70
+expected:
+  peak_bubble_risk_min: 0.20
+failure_modes:
+  - bubble_risk_never_rises

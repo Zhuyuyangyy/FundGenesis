@@ -61,10 +61,26 @@ class SimulationRunner:
         market = controller.setup_market()
         emotion = controller.setup_emotion()
 
+        # Ablation: disable emotion field amplification
+        # Emotion stays neutral (0.5) and cannot be amplified by narratives or FOMO
+        if self.config.ablation.get("disable_emotion_field", False):
+            emotion = EmotionField(fear=0.5, greed=0.5, confidence=0.5, uncertainty=0.5)
+            # Block all emotion modification methods
+            emotion.apply_shock = lambda *a, **kw: None
+            emotion.apply_fomo_signal = lambda *a, **kw: None
+            emotion.decay_toward_neutral = lambda inertia=0.90: None
+
         kol_cfg = self.config.agents.get("kol", {})
         kol_network = KOLNetwork().build_default_network(
             n_macro=kol_cfg.get("n_macro", 2), n_influencer=kol_cfg.get("n_influencer", 5),
             n_micro=kol_cfg.get("n_micro", 10), n_retail=kol_cfg.get("n_retail", 100))
+
+        # Ablation: disable KOL network propagation
+        if self.config.ablation.get("disable_kol_network", False):
+            kol_network = KOLNetwork().build_default_network(n_macro=1, n_influencer=1, n_micro=1, n_retail=10)
+            for kol in kol_network.get_kols():
+                kol.influence_score = 0.0
+                kol.susceptibility = 0.0
 
         narrative_engine = NarrativeEngine()
         propagation = PropagationModel(kol_network)
@@ -75,10 +91,16 @@ class SimulationRunner:
         risk_agent = ManipulationRiskAgent(action_thresholds={"monitor": 0.15, "human_review": 0.25, "block": 0.60})
 
         regulation_mode = self.config.regulation.get("mode", "baseline")
+
+        # Ablation: disable regulation
+        if self.config.ablation.get("disable_regulation", False):
+            regulation_mode = "baseline"
+
         regulator = None
         if regulation_mode != "baseline":
             from risk.regulator_agent import RegulatorAgent
             regulator = RegulatorAgent()
+            regulator.set_mode(regulation_mode)
 
         agents = []
         for i in range(self.config.agents.get("n_value_investor", 10)):

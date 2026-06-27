@@ -47,6 +47,9 @@ class PropagationModel:
         if macro_kols:
             # 按影响力分配初始曝光权重
             total_influence = sum(k.influence_score for k in macro_kols)
+            if total_influence == 0:
+                # Ablation case: all influence zeroed
+                return
             for kol in macro_kols:
                 exposure = narrative.effective_intensity * (kol.influence_score / total_influence)
                 kol.receive_exposure(exposure)

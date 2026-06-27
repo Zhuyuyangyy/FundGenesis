@@ -25,6 +25,7 @@ class ScenarioConfig:
     agents: dict[str, Any] = field(default_factory=dict)
     narratives: dict[str, Any] = field(default_factory=dict)
     expected: dict[str, Any] = field(default_factory=dict)
+    ablation: dict[str, Any] = field(default_factory=dict)
     failure_modes: list[str] = field(default_factory=list)
 
     @classmethod
@@ -47,6 +48,7 @@ class ScenarioConfig:
             agents=data.get("agents", {}),
             narratives=data.get("narratives", {}),
             expected=data.get("expected", {}),
+            ablation=data.get("ablation", {}),
             failure_modes=data.get("failure_modes", []),
         )
 
@@ -58,5 +60,6 @@ class ScenarioConfig:
             "regulation": self.regulation,
             "scheduled_events": self.scheduled_events,
             "agents": self.agents, "narratives": self.narratives,
-            "expected": self.expected, "failure_modes": self.failure_modes,
+            "expected": self.expected, "ablation": self.ablation,
+            "failure_modes": self.failure_modes,
         }

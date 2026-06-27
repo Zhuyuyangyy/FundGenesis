@@ -86,6 +86,34 @@ class RegulatorState:
     investor_fear_factor: float = 0.0    # 投资者恐惧放大因子
 
 
+@dataclass
+class RegulationProfile:
+    """Configuration profile that differentiates Light vs Strong regulation."""
+    # Narrative throttle
+    narrative_cap_light: float = 0.65      # Light: cap at 65%
+    narrative_cap_strong: float = 0.35     # Strong: cap at 35%
+
+    # KOL downweight
+    kol_penalty_light: float = 0.70        # Light: reduce to 70%
+    kol_penalty_strong: float = 0.45       # Strong: reduce to 45%
+
+    # Trading cooldown
+    trading_slowdown_light: float = 0.30   # Light: 30% slowdown
+    trading_slowdown_strong: float = 0.60  # Strong: 60% slowdown
+
+    # Warning fear factor
+    fear_boost_light: float = 0.12         # Light: mild fear injection
+    fear_boost_strong: float = 0.25        # Strong: significant fear injection
+
+    # Persistence (how many steps before de-escalation)
+    persistence_light: int = 5             # Light: de-escalate quickly
+    persistence_strong: int = 20           # Strong: persist much longer
+
+    # Minimum duration before de-escalation
+    min_duration_light: int = 3            # Light: can de-escalate after 3 steps
+    min_duration_strong: int = 15          # Strong: must wait 15 steps
+
+
 class InterventionPolicy:
     """干预策略：根据风险评分选择干预强度"""
     LIGHT_THRESHOLD    = 0.30
@@ -176,12 +204,22 @@ class RegulatorAgent:
         self.history: List[InterventionEffect] = []
         self.current_intensity = InterventionIntensity.NONE
         self._step_count = 0
+        self.profile = RegulationProfile()
+        self._mode: str = "light"  # "light" or "strong"
+        self._steps_at_current_intensity: int = 0
 
     def reset(self):
         self.state = RegulatorState()
         self.history.clear()
         self.current_intensity = InterventionIntensity.NONE
         self._step_count = 0
+        self._mode = "light"
+        self._steps_at_current_intensity = 0
+
+    def set_mode(self, mode: str):
+        """Set regulation mode: 'light' or 'strong'."""
+        if mode in ("light", "strong"):
+            self._mode = mode
 
     def step(self,
              risk_score: float,
@@ -205,6 +243,7 @@ class RegulatorAgent:
             InterventionEffect: 干预效果记录
         """
         self._step_count += 1
+        self._steps_at_current_intensity += 1
 
         # 警告自然衰减
         InvestorProtection.decay_warning(self.state)
@@ -219,10 +258,12 @@ class RegulatorAgent:
         new_intensity = InterventionPolicy.select_intensity(risk_score)
         if new_intensity.value < self.current_intensity.value:
             # 逐步退出干预
-            self._apply_deescalation(new_intensity)
-            self.current_intensity = new_intensity
+            deescalated = self._apply_deescalation(new_intensity)
+            if deescalated:
+                self.current_intensity = new_intensity
         elif new_intensity.value > self.current_intensity.value:
             self.current_intensity = new_intensity
+            self._steps_at_current_intensity = 0
 
         # 执行干预动作
         actions = InterventionPolicy.get_actions(self.current_intensity)
@@ -257,27 +298,30 @@ class RegulatorAgent:
         effect.actions.append(action.value)
 
         if action == InterventionAction.NARRATIVE_THROTTLE:
-            # 叙事限流：降低叙事生成强度和传播速度
-            self.state.narrative_cap = max(1.0 - risk_score * 0.55, 0.25)
-            effect.narrative_suppression = risk_score * 0.55
+            cap = self.profile.narrative_cap_strong if self._mode == "strong" else self.profile.narrative_cap_light
+            self.state.narrative_cap = min(cap, max(1.0 - risk_score * 0.55, 0.25))
+            effect.narrative_suppression = 1.0 - self.state.narrative_cap
 
         elif action == InterventionAction.KOL_DOWNWEIGHT:
-            # KOL降权：降低KOL影响力，削弱协同传播
-            self.state.kol_penalty = max(1.0 - risk_score * 0.65, 0.15)
-            effect.risk_reduction += risk_score * 0.35
+            penalty = self.profile.kol_penalty_strong if self._mode == "strong" else self.profile.kol_penalty_light
+            self.state.kol_penalty = min(penalty, max(1.0 - risk_score * 0.65, 0.15))
+            effect.risk_reduction += (1.0 - self.state.kol_penalty) * 0.5
 
         elif action == InterventionAction.RISK_WARNING:
-            # 风险提示：发出市场警告，触发投资者谨慎
+            fear_boost = self.profile.fear_boost_strong if self._mode == "strong" else self.profile.fear_boost_light
             InvestorProtection.issue_warning(self.state, risk_score)
+            self.state.investor_fear_factor = min(self.state.investor_fear_factor + fear_boost, 1.0)
             effect.risk_reduction += risk_score * 0.25
 
         elif action == InterventionAction.TRADING_COOLDOWN:
-            # 交易冷却：减少短期交易频率
+            slowdown = self.profile.trading_slowdown_strong if self._mode == "strong" else self.profile.trading_slowdown_light
             dur = CoolingMechanism.compute_duration(risk_score, self.current_intensity)
+            if self._mode == "strong":
+                dur = min(int(dur * 1.8), CoolingMechanism.MAX_STEPS)
             self.state.cooldown_steps_remaining = dur
-            self.state.trading_slowdown = min(risk_score * 0.75, 0.75)
-            effect.risk_reduction += risk_score * 0.40
-            effect.fomo_reduction = risk_score * 0.30
+            self.state.trading_slowdown = min(slowdown, 0.75)
+            effect.risk_reduction += self.state.trading_slowdown * 0.5
+            effect.fomo_reduction = self.state.trading_slowdown * 0.4
 
     def _apply_to_narrative_engine(self, engine, risk_score: float) -> InterventionEffectReport:
         """Apply narrative throttle and return verifiable effect report"""
@@ -377,18 +421,26 @@ class RegulatorAgent:
             step=self._step_count,
         )
 
-    def _apply_deescalation(self, new_intensity: InterventionIntensity):
-        """干预降级：逐步撤销干预动作"""
+    def _apply_deescalation(self, new_intensity: InterventionIntensity) -> bool:
+        """干预降级：逐步撤销干预动作。Returns True if de-escalation was applied."""
+        min_dur = self.profile.min_duration_strong if self._mode == "strong" else self.profile.min_duration_light
+        if self._steps_at_current_intensity < min_dur:
+            return False  # Don't de-escalate yet
+
+        persistence = self.profile.persistence_strong if self._mode == "strong" else self.profile.persistence_light
+        if self._steps_at_current_intensity < persistence:
+            return False  # Still within persistence window
+
         if new_intensity.value <= InterventionIntensity.LIGHT.value:
-            # MODERATE->LIGHT: 只保留 throttle + warning
             self.state.kol_penalty = 1.0
         if new_intensity == InterventionIntensity.NONE:
-            # 完全撤销
             self.state.narrative_cap = 1.0
             self.state.kol_penalty = 1.0
             self.state.trading_slowdown = 0.0
             self.state.warning_active = False
             self.state.investor_fear_factor = 0.0
+        self._steps_at_current_intensity = 0
+        return True
 
     def get_summary(self) -> Dict:
         """干预历史摘要"""
