@@ -1,0 +1,59 @@
+id: C06
+name: negative_reflexivity_spiral
+category: reflexivity
+seed: 42
+steps: 100
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.22
+  noise_std: 0.010
+  total_agents: 100
+emotion:
+  initial_fear: 0.45
+  initial_greed: 0.25
+  fear_inertia: 0.90
+  greed_inertia: 0.94
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 35
+  n_retail_agent: 55
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "行业监管政策收紧预期"
+    category: REGULATORY
+    polarity: NEGATIVE
+    sector: finance
+    intensity: 0.80
+    credibility: 0.75
+    novelty: 0.85
+    duration: 80
+  - step: 15
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2"]
+  - step: 30
+    type: price_feedback
+    price_change: -0.02
+    confirmation_strength: 0.65
+  - step: 50
+    type: price_feedback
+    price_change: -0.03
+    confirmation_strength: 0.75
+  - step: 65
+    type: narrative_inject
+    narrative: "更多企业受政策影响"
+    category: REGULATORY
+    polarity: NEGATIVE
+    sector: finance
+    intensity: 0.75
+    credibility: 0.70
+    novelty: 0.60
+    duration: 30
+expected:
+  peak_bubble_risk_min: 0.15
+failure_modes:
+  - negative_spiral_not_observed
+  - price_never_drops

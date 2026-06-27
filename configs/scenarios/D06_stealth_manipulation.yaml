@@ -1,0 +1,67 @@
+id: D06
+name: stealth_manipulation
+category: risk_identification
+seed: 42
+steps: 90
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.18
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.20
+  initial_greed: 0.45
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 15
+  n_trend_follower: 30
+  n_retail_agent: 55
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "行业小幅利好"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.55
+    credibility: 0.60
+    novelty: 0.70
+    duration: 70
+  - step: 15
+    type: kol_spread
+    kol_ids: ["influencer_0"]
+  - step: 25
+    type: narrative_inject
+    narrative: "行业数据继续向好"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.60
+    credibility: 0.55
+    novelty: 0.50
+    duration: 50
+  - step: 35
+    type: kol_spread
+    kol_ids: ["influencer_1"]
+  - step: 45
+    type: narrative_inject
+    narrative: "分析称还有上涨空间"
+    category: SENTIMENT
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.65
+    credibility: 0.50
+    novelty: 0.35
+    duration: 40
+  - step: 55
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1"]
+expected:
+  peak_price_min: 101.0
+failure_modes:
+  - stealth_manipulation_undetectable
+  - gradual_pump_not_observed

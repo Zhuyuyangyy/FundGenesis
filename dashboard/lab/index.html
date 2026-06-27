@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflexivity Lab — ReflexMarket-AI</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   REFLEXIVITY LAB — Retro-Futuristic Control Room Aesthetic
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --bg-deep: #0a0c0f;
+  --bg-panel: #0d1117;
+  --bg-panel-inner: #080b10;
+  --border-dim: #1a2332;
+  --border-glow: #1e3a4f;
+  --green-phosphor: #00ff88;
+  --green-dim: #00aa5c;
+  --green-glow: rgba(0, 255, 136, 0.15);
+  --amber-phosphor: #ffb000;
+  --amber-dim: #b87d00;
+  --amber-glow: rgba(255, 176, 0, 0.15);
+  --cyan-phosphor: #00e5ff;
+  --cyan-dim: #009db3;
+  --cyan-glow: rgba(0, 229, 255, 0.15);
+  --red-phosphor: #ff3355;
+  --red-dim: #b3223b;
+  --red-glow: rgba(255, 51, 85, 0.15);
+  --text-primary: #c8d6e5;
+  --text-dim: #5c6e82;
+  --text-mono: #8a9bb0;
+  --grid-line: rgba(0, 255, 136, 0.04);
+  --scanline-opacity: 0.03;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  font-size: 13px;
+}
+
+/* Scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+    rgba(0, 0, 0, var(--scanline-opacity)) 4px
+  );
+}
+
+/* Grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ─── HEADER ─── */
+.header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: linear-gradient(180deg, rgba(13, 17, 23, 0.98), rgba(13, 17, 23, 0.9));
+  border-bottom: 1px solid var(--border-glow);
+  height: 48px;
+}
+
+.header-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--green-phosphor), var(--cyan-phosphor));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.3));
+}
+
+.header-subtitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-phosphor);
+  box-shadow: 0 0 6px var(--green-phosphor);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.status-dot.amber { background: var(--amber-phosphor); box-shadow: 0 0 6px var(--amber-phosphor); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ─── DASHBOARD GRID ─── */
+.dashboard {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr auto;
+  gap: 6px;
+  padding: 6px;
+  height: calc(100vh - 48px);
+}
+
+.panel {
+  position: relative;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-dim);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top left, rgba(0, 255, 136, 0.02), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(0, 229, 255, 0.02), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--border-dim);
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cyan-phosphor);
+  position: relative;
+  z-index: 1;
+}
+
+.panel-header .indicator {
+  width: 4px; height: 4px;
+  background: var(--green-phosphor);
+  box-shadow: 0 0 4px var(--green-phosphor);
+  border-radius: 50%;
+}
+
+.panel-body {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Panel grid placement */
+.panel-loop   { grid-column: 1; grid-row: 1; }
+.panel-kol    { grid-column: 2; grid-row: 1; }
+.panel-agent  { grid-column: 1; grid-row: 2; }
+.panel-risk   { grid-column: 2; grid-row: 2; }
+.panel-god    { grid-column: 1 / -1; grid-row: 3; }
+
+/* ─── PANEL 1: REFLEXIVITY LOOP ─── */
+.loop-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loop-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.loop-node-group { cursor: default; }
+
+.loop-node {
+  transition: all 0.6s ease;
+}
+
+.loop-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  font-weight: bold;
+  fill: var(--green-phosphor);
+}
+
+.loop-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  fill: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+.loop-direction {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.loop-arrow {
+  stroke: var(--border-glow);
+  stroke-width: 1.5;
+  fill: none;
+  marker-end: url(#arrowhead);
+}
+
+.loop-arrow-glow {
+  stroke: rgba(0, 255, 136, 0.15);
+  stroke-width: 4;
+  fill: none;
+}
+
+/* ─── PANEL 2: KOL NETWORK ─── */
+.kol-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kol-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kol-node {
+  transition: all 0.6s ease;
+  cursor: pointer;
+}
+
+.kol-node:hover {
+  filter: brightness(1.4) drop-shadow(0 0 8px currentColor);
+}
+
+.kol-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  fill: var(--text-dim);
+  pointer-events: none;
+}
+
+.kol-tier-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  fill: var(--cyan-dim);
+  letter-spacing: 2px;
+}
+
+.kol-edge {
+  stroke: rgba(0, 229, 255, 0.08);
+  fill: none;
+  transition: stroke 0.6s ease;
+}
+
+/* ─── PANEL 3: AGENT BEHAVIOR ─── */
+.agent-container {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  justify-content: center;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  width: 140px;
+  text-align: right;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-dim);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1), background 0.6s ease;
+  position: relative;
+}
+
+.bar-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+.bar-fill.green {
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), var(--green-phosphor));
+  box-shadow: inset 0 0 12px rgba(0, 255, 136, 0.15);
+}
+
+.bar-fill.amber {
+  background: linear-gradient(90deg, rgba(255, 176, 0, 0.1), var(--amber-phosphor));
+  box-shadow: inset 0 0 12px rgba(255, 176, 0, 0.15);
+}
+
+.bar-fill.red {
+  background: linear-gradient(90deg, rgba(255, 51, 85, 0.1), var(--red-phosphor));
+  box-shadow: inset 0 0 12px rgba(255, 51, 85, 0.15);
+}
+
+.bar-fill.cyan {
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.1), var(--cyan-phosphor));
+  box-shadow: inset 0 0 12px rgba(0, 229, 255, 0.15);
+}
+
+.bar-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--text-mono);
+  width: 48px;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+/* ─── PANEL 4: RISK RADAR ─── */
+.radar-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.radar-axis {
+  stroke: var(--border-dim);
+  stroke-width: 0.5;
+}
+
+.radar-grid-ring {
+  fill: none;
+  stroke: var(--border-dim);
+  stroke-width: 0.5;
+  stroke-dasharray: 2, 4;
+}
+
+.radar-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  fill: var(--text-dim);
+}
+
+.radar-value-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  fill: var(--amber-phosphor);
+}
+
+.radar-polygon {
+  fill: rgba(255, 176, 0, 0.08);
+  stroke: var(--amber-phosphor);
+  stroke-width: 1.5;
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.radar-dot {
+  fill: var(--amber-phosphor);
+  filter: drop-shadow(0 0 3px var(--amber-phosphor));
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── PANEL 5: GOD CONSOLE ─── */
+.god-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.god-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.god-section-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.god-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border: 1px solid var(--border-glow);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-mono);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.god-btn:hover {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--green-dim);
+  color: var(--green-phosphor);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
+}
+
+.god-btn:active {
+  background: rgba(0, 255, 136, 0.2);
+  transform: scale(0.97);
+}
+
+.god-btn.narrative-pos { border-color: var(--green-dim); color: var(--green-phosphor); }
+.god-btn.narrative-pos:hover { background: rgba(0, 255, 136, 0.15); box-shadow: 0 0 12px rgba(0, 255, 136, 0.2); }
+
+.god-btn.narrative-neg { border-color: var(--red-dim); color: var(--red-phosphor); }
+.god-btn.narrative-neg:hover { background: rgba(255, 51, 85, 0.15); box-shadow: 0 0 12px rgba(255, 51, 85, 0.2); }
+
+.god-btn.falsification { border-color: var(--amber-dim); color: var(--amber-phosphor); }
+.god-btn.falsification:hover { background: rgba(255, 176, 0, 0.15); box-shadow: 0 0 12px rgba(255, 176, 0, 0.2); }
+
+.god-btn.betrayal { border-color: var(--amber-dim); color: var(--amber-phosphor); }
+.god-btn.betrayal:hover { background: rgba(255, 176, 0, 0.15); box-shadow: 0 0 12px rgba(255, 176, 0, 0.2); }
+
+.god-btn.regulatory { border-color: var(--cyan-dim); color: var(--cyan-phosphor); }
+.god-btn.regulatory:hover { background: rgba(0, 229, 255, 0.15); box-shadow: 0 0 12px rgba(0, 229, 255, 0.2); }
+
+.god-select {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  padding: 5px 8px;
+  border: 1px solid var(--border-glow);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--cyan-phosphor);
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+}
+
+.god-select:focus {
+  border-color: var(--cyan-dim);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.15);
+}
+
+.god-select option {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+}
+
+.god-btn.export { border-color: var(--cyan-dim); color: var(--cyan-phosphor); }
+.god-btn.export:hover { background: rgba(0, 229, 255, 0.15); box-shadow: 0 0 12px rgba(0, 229, 255, 0.2); }
+
+.god-spacer { flex: 1; min-width: 8px; }
+
+.god-step {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  color: var(--green-phosphor);
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.god-step-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-right: 6px;
+}
+
+.god-speed-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.god-speed-slider {
+  -webkit-appearance: none;
+  width: 80px;
+  height: 3px;
+  background: var(--border-dim);
+  border-radius: 2px;
+  outline: none;
+}
+
+.god-speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--cyan-phosphor);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--cyan-phosphor);
+}
+
+.god-speed-val {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--cyan-phosphor);
+  min-width: 28px;
+}
+
+/* ─── PRICE TICKER ─── */
+.price-ticker {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  color: var(--green-phosphor);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+  letter-spacing: 1px;
+}
+
+/* ─── TOAST ─── */
+.toast-container {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toast {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  background: rgba(13, 17, 23, 0.95);
+  border: 1px solid var(--border-glow);
+  color: var(--green-phosphor);
+  animation: toast-in 0.3s ease, toast-out 0.3s ease 2.5s forwards;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.1);
+}
+
+.toast.amber { color: var(--amber-phosphor); border-color: var(--amber-dim); box-shadow: 0 0 12px rgba(255, 176, 0, 0.1); }
+.toast.red { color: var(--red-phosphor); border-color: var(--red-dim); box-shadow: 0 0 12px rgba(255, 51, 85, 0.1); }
+.toast.cyan { color: var(--cyan-phosphor); border-color: var(--cyan-dim); box-shadow: 0 0 12px rgba(0, 229, 255, 0.1); }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+/* ─── UTILITY ─── */
+.glow-text-green { text-shadow: 0 0 6px rgba(0, 255, 136, 0.4); }
+.glow-text-amber { text-shadow: 0 0 6px rgba(255, 176, 0, 0.4); }
+.glow-text-cyan  { text-shadow: 0 0 6px rgba(0, 229, 255, 0.4); }
+.glow-text-red   { text-shadow: 0 0 6px rgba(255, 51, 85, 0.4); }
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+.flicker { animation: flicker 4s infinite; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div>
+    <div class="header-title">Reflexivity Lab</div>
+    <div class="header-subtitle">ReflexMarket-AI Simulation Framework</div>
+  </div>
+  <div class="header-status">
+    <span class="price-ticker" id="priceTicker">$127.30</span>
+    <span><span class="status-dot"></span> LIVE</span>
+    <span id="clockDisplay">00:00:00</span>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD GRID ═══ -->
+<div class="dashboard">
+
+  <!-- PANEL 1: Reflexivity Loop -->
+  <div class="panel panel-loop">
+    <div class="panel-header">
+      <span class="indicator"></span>
+      Reflexivity Loop
+    </div>
+    <div class="panel-body">
+      <div class="loop-container" id="loopContainer"></div>
+    </div>
+  </div>
+
+  <!-- PANEL 2: KOL Propagation Network -->
+  <div class="panel panel-kol">
+    <div class="panel-header">
+      <span class="indicator"></span>
+      KOL Propagation Network
+    </div>
+    <div class="panel-body">
+      <div class="kol-container" id="kolContainer"></div>
+    </div>
+  </div>
+
+  <!-- PANEL 3: Agent Behavior -->
+  <div class="panel panel-agent">
+    <div class="panel-header">
+      <span class="indicator"></span>
+      Agent Behavior
+    </div>
+    <div class="panel-body">
+      <div class="agent-container" id="agentContainer"></div>
+    </div>
+  </div>
+
+  <!-- PANEL 4: Risk Radar -->
+  <div class="panel panel-risk">
+    <div class="panel-header">
+      <span class="indicator"></span>
+      Risk Radar
+    </div>
+    <div class="panel-body">
+      <div class="radar-container" id="radarContainer"></div>
+    </div>
+  </div>
+
+  <!-- PANEL 5: God Console -->
+  <div class="panel panel-god">
+    <div class="panel-header">
+      <span class="indicator"></span>
+      God Console
+    </div>
+    <div class="panel-body">
+      <div class="god-container" id="godContainer"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT — All Logic
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ─── MOCK DATA ───
+  let mockData = {
+    step: 42,
+    reflexivity: {
+      narrative_strength: 0.78,
+      belief_concentration: 0.55,
+      emotion_amplification: 0.65,
+      order_imbalance: 0.42,
+      price_momentum: 0.31,
+      narrative_confirmation: 0.58,
+    },
+    kol: {
+      macro: [
+        {id: "M1", belief: 0.8, influence: 0.9},
+        {id: "M2", belief: 0.6, influence: 0.85}
+      ],
+      influencer: Array(5).fill(null).map((_, i) => ({id: `I${i}`, belief: Math.random()*0.6-0.1, influence: 0.5+Math.random()*0.3})),
+      micro: Array(10).fill(null).map((_, i) => ({id: `M${i}`, belief: Math.random()*0.4-0.1, influence: 0.2+Math.random()*0.3})),
+      retail: Array(100).fill(null).map((_, i) => ({id: `R${i}`, belief: Math.random()*0.2-0.05, influence: 0.05+Math.random()*0.1})),
+    },
+    agents: {
+      buy_ratio: 0.62, sell_ratio: 0.25, hold_ratio: 0.13,
+      retail_buy_pressure: 0.71, trend_following_strength: 0.55, value_investor_resistance: 0.40,
+    },
+    risk: {
+      bubble_risk: 0.45, panic_risk: 0.15, manipulation_risk: 0.35,
+      fomo_score: 0.52, kol_coordination: 0.28, self_validation: 0.31, abnormal_trust: 0.12,
+    },
+    price: 127.3,
+    regulation_mode: "light",
+  };
+
+  let previousReflexivity = { ...mockData.reflexivity };
+  let simSpeed = 1.0;
+  let simInterval = null;
+
+  // ─── UTILITY ───
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function randDelta(base, range) { return clamp(base + (Math.random() - 0.5) * range, 0, 1); }
+  function riskColor(val) {
+    if (val < 0.35) return '#00ff88';
+    if (val < 0.65) return '#ffb000';
+    return '#ff3355';
+  }
+  function riskClass(val) {
+    if (val < 0.35) return 'green';
+    if (val < 0.65) return 'amber';
+    return 'red';
+  }
+  function direction(current, previous) {
+    const diff = current - previous;
+    if (diff > 0.01) return { symbol: '↑', color: '#00ff88' };
+    if (diff < -0.01) return { symbol: '↓', color: '#ff3355' };
+    return { symbol: '→', color: '#ffb000' };
+  }
+  function beliefColor(b) {
+    if (b < -0.05) return '#3b8bff';
+    if (b > 0.2) return '#ff3355';
+    return '#6b7d92';
+  }
+
+  // ─── TOAST ───
+  function showToast(msg, type = '') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.textContent = msg;
+    container.appendChild(toast);
+    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
+  }
+
+  // ─── CLOCK ───
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clockDisplay').textContent =
+      now.toTimeString().split(' ')[0];
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ─── DATA EVOLUTION ───
+  function evolveData() {
+    previousReflexivity = { ...mockData.reflexivity };
+    mockData.step++;
+
+    // Reflexivity values drift
+    const r = mockData.reflexivity;
+    r.narrative_strength = randDelta(r.narrative_strength, 0.08);
+    r.belief_concentration = randDelta(r.belief_concentration, 0.06);
+    r.emotion_amplification = randDelta(r.emotion_amplification, 0.07);
+    r.order_imbalance = randDelta(r.order_imbalance, 0.05);
+    r.price_momentum = randDelta(r.price_momentum, 0.06);
+    r.narrative_confirmation = randDelta(r.narrative_confirmation, 0.05);
+
+    // KOL drift
+    ['macro', 'influencer', 'micro', 'retail'].forEach(tier => {
+      mockData.kol[tier].forEach(n => {
+        n.belief = clamp(n.belief + (Math.random() - 0.5) * 0.06, -0.3, 0.9);
+      });
+    });
+
+    // Agent drift
+    const a = mockData.agents;
+    a.buy_ratio = randDelta(a.buy_ratio, 0.05);
+    a.sell_ratio = randDelta(a.sell_ratio, 0.04);
+    a.hold_ratio = 1 - a.buy_ratio - a.sell_ratio;
+    a.hold_ratio = clamp(a.hold_ratio, 0, 1);
+    a.retail_buy_pressure = randDelta(a.retail_buy_pressure, 0.06);
+    a.trend_following_strength = randDelta(a.trend_following_strength, 0.05);
+    a.value_investor_resistance = randDelta(a.value_investor_resistance, 0.04);
+
+    // Risk drift
+    const rk = mockData.risk;
+    rk.bubble_risk = randDelta(rk.bubble_risk, 0.04);
+    rk.panic_risk = randDelta(rk.panic_risk, 0.05);
+    rk.manipulation_risk = randDelta(rk.manipulation_risk, 0.03);
+    rk.fomo_score = randDelta(rk.fomo_score, 0.05);
+    rk.kol_coordination = randDelta(rk.kol_coordination, 0.04);
+    rk.self_validation = randDelta(rk.self_validation, 0.03);
+    rk.abnormal_trust = randDelta(rk.abnormal_trust, 0.04);
+
+    // Price drift
+    mockData.price = clamp(mockData.price + (Math.random() - 0.48) * 2, 50, 300);
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // PANEL 1: REFLEXIVITY LOOP
+  // ═══════════════════════════════════════════════════════════
+  function renderReflexivityLoop() {
+    const container = document.getElementById('loopContainer');
+    const rect = container.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    if (w === 0 || h === 0) return;
+
+    const cx = w / 2;
+    const cy = h / 2;
+    const radius = Math.min(w, h) * 0.34;
+
+    const nodes = [
+      { key: 'narrative_strength', label: 'NARRATIVE\nSTRENGTH' },
+      { key: 'belief_concentration', label: 'BELIEF\nCONCENTRATION' },
+      { key: 'emotion_amplification', label: 'EMOTION\nAMPLIFICATION' },
+      { key: 'order_imbalance', label: 'ORDER\nIMBALANCE' },
+      { key: 'price_momentum', label: 'PRICE\nMOMENTUM' },
+      { key: 'narrative_confirmation', label: 'NARRATIVE\nCONFIRMATION' },
+    ];
+
+    const angles = nodes.map((_, i) => (i / nodes.length) * Math.PI * 2 - Math.PI / 2);
+
+    let svg = `<svg class="loop-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">`;
+
+    // Defs
+    svg += `<defs>
+      <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
+        <polygon points="0 0, 6 2, 0 4" fill="#1e3a4f" />
+      </marker>
+      <filter id="glow-green"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="glow-amber"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>`;
+
+    // Center decoration
+    svg += `<circle cx="${cx}" cy="${cy}" r="12" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="0.5"/>`;
+    svg += `<circle cx="${cx}" cy="${cy}" r="4" fill="rgba(0,255,136,0.15)"/>`;
+    svg += `<text x="${cx}" y="${cy + 28}" text-anchor="middle" font-family="Orbitron" font-size="7" fill="#5c6e82" letter-spacing="2">CYCLE</text>`;
+
+    // Arrows between nodes
+    for (let i = 0; i < nodes.length; i++) {
+      const from = i;
+      const to = (i + 1) % nodes.length;
+      const fa = angles[from];
+      const ta = angles[to];
+      const nodeR = 30;
+      const x1 = cx + Math.cos(fa) * (radius + nodeR * 0.3);
+      const y1 = cy + Math.sin(fa) * (radius + nodeR * 0.3);
+      const x2 = cx + Math.cos(ta) * (radius + nodeR * 0.3);
+      const y2 = cy + Math.sin(ta) * (radius + nodeR * 0.3);
+
+      // Curved arrow
+      const midAngle = (fa + ta) / 2;
+      const outerR = radius + nodeR * 1.4;
+      const mx = cx + Math.cos(midAngle) * outerR;
+      const my = cy + Math.sin(midAngle) * outerR;
+      svg += `<path d="M${x1},${y1} Q${mx},${my} ${x2},${y2}" class="loop-arrow-glow"/>`;
+      svg += `<path d="M${x1},${y1} Q${mx},${my} ${x2},${y2}" class="loop-arrow"/>`;
+    }
+
+    // Nodes
+    nodes.forEach((node, i) => {
+      const angle = angles[i];
+      const nx = cx + Math.cos(angle) * radius;
+      const ny = cy + Math.sin(angle) * radius;
+      const val = mockData.reflexivity[node.key];
+      const prev = previousReflexivity[node.key];
+      const dir = direction(val, prev);
+      const color = riskColor(val);
+      const lines = node.label.split('\n');
+
+      // Glow circle
+      svg += `<circle cx="${nx}" cy="${ny}" r="28" fill="none" stroke="${color}" stroke-width="0.5" opacity="0.3"/>`;
+
+      // Node circle
+      svg += `<circle cx="${nx}" cy="${ny}" r="24" fill="rgba(0,0,0,0.6)" stroke="${color}" stroke-width="1.5" class="loop-node"/>`;
+
+      // Value
+      svg += `<text x="${nx}" y="${ny + 3}" text-anchor="middle" class="loop-value" fill="${color}">${val.toFixed(2)}</text>`;
+
+      // Direction arrow
+      svg += `<text x="${nx + 30}" y="${ny - 14}" text-anchor="middle" class="loop-direction" fill="${dir.color}">${dir.symbol}</text>`;
+
+      // Label
+      lines.forEach((line, li) => {
+        svg += `<text x="${nx}" y="${ny + 44 + li * 10}" text-anchor="middle" class="loop-label">${line}</text>`;
+      });
+
+      // Small arc segment showing value
+      const arcStart = angle - 0.5;
+      const arcEnd = angle - 0.5 + val * 1.0;
+      const arcR = 20;
+      const asx = nx + Math.cos(arcStart) * arcR;
+      const asy = ny + Math.sin(arcStart) * arcR;
+      const aex = nx + Math.cos(arcEnd) * arcR;
+      const aey = ny + Math.sin(arcEnd) * arcR;
+      svg += `<path d="M${asx},${asy} A${arcR},${arcR} 0 0,1 ${aex},${aey}" fill="none" stroke="${color}" stroke-width="2.5" opacity="0.6"/>`;
+    });
+
+    svg += '</svg>';
+    container.innerHTML = svg;
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // PANEL 2: KOL PROPAGATION NETWORK
+  // ═══════════════════════════════════════════════════════════
+  function renderKOLNetwork() {
+    const container = document.getElementById('kolContainer');
+    const rect = container.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    if (w === 0 || h === 0) return;
+
+    const cx = w / 2;
+    const cy = h / 2;
+
+    let svg = `<svg class="kol-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">`;
+
+    // Tier radii
+    const tiers = [
+      { key: 'macro', radius: Math.min(w, h) * 0.12, nodeR: 14, labelR: Math.min(w, h) * 0.06 },
+      { key: 'influencer', radius: Math.min(w, h) * 0.24, nodeR: 9, labelR: Math.min(w, h) * 0.18 },
+      { key: 'micro', radius: Math.min(w, h) * 0.36, nodeR: 6, labelR: Math.min(w, h) * 0.30 },
+      { key: 'retail', radius: Math.min(w, h) * 0.45, nodeR: 2.5, labelR: 0 },
+    ];
+
+    // Tier orbit rings
+    tiers.forEach((tier, ti) => {
+      svg += `<circle cx="${cx}" cy="${cy}" r="${tier.radius}" fill="none" stroke="rgba(0,229,255,0.06)" stroke-width="0.5" stroke-dasharray="3,6"/>`;
+
+      // Tier label
+      if (tier.labelR > 0) {
+        svg += `<text x="${cx}" y="${cy - tier.labelR - 2}" text-anchor="middle" class="kol-tier-label">${tier.key.toUpperCase()}</text>`;
+      }
+    });
+
+    // Position nodes
+    const allPositions = {};
+
+    tiers.forEach(tier => {
+      const nodes = mockData.kol[tier.key];
+      nodes.forEach((node, i) => {
+        const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2 + (tier.key === 'influencer' ? 0.3 : tier.key === 'micro' ? 0.15 : 0);
+        const nx = cx + Math.cos(angle) * tier.radius;
+        const ny = cy + Math.sin(angle) * tier.radius;
+        allPositions[node.id] = { x: nx, y: ny, tier: tier.key };
+
+        // Edges from this node to random nodes in next tier
+        const tierOrder = ['macro', 'influencer', 'micro', 'retail'];
+        const tierIdx = tierOrder.indexOf(tier.key);
+        if (tierIdx < tierOrder.length - 1) {
+          const nextTier = tierOrder[tierIdx + 1];
+          const nextNodes = mockData.kol[nextTier];
+          // Connect to 2-3 next-tier nodes
+          const connectCount = tier.key === 'retail' ? 0 : (tier.key === 'macro' ? 3 : 2);
+          for (let c = 0; c < connectCount && c < nextNodes.length; c++) {
+            const targetIdx = (i * 7 + c * 3) % nextNodes.length;
+            const target = nextNodes[targetIdx];
+            if (allPositions[target.id]) {
+              const trust = 0.2 + Math.random() * 0.6;
+              svg += `<line x1="${nx}" y1="${ny}" x2="${allPositions[target.id].x}" y2="${allPositions[target.id].y}" class="kol-edge" stroke-width="${trust * 1.5}"/>`;
+            }
+          }
+        }
+      });
+    });
+
+    // Draw nodes (on top of edges)
+    tiers.forEach(tier => {
+      const nodes = mockData.kol[tier.key];
+      nodes.forEach((node, i) => {
+        const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2 + (tier.key === 'influencer' ? 0.3 : tier.key === 'micro' ? 0.15 : 0);
+        const nx = cx + Math.cos(angle) * tier.radius;
+        const ny = cy + Math.sin(angle) * tier.radius;
+        const color = beliefColor(node.belief);
+        const r = tier.nodeR * (0.7 + node.influence * 0.5);
+
+        // Glow
+        if (tier.key !== 'retail') {
+          svg += `<circle cx="${nx}" cy="${ny}" r="${r + 4}" fill="none" stroke="${color}" stroke-width="0.5" opacity="0.2"/>`;
+        }
+
+        // Node
+        svg += `<circle cx="${nx}" cy="${ny}" r="${r}" fill="${color}" opacity="${tier.key === 'retail' ? 0.5 : 0.8}" class="kol-node"/>`;
+
+        // Label for macro & influencer
+        if (tier.key === 'macro' || tier.key === 'influencer') {
+          svg += `<text x="${nx}" y="${ny + 3}" text-anchor="middle" class="kol-label" fill="rgba(255,255,255,0.8)" font-size="${tier.key === 'macro' ? 8 : 7}">${node.id}</text>`;
+        }
+      });
+    });
+
+    // Legend
+    const legX = 12;
+    const legY = h - 40;
+    svg += `<rect x="${legX}" y="${legY}" width="110" height="36" fill="rgba(0,0,0,0.5)" stroke="rgba(30,58,79,0.5)" rx="2"/>`;
+    svg += `<circle cx="${legX + 12}" cy="${legY + 10}" r="4" fill="#3b8bff"/>`;
+    svg += `<text x="${legX + 22}" y="${legY + 13}" class="kol-label" font-size="8">Negative</text>`;
+    svg += `<circle cx="${legX + 65}" cy="${legY + 10}" r="4" fill="#6b7d92"/>`;
+    svg += `<text x="${legX + 75}" y="${legY + 13}" class="kol-label" font-size="8">Neutral</text>`;
+    svg += `<circle cx="${legX + 12}" cy="${legY + 26}" r="4" fill="#ff3355"/>`;
+    svg += `<text x="${legX + 22}" y="${legY + 29}" class="kol-label" font-size="8">Positive</text>`;
+    svg += `<text x="${legX + 55}" y="${legY + 29}" class="kol-label" font-size="7" fill="#5c6e82">belief → color</text>`;
+
+    svg += '</svg>';
+    container.innerHTML = svg;
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // PANEL 3: AGENT BEHAVIOR
+  // ═══════════════════════════════════════════════════════════
+  function renderAgentBehavior() {
+    const container = document.getElementById('agentContainer');
+    const a = mockData.agents;
+
+    const bars = [
+      { key: 'buy_ratio', label: 'BUY RATIO', value: a.buy_ratio, cls: 'green' },
+      { key: 'sell_ratio', label: 'SELL RATIO', value: a.sell_ratio, cls: 'red' },
+      { key: 'hold_ratio', label: 'HOLD RATIO', value: a.hold_ratio, cls: 'cyan' },
+      { key: 'retail_buy_pressure', label: 'RETAIL BUY PRESSURE', value: a.retail_buy_pressure, cls: 'amber' },
+      { key: 'trend_following_strength', label: 'TREND FOLLOWING', value: a.trend_following_strength, cls: 'green' },
+      { key: 'value_investor_resistance', label: 'VALUE RESISTANCE', value: a.value_investor_resistance, cls: 'cyan' },
+    ];
+
+    let html = '';
+    bars.forEach(bar => {
+      const pct = (bar.value * 100).toFixed(1);
+      html += `
+        <div class="bar-row">
+          <span class="bar-label">${bar.label}</span>
+          <div class="bar-track">
+            <div class="bar-fill ${bar.cls}" style="width: ${bar.value * 100}%"></div>
+          </div>
+          <span class="bar-value">${pct}%</span>
+        </div>`;
+    });
+
+    container.innerHTML = html;
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // PANEL 4: RISK RADAR
+  // ═══════════════════════════════════════════════════════════
+  function renderRiskRadar() {
+    const container = document.getElementById('radarContainer');
+    const rect = container.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    if (w === 0 || h === 0) return;
+
+    const cx = w / 2;
+    const cy = h / 2;
+    const radius = Math.min(w, h) * 0.36;
+
+    const axes = [
+      { key: 'bubble_risk', label: 'BUBBLE' },
+      { key: 'panic_risk', label: 'PANIC' },
+      { key: 'manipulation_risk', label: 'MANIPULATION' },
+      { key: 'fomo_score', label: 'FOMO' },
+      { key: 'kol_coordination', label: 'KOL COORD' },
+      { key: 'self_validation', label: 'SELF-VALID' },
+      { key: 'abnormal_trust', label: 'ABN TRUST' },
+    ];
+
+    const n = axes.length;
+    const angles = axes.map((_, i) => (i / n) * Math.PI * 2 - Math.PI / 2);
+
+    let svg = `<svg class="radar-svg" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">`;
+
+    // Grid rings
+    for (let ring = 0.25; ring <= 1.0; ring += 0.25) {
+      const r = radius * ring;
+      let points = '';
+      for (let i = 0; i < n; i++) {
+        const px = cx + Math.cos(angles[i]) * r;
+        const py = cy + Math.sin(angles[i]) * r;
+        points += `${px},${py} `;
+      }
+      svg += `<polygon points="${points.trim()}" class="radar-grid-ring"/>`;
+
+      // Ring value label
+      svg += `<text x="${cx + 4}" y="${cy - r + 3}" font-family="Share Tech Mono" font-size="7" fill="#3a4a5c">${ring.toFixed(2)}</text>`;
+    }
+
+    // Axis lines
+    angles.forEach(angle => {
+      const ex = cx + Math.cos(angle) * radius;
+      const ey = cy + Math.sin(angle) * radius;
+      svg += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" class="radar-axis"/>`;
+    });
+
+    // Data polygon
+    let polyPoints = '';
+    const dataPoints = [];
+    axes.forEach((axis, i) => {
+      const val = mockData.risk[axis.key];
+      const r = radius * val;
+      const px = cx + Math.cos(angles[i]) * r;
+      const py = cy + Math.sin(angles[i]) * r;
+      polyPoints += `${px},${py} `;
+      dataPoints.push({ x: px, y: py, val, axis });
+    });
+
+    svg += `<polygon points="${polyPoints.trim()}" class="radar-polygon"/>`;
+
+    // Data dots and labels
+    dataPoints.forEach(dp => {
+      svg += `<circle cx="${dp.x}" cy="${dp.y}" r="3" class="radar-dot"/>`;
+
+      // Label
+      const labelAngle = angles[axes.indexOf(dp.axis)];
+      const labelR = radius + 16;
+      const lx = cx + Math.cos(labelAngle) * labelR;
+      const ly = cy + Math.sin(labelAngle) * labelR;
+      const anchor = Math.abs(Math.cos(labelAngle)) < 0.1 ? 'middle' : (Math.cos(labelAngle) > 0 ? 'start' : 'end');
+      svg += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" class="radar-label">${dp.axis.label}</text>`;
+
+      // Value
+      const valR = radius + 6;
+      const vx = cx + Math.cos(labelAngle) * (radius * dp.val + 8);
+      const vy = cy + Math.sin(labelAngle) * (radius * dp.val + 8);
+      svg += `<text x="${vx}" y="${vy + 3}" text-anchor="middle" class="radar-value-label">${dp.val.toFixed(2)}</text>`;
+    });
+
+    // Overall risk indicator at center
+    const avgRisk = Object.values(mockData.risk).reduce((s, v) => s + v, 0) / axes.length;
+    const riskCol = riskColor(avgRisk);
+    svg += `<circle cx="${cx}" cy="${cy}" r="8" fill="rgba(0,0,0,0.6)" stroke="${riskCol}" stroke-width="1"/>`;
+    svg += `<text x="${cx}" y="${cy + 3}" text-anchor="middle" font-family="Share Tech Mono" font-size="8" fill="${riskCol}">${avgRisk.toFixed(2)}</text>`;
+
+    svg += '</svg>';
+    container.innerHTML = svg;
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // PANEL 5: GOD CONSOLE
+  // ═══════════════════════════════════════════════════════════
+  function renderGodConsole() {
+    const container = document.getElementById('godContainer');
+
+    container.innerHTML = `
+      <div class="god-section">
+        <span class="god-step-label">STEP</span>
+        <span class="god-step" id="stepCounter">${String(mockData.step).padStart(5, '0')}</span>
+      </div>
+      <div class="god-section">
+        <button class="god-btn narrative-pos" onclick="window._godAction('pos_narrative')">▲ Positive Narrative</button>
+        <button class="god-btn narrative-neg" onclick="window._godAction('neg_narrative')">▼ Negative Narrative</button>
+        <button class="god-btn falsification" onclick="window._godAction('falsification')">⚡ Falsification</button>
+        <button class="god-btn betrayal" onclick="window._godAction('betrayal')">⚔ KOL Betrayal</button>
+        <button class="god-btn regulatory" onclick="window._godAction('regulatory')">⚠ Regulatory Warning</button>
+      </div>
+      <div class="god-section">
+        <span class="god-section-label">Regulation</span>
+        <select class="god-select" id="regulationSelect" onchange="window._godRegulation(this.value)">
+          <option value="light" ${mockData.regulation_mode === 'light' ? 'selected' : ''}>Light</option>
+          <option value="strong" ${mockData.regulation_mode === 'strong' ? 'selected' : ''}>Strong</option>
+          <option value="adaptive" ${mockData.regulation_mode === 'adaptive' ? 'selected' : ''}>Adaptive</option>
+        </select>
+      </div>
+      <div class="god-section god-speed-group">
+        <span class="god-section-label">Speed</span>
+        <input type="range" class="god-speed-slider" id="speedSlider" min="0.25" max="4" step="0.25" value="${simSpeed}" oninput="window._godSpeed(this.value)">
+        <span class="god-speed-val" id="speedVal">${simSpeed.toFixed(1)}x</span>
+      </div>
+      <div class="god-spacer"></div>
+      <div class="god-section">
+        <button class="god-btn export" onclick="window._godExport()">◆ Export Run</button>
+      </div>
+    `;
+  }
+
+  // God actions
+  window._godAction = function(action) {
+    const r = mockData.reflexivity;
+    const rk = mockData.risk;
+    switch(action) {
+      case 'pos_narrative':
+        r.narrative_strength = clamp(r.narrative_strength + 0.15, 0, 1);
+        r.emotion_amplification = clamp(r.emotion_amplification + 0.08, 0, 1);
+        rk.fomo_score = clamp(rk.fomo_score + 0.12, 0, 1);
+        mockData.agents.buy_ratio = clamp(mockData.agents.buy_ratio + 0.08, 0, 1);
+        showToast('INJECTED: Positive narrative surge', 'green');
+        break;
+      case 'neg_narrative':
+        r.narrative_strength = clamp(r.narrative_strength - 0.15, 0, 1);
+        r.emotion_amplification = clamp(r.emotion_amplification + 0.1, 0, 1);
+        rk.panic_risk = clamp(rk.panic_risk + 0.15, 0, 1);
+        mockData.agents.sell_ratio = clamp(mockData.agents.sell_ratio + 0.1, 0, 1);
+        showToast('INJECTED: Negative narrative shock', 'red');
+        break;
+      case 'falsification':
+        r.belief_concentration = clamp(r.belief_concentration - 0.12, 0, 1);
+        r.narrative_confirmation = clamp(r.narrative_confirmation - 0.1, 0, 1);
+        rk.bubble_risk = clamp(rk.bubble_risk - 0.1, 0, 1);
+        showToast('EVENT: Falsification event triggered', 'amber');
+        break;
+      case 'betrayal':
+        rk.kol_coordination = clamp(rk.kol_coordination - 0.2, 0, 1);
+        rk.manipulation_risk = clamp(rk.manipulation_risk + 0.15, 0, 1);
+        // Flip one macro belief
+        if (mockData.kol.macro.length > 0) {
+          const target = mockData.kol.macro[Math.floor(Math.random() * mockData.kol.macro.length)];
+          target.belief = -target.belief;
+        }
+        showToast('EVENT: KOL betrayal — macro node flipped', 'amber');
+        break;
+      case 'regulatory':
+        r.order_imbalance = clamp(r.order_imbalance - 0.1, 0, 1);
+        rk.manipulation_risk = clamp(rk.manipulation_risk - 0.12, 0, 1);
+        rk.bubble_risk = clamp(rk.bubble_risk - 0.08, 0, 1);
+        mockData.agents.retail_buy_pressure = clamp(mockData.agents.retail_buy_pressure - 0.1, 0, 1);
+        showToast('WARNING: Regulatory intervention applied', 'cyan');
+        break;
+    }
+    renderAll();
+  };
+
+  window._godRegulation = function(mode) {
+    mockData.regulation_mode = mode;
+    showToast(`Regulation mode → ${mode.toUpperCase()}`, 'cyan');
+  };
+
+  window._godSpeed = function(val) {
+    simSpeed = parseFloat(val);
+    document.getElementById('speedVal').textContent = simSpeed.toFixed(1) + 'x';
+    restartSimInterval();
+  };
+
+  window._godExport = function() {
+    const blob = new Blob([JSON.stringify(mockData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reflexivity-run-step${mockData.step}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast(`Exported run data at step ${mockData.step}`, 'cyan');
+  };
+
+  // ─── UPDATE STEP COUNTER ───
+  function updateStepCounter() {
+    const el = document.getElementById('stepCounter');
+    if (el) el.textContent = String(mockData.step).padStart(5, '0');
+  }
+
+  // ─── PRICE TICKER ───
+  function updatePriceTicker() {
+    const el = document.getElementById('priceTicker');
+    if (el) {
+      const change = mockData.price >= 0 ? '+' : '';
+      el.textContent = `$${mockData.price.toFixed(2)}`;
+    }
+  }
+
+  // ─── RENDER ALL ───
+  function renderAll() {
+    renderReflexivityLoop();
+    renderKOLNetwork();
+    renderAgentBehavior();
+    renderRiskRadar();
+    updateStepCounter();
+    updatePriceTicker();
+  }
+
+  // ─── SIMULATION TICK ───
+  function simTick() {
+    evolveData();
+    renderAll();
+  }
+
+  // ─── INTERVAL MANAGEMENT ───
+  function restartSimInterval() {
+    if (simInterval) clearInterval(simInterval);
+    const ms = Math.max(200, Math.round(2000 / simSpeed));
+    simInterval = setInterval(simTick, ms);
+  }
+
+  // ─── INIT ───
+  function init() {
+    renderGodConsole();
+    renderAll();
+    restartSimInterval();
+  }
+
+  // Wait for layout to settle
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(init, 100));
+  } else {
+    setTimeout(init, 100);
+  }
+
+  // Handle resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(renderAll, 200);
+  });
+
+})();
+</script>
+</body>
+</html>

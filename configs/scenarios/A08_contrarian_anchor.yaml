@@ -1,0 +1,46 @@
+id: A08
+name: contrarian_anchor
+category: core_mechanism
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.15
+  noise_std: 0.006
+  total_agents: 100
+emotion:
+  initial_fear: 0.25
+  initial_greed: 0.45
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 35
+  n_trend_follower: 20
+  n_retail_agent: 45
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "市场传闻利好消息"
+    category: SENTIMENT
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.75
+    credibility: 0.60
+    novelty: 0.70
+    duration: 60
+  - step: 15
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1"]
+  - step: 30
+    type: price_feedback
+    price_change: 0.01
+    confirmation_strength: 0.40
+expected:
+  peak_price_min: 100.0
+  bubble_risk_max: 0.50
+failure_modes:
+  - value_investors_fail_to_anchor
+  - bubble_despite_contrarians

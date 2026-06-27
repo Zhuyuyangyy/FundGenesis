@@ -1,0 +1,58 @@
+id: A07
+name: narrative_fatigue
+category: core_mechanism
+seed: 42
+steps: 100
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.20
+  initial_greed: 0.50
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 15
+  n_trend_follower: 25
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "行业利好消息"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.70
+    novelty: 0.80
+    duration: 30
+  - step: 30
+    type: narrative_inject
+    narrative: "类似利好再次出现"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.70
+    novelty: 0.40
+    duration: 30
+  - step: 55
+    type: narrative_inject
+    narrative: "第三次同类利好"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.70
+    novelty: 0.15
+    duration: 30
+expected:
+  peak_price_min: 102.0
+failure_modes:
+  - narrative_fatigue_not_observed
+  - price_always_same_response

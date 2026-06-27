@@ -15,9 +15,19 @@ from pathlib import Path
 from collections import defaultdict
 
 
-def load_csv(path: str) -> list[dict]:
-    with open(path, "r") as f:
-        return list(csv.DictReader(f))
+def load_data(path: str) -> list[dict]:
+    path = Path(path)
+    if path.suffix == ".jsonl":
+        rows = []
+        with open(path, "r") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    rows.append(json.loads(line))
+        return rows
+    else:
+        with open(path, "r") as f:
+            return list(csv.DictReader(f))
 
 
 def bootstrap_ci(values: list[float], n_bootstrap: int = 1000, ci: float = 0.95) -> dict:
@@ -42,14 +52,15 @@ def bootstrap_ci(values: list[float], n_bootstrap: int = 1000, ci: float = 0.95)
 
 
 def compute_bootstrap(summary_csv: str, output_json: str):
-    rows = load_csv(summary_csv)
+    rows = load_data(summary_csv)
     metrics = ["peak_bubble_risk", "bubble_high_risk_steps", "max_drawdown",
                "manipulation_high_risk_steps", "overall_high_risk_steps", "intervention_count"]
 
     results = {}
     by_scenario = defaultdict(list)
     for row in rows:
-        by_scenario[row["scenario_id"]].append(row)
+        sid = row.get("scenario_id", row.get("scenario", "unknown"))
+        by_scenario[sid].append(row)
 
     for scenario_id, scenario_rows in by_scenario.items():
         results[scenario_id] = {}

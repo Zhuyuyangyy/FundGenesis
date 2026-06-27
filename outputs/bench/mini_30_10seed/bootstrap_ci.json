@@ -1,0 +1,1500 @@
+{
+  "A01": {
+    "peak_bubble_risk": {
+      "mean": 0.37328,
+      "std": 0.025041757126847156,
+      "ci_lower": 0.35785575,
+      "ci_upper": 0.388486,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 12.3,
+      "std": 2.6095976701399777,
+      "ci_lower": 10.6,
+      "ci_upper": 13.7,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -7.230000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -7.230000000000001,
+      "ci_upper": -7.230000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 12.3,
+      "std": 2.6095976701399777,
+      "ci_lower": 10.6,
+      "ci_upper": 13.7,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A02": {
+    "peak_bubble_risk": {
+      "mean": 0.27842,
+      "std": 0.01950357915870828,
+      "ci_lower": 0.26616000000000006,
+      "ci_upper": 0.29112074999999993,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.7,
+      "std": 1.552417469626002,
+      "ci_lower": 0.0,
+      "ci_upper": 1.9,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -6.795999999999999,
+      "std": 2.9199527393435663,
+      "ci_lower": -8.623275,
+      "ci_upper": -5.03875,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.7,
+      "std": 1.552417469626002,
+      "ci_lower": 0.0,
+      "ci_upper": 1.7024999999999977,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A03": {
+    "peak_bubble_risk": {
+      "mean": 0.52889,
+      "std": 0.023782743744151954,
+      "ci_lower": 0.5157675,
+      "ci_upper": 0.5444145,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 8.9,
+      "std": 4.988987873306569,
+      "ci_lower": 6.4,
+      "ci_upper": 12.402499999999998,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -5.688,
+      "std": 4.121149839547211,
+      "ci_lower": -8.43,
+      "ci_upper": -3.396950000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 8.9,
+      "std": 4.988987873306569,
+      "ci_lower": 6.297500000000002,
+      "ci_upper": 12.2,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A04": {
+    "peak_bubble_risk": {
+      "mean": 0.32153000000000004,
+      "std": 0.026448215440743827,
+      "ci_lower": 0.305466,
+      "ci_upper": 0.33797774999999997,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 2.1,
+      "std": 1.3747727084867518,
+      "ci_lower": 1.2,
+      "ci_upper": 3.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.880000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -4.880000000000001,
+      "ci_upper": -4.880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 2.1,
+      "std": 1.3747727084867518,
+      "ci_lower": 1.2,
+      "ci_upper": 2.7074999999999934,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A05": {
+    "peak_bubble_risk": {
+      "mean": 0.31693,
+      "std": 0.03919449068427858,
+      "ci_lower": 0.29336075,
+      "ci_upper": 0.3422435,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 4.6,
+      "std": 5.834380858325929,
+      "ci_lower": 1.5,
+      "ci_upper": 8.5,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -11.75,
+      "std": 0.0,
+      "ci_lower": -11.75,
+      "ci_upper": -11.75,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 4.6,
+      "std": 5.834380858325929,
+      "ci_lower": 1.3,
+      "ci_upper": 8.102499999999997,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A06": {
+    "peak_bubble_risk": {
+      "mean": 0.009179999999999999,
+      "std": 0.0023924046480476497,
+      "ci_lower": 0.0078095000000000005,
+      "ci_upper": 0.01077025,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.880000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -4.880000000000001,
+      "ci_upper": -4.880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A07": {
+    "peak_bubble_risk": {
+      "mean": 0.39059999999999995,
+      "std": 0.036422493050311644,
+      "ci_lower": 0.37053775,
+      "ci_upper": 0.41390099999999996,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 11.8,
+      "std": 1.8330302779823358,
+      "ci_lower": 10.8,
+      "ci_upper": 13.1,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.880000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -4.880000000000001,
+      "ci_upper": -4.880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 11.8,
+      "std": 1.8330302779823358,
+      "ci_lower": 10.8,
+      "ci_upper": 13.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "A08": {
+    "peak_bubble_risk": {
+      "mean": 0.22441,
+      "std": 0.021387306983348793,
+      "ci_lower": 0.21088975000000001,
+      "ci_upper": 0.23716449999999997,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.880000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -4.880000000000001,
+      "ci_upper": -4.880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "B01": {
+    "peak_bubble_risk": {
+      "mean": 0.33849999999999997,
+      "std": 0.02941652596755775,
+      "ci_lower": 0.31973900000000005,
+      "ci_upper": 0.35615325000000003,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 7.9,
+      "std": 4.825971404805461,
+      "ci_lower": 4.8,
+      "ci_upper": 10.602499999999997,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -7.230000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -7.230000000000001,
+      "ci_upper": -7.230000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 7.9,
+      "std": 4.825971404805461,
+      "ci_lower": 4.7,
+      "ci_upper": 10.8,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "B02": {
+    "peak_bubble_risk": {
+      "mean": 0.040100000000000004,
+      "std": 0.011419807353891746,
+      "ci_lower": 0.032629500000000006,
+      "ci_upper": 0.0471205,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -11.75,
+      "std": 0.0,
+      "ci_lower": -11.75,
+      "ci_upper": -11.75,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "B03": {
+    "peak_bubble_risk": {
+      "mean": 0.40737999999999996,
+      "std": 0.03606329990447352,
+      "ci_lower": 0.38623549999999995,
+      "ci_upper": 0.4299615,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 22.0,
+      "std": 5.196152422706632,
+      "ci_lower": 18.797500000000003,
+      "ci_upper": 25.202499999999997,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -7.919,
+      "std": 2.6509449258707733,
+      "ci_lower": -9.59905,
+      "ci_upper": -6.200825000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 22.0,
+      "std": 5.196152422706632,
+      "ci_lower": 18.9,
+      "ci_upper": 25.3,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "B04": {
+    "peak_bubble_risk": {
+      "mean": 0.88246,
+      "std": 0.07037360584764717,
+      "ci_lower": 0.8403605,
+      "ci_upper": 0.9253367499999999,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 47.6,
+      "std": 4.586937976471886,
+      "ci_lower": 44.697500000000005,
+      "ci_upper": 50.5025,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -29.753000000000004,
+      "std": 2.6991000351969174,
+      "ci_lower": -31.322599999999994,
+      "ci_upper": -28.082875000000005,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 47.6,
+      "std": 4.586937976471886,
+      "ci_lower": 44.9,
+      "ci_upper": 50.402499999999996,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "B05": {
+    "peak_bubble_risk": {
+      "mean": 0.30148,
+      "std": 0.021812235098677985,
+      "ci_lower": 0.2881274999999999,
+      "ci_upper": 0.31512274999999995,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 1.0,
+      "std": 1.1832159566199232,
+      "ci_lower": 0.3,
+      "ci_upper": 1.8,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -9.495999999999999,
+      "std": 2.041730638453564,
+      "ci_lower": -10.635,
+      "ci_upper": -8.121999999999998,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 1.0,
+      "std": 1.1832159566199232,
+      "ci_lower": 0.3,
+      "ci_upper": 1.8,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "C01": {
+    "peak_bubble_risk": {
+      "mean": 0.37164,
+      "std": 0.02898213932752377,
+      "ci_lower": 0.35172925,
+      "ci_upper": 0.3886445,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 12.6,
+      "std": 4.963869458396343,
+      "ci_lower": 9.5,
+      "ci_upper": 15.7,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -2.4699999999999998,
+      "std": 4.440892098500626e-16,
+      "ci_lower": -2.4699999999999998,
+      "ci_upper": -2.4699999999999998,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 12.6,
+      "std": 4.963869458396343,
+      "ci_lower": 9.8,
+      "ci_upper": 15.6,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "C02": {
+    "peak_bubble_risk": {
+      "mean": 0.5287000000000001,
+      "std": 0.017536761388580274,
+      "ci_lower": 0.5176697499999999,
+      "ci_upper": 0.53991025,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 17.8,
+      "std": 3.7094473981982814,
+      "ci_lower": 15.4,
+      "ci_upper": 19.9,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.262,
+      "std": 3.1559081101958597,
+      "ci_lower": -6.192,
+      "ci_upper": -2.388825,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 17.8,
+      "std": 3.7094473981982814,
+      "ci_lower": 15.297500000000003,
+      "ci_upper": 20.1025,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "C03": {
+    "peak_bubble_risk": {
+      "mean": 0.28931000000000007,
+      "std": 0.02424839994721301,
+      "ci_lower": 0.27459824999999993,
+      "ci_upper": 0.30378075,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.8,
+      "std": 1.5362291495737217,
+      "ci_lower": 0.0,
+      "ci_upper": 2.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.880000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -4.880000000000001,
+      "ci_upper": -4.880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.8,
+      "std": 1.5362291495737217,
+      "ci_lower": 0.09750000000000228,
+      "ci_upper": 1.9,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "C04": {
+    "peak_bubble_risk": {
+      "mean": 0.26592000000000005,
+      "std": 0.041877268296774094,
+      "ci_lower": 0.24091475000000004,
+      "ci_upper": 0.29089024999999996,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 1.9,
+      "std": 3.7000000000000006,
+      "ci_lower": 0.0,
+      "ci_upper": 4.4,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -9.52,
+      "std": 0.0,
+      "ci_lower": -9.52,
+      "ci_upper": -9.52,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 1.9,
+      "std": 3.7000000000000006,
+      "ci_lower": 0.0,
+      "ci_upper": 4.8,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "C05": {
+    "peak_bubble_risk": {
+      "mean": 0.09898,
+      "std": 0.00872144483442967,
+      "ci_lower": 0.09343925,
+      "ci_upper": 0.10402075,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -15.479999999999999,
+      "std": 2.4242524621004304,
+      "ci_lower": -17.090999999999998,
+      "ci_upper": -14.165525,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "C06": {
+    "peak_bubble_risk": {
+      "mean": 0.29931,
+      "std": 0.024976126601216616,
+      "ci_lower": 0.2829895,
+      "ci_upper": 0.31395175000000003,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 3.2,
+      "std": 3.8418745424597094,
+      "ci_lower": 0.8,
+      "ci_upper": 5.502499999999998,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -2.8919999999999995,
+      "std": 3.493247199955938,
+      "ci_lower": -5.289999999999999,
+      "ci_upper": -0.9880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 3.2,
+      "std": 3.8418745424597094,
+      "ci_lower": 1.0975000000000024,
+      "ci_upper": 5.8,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "D01": {
+    "peak_bubble_risk": {
+      "mean": 0.30601,
+      "std": 0.027417529064450715,
+      "ci_lower": 0.28914575,
+      "ci_upper": 0.32280025,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 3.7,
+      "std": 3.287856444554719,
+      "ci_lower": 1.5,
+      "ci_upper": 5.7,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -11.75,
+      "std": 0.0,
+      "ci_lower": -11.75,
+      "ci_upper": -11.75,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 3.7,
+      "std": 3.287856444554719,
+      "ci_lower": 1.6,
+      "ci_upper": 5.7,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "D02": {
+    "peak_bubble_risk": {
+      "mean": 0.6346999999999999,
+      "std": 0.05640085105740869,
+      "ci_lower": 0.5998272499999999,
+      "ci_upper": 0.6736362499999999,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 34.6,
+      "std": 5.624944444170094,
+      "ci_lower": 31.2,
+      "ci_upper": 37.802499999999995,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -0.883,
+      "std": 1.1435213159359994,
+      "ci_lower": -1.7,
+      "ci_upper": -0.2695750000000004,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 34.6,
+      "std": 5.624944444170094,
+      "ci_lower": 31.097500000000004,
+      "ci_upper": 38.1,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "D03": {
+    "peak_bubble_risk": {
+      "mean": 0.41805000000000003,
+      "std": 0.030584023607105718,
+      "ci_lower": 0.39917525,
+      "ci_upper": 0.43469299999999994,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 21.4,
+      "std": 7.296574538781879,
+      "ci_lower": 16.997500000000002,
+      "ci_upper": 26.404999999999994,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -1.152,
+      "std": 0.9792323524067207,
+      "ci_lower": -1.79605,
+      "ci_upper": -0.585925,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 21.4,
+      "std": 7.296574538781879,
+      "ci_lower": 17.1975,
+      "ci_upper": 25.9,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "D04": {
+    "peak_bubble_risk": {
+      "mean": 0.34711,
+      "std": 0.023548861968256563,
+      "ci_lower": 0.332575,
+      "ci_upper": 0.36195275,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 7.7,
+      "std": 3.0016662039607267,
+      "ci_lower": 5.6,
+      "ci_upper": 9.5,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.880000000000001,
+      "std": 8.881784197001252e-16,
+      "ci_lower": -4.880000000000001,
+      "ci_upper": -4.880000000000001,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 7.7,
+      "std": 3.0016662039607267,
+      "ci_lower": 5.797500000000002,
+      "ci_upper": 9.4,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "D05": {
+    "peak_bubble_risk": {
+      "mean": 0.007899999999999999,
+      "std": 0.0014886235252742715,
+      "ci_lower": 0.007060000000000001,
+      "ci_upper": 0.0088705,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -6.0009999999999994,
+      "std": 3.3590875249091083,
+      "ci_lower": -8.09815,
+      "ci_upper": -3.8737000000000004,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "D06": {
+    "peak_bubble_risk": {
+      "mean": 0.78831,
+      "std": 0.2587804414943293,
+      "ci_lower": 0.62728,
+      "ci_upper": 0.9479625000000002,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 47.9,
+      "std": 14.767870530310049,
+      "ci_lower": 39.0,
+      "ci_upper": 57.0025,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -7.247000000000002,
+      "std": 7.026703423370023,
+      "ci_lower": -11.7145,
+      "ci_upper": -2.8920000000000003,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 47.9,
+      "std": 14.767870530310049,
+      "ci_lower": 38.8,
+      "ci_upper": 56.7,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "E01": {
+    "peak_bubble_risk": {
+      "mean": 0.74786,
+      "std": 0.09446706516029806,
+      "ci_lower": 0.695766,
+      "ci_upper": 0.8136552499999999,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 45.2,
+      "std": 1.8867962264113207,
+      "ci_lower": 44.097500000000004,
+      "ci_upper": 46.3,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.247,
+      "std": 1.5144573285503955,
+      "ci_lower": -5.187249999999999,
+      "ci_upper": -3.342,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 45.2,
+      "std": 1.8867962264113207,
+      "ci_lower": 43.9,
+      "ci_upper": 46.4,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "E02": {
+    "peak_bubble_risk": {
+      "mean": 0.5316099999999999,
+      "std": 0.07827164812369801,
+      "ci_lower": 0.48766575,
+      "ci_upper": 0.58370075,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 35.9,
+      "std": 2.3430749027719964,
+      "ci_lower": 34.6,
+      "ci_upper": 37.4,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -4.759,
+      "std": 3.868212636347697,
+      "ci_lower": -7.369749999999999,
+      "ci_upper": -2.564975,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 35.9,
+      "std": 2.3430749027719964,
+      "ci_lower": 34.5,
+      "ci_upper": 37.4,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 12.0,
+      "std": 2.449489742783178,
+      "ci_lower": 10.5,
+      "ci_upper": 13.5,
+      "n": 10
+    }
+  },
+  "E03": {
+    "peak_bubble_risk": {
+      "mean": 0.52702,
+      "std": 0.07069716826012197,
+      "ci_lower": 0.48661375,
+      "ci_upper": 0.5738035,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 25.0,
+      "std": 5.761944116355173,
+      "ci_lower": 21.6,
+      "ci_upper": 28.5,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -6.627,
+      "std": 1.987284831120089,
+      "ci_lower": -7.899124999999999,
+      "ci_upper": -5.393975,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 25.0,
+      "std": 5.761944116355173,
+      "ci_lower": 21.5,
+      "ci_upper": 28.7,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 20.0,
+      "std": 0.0,
+      "ci_lower": 20.0,
+      "ci_upper": 20.0,
+      "n": 10
+    }
+  },
+  "E04": {
+    "peak_bubble_risk": {
+      "mean": 0.15843,
+      "std": 0.030847594719848097,
+      "ci_lower": 0.14186650000000003,
+      "ci_upper": 0.17908374999999999,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -11.75,
+      "std": 0.0,
+      "ci_lower": -11.75,
+      "ci_upper": -11.75,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    }
+  },
+  "E05": {
+    "peak_bubble_risk": {
+      "mean": 0.54844,
+      "std": 0.06441596385990044,
+      "ci_lower": 0.51306925,
+      "ci_upper": 0.590254,
+      "n": 10
+    },
+    "bubble_high_risk_steps": {
+      "mean": 32.4,
+      "std": 4.409081537009721,
+      "ci_lower": 29.797500000000003,
+      "ci_upper": 35.2,
+      "n": 10
+    },
+    "max_drawdown": {
+      "mean": -29.227000000000004,
+      "std": 2.8769742786476216,
+      "ci_lower": -30.90915,
+      "ci_upper": -27.3186,
+      "n": 10
+    },
+    "manipulation_high_risk_steps": {
+      "mean": 0.0,
+      "std": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "n": 10
+    },
+    "overall_high_risk_steps": {
+      "mean": 32.4,
+      "std": 4.409081537009721,
+      "ci_lower": 29.8975,
+      "ci_upper": 35.1025,
+      "n": 10
+    },
+    "intervention_count": {
+      "mean": 8.5,
+      "std": 2.29128784747792,
+      "ci_lower": 7.0,
+      "ci_upper": 9.5,
+      "n": 10
+    }
+  },
+  "_by_condition": {
+    "default": {
+      "peak_bubble_risk": {
+        "mean": 0.35096185185185186,
+        "std": 0.21387526995955924,
+        "ci_lower": 0.3256445555555556,
+        "ci_upper": 0.37671095370370367,
+        "n": 270
+      },
+      "bubble_high_risk_steps": {
+        "mean": 11.218518518518518,
+        "std": 14.820919575534843,
+        "ci_lower": 9.451481481481483,
+        "ci_upper": 13.07787037037037,
+        "n": 270
+      },
+      "max_drawdown": {
+        "mean": -8.500962962962964,
+        "std": 7.2421923603155856,
+        "ci_lower": -9.35155925925926,
+        "ci_upper": -7.653607407407408,
+        "n": 270
+      },
+      "manipulation_high_risk_steps": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "n": 270
+      },
+      "overall_high_risk_steps": {
+        "mean": 11.218518518518518,
+        "std": 14.820919575534843,
+        "ci_lower": 9.458703703703703,
+        "ci_upper": 13.089351851851852,
+        "n": 270
+      },
+      "intervention_count": {
+        "mean": 0.3148148148148148,
+        "std": 1.6647107865162296,
+        "ci_lower": 0.14814814814814814,
+        "ci_upper": 0.5185185185185185,
+        "n": 270
+      }
+    },
+    "baseline": {
+      "peak_bubble_risk": {
+        "mean": 0.74786,
+        "std": 0.09446706516029806,
+        "ci_lower": 0.6916987500000001,
+        "ci_upper": 0.8095554999999999,
+        "n": 10
+      },
+      "bubble_high_risk_steps": {
+        "mean": 45.2,
+        "std": 1.8867962264113207,
+        "ci_lower": 44.0,
+        "ci_upper": 46.4,
+        "n": 10
+      },
+      "max_drawdown": {
+        "mean": -4.247,
+        "std": 1.5144573285503955,
+        "ci_lower": -5.21005,
+        "ci_upper": -3.3377000000000003,
+        "n": 10
+      },
+      "manipulation_high_risk_steps": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "n": 10
+      },
+      "overall_high_risk_steps": {
+        "mean": 45.2,
+        "std": 1.8867962264113207,
+        "ci_lower": 44.0,
+        "ci_upper": 46.4,
+        "n": 10
+      },
+      "intervention_count": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "n": 10
+      }
+    },
+    "light": {
+      "peak_bubble_risk": {
+        "mean": 0.5316099999999999,
+        "std": 0.07827164812369801,
+        "ci_lower": 0.49036775000000005,
+        "ci_upper": 0.5847825,
+        "n": 10
+      },
+      "bubble_high_risk_steps": {
+        "mean": 35.9,
+        "std": 2.3430749027719964,
+        "ci_lower": 34.5,
+        "ci_upper": 37.4,
+        "n": 10
+      },
+      "max_drawdown": {
+        "mean": -4.759,
+        "std": 3.868212636347697,
+        "ci_lower": -7.318474999999999,
+        "ci_upper": -2.69695,
+        "n": 10
+      },
+      "manipulation_high_risk_steps": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "n": 10
+      },
+      "overall_high_risk_steps": {
+        "mean": 35.9,
+        "std": 2.3430749027719964,
+        "ci_lower": 34.5,
+        "ci_upper": 37.4,
+        "n": 10
+      },
+      "intervention_count": {
+        "mean": 12.0,
+        "std": 2.449489742783178,
+        "ci_lower": 10.5,
+        "ci_upper": 13.5,
+        "n": 10
+      }
+    },
+    "strong": {
+      "peak_bubble_risk": {
+        "mean": 0.52702,
+        "std": 0.07069716826012197,
+        "ci_lower": 0.48783324999999994,
+        "ci_upper": 0.5722547499999999,
+        "n": 10
+      },
+      "bubble_high_risk_steps": {
+        "mean": 25.0,
+        "std": 5.761944116355173,
+        "ci_lower": 21.5,
+        "ci_upper": 28.6025,
+        "n": 10
+      },
+      "max_drawdown": {
+        "mean": -6.627,
+        "std": 1.987284831120089,
+        "ci_lower": -8.012349999999998,
+        "ci_upper": -5.5009500000000005,
+        "n": 10
+      },
+      "manipulation_high_risk_steps": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "n": 10
+      },
+      "overall_high_risk_steps": {
+        "mean": 25.0,
+        "std": 5.761944116355173,
+        "ci_lower": 21.7,
+        "ci_upper": 28.5,
+        "n": 10
+      },
+      "intervention_count": {
+        "mean": 20.0,
+        "std": 0.0,
+        "ci_lower": 20.0,
+        "ci_upper": 20.0,
+        "n": 10
+      }
+    }
+  }
+}

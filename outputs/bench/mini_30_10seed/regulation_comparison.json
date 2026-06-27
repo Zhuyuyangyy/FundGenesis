@@ -1,0 +1,260 @@
+{
+  "conditions": [
+    "baseline",
+    "default",
+    "light",
+    "strong"
+  ],
+  "metrics": {
+    "peak_bubble_risk": {
+      "baseline": {
+        "mean": 0.74786,
+        "std": 0.09446706516029806,
+        "n": 10
+      },
+      "default": {
+        "mean": 0.35096185185185186,
+        "std": 0.21387526995955924,
+        "n": 270
+      },
+      "light": {
+        "mean": 0.5316099999999999,
+        "std": 0.07827164812369801,
+        "n": 10
+      },
+      "strong": {
+        "mean": 0.52702,
+        "std": 0.07069716826012197,
+        "n": 10
+      }
+    },
+    "bubble_high_risk_steps": {
+      "baseline": {
+        "mean": 45.2,
+        "std": 1.8867962264113207,
+        "n": 10
+      },
+      "default": {
+        "mean": 11.218518518518518,
+        "std": 14.820919575534843,
+        "n": 270
+      },
+      "light": {
+        "mean": 35.9,
+        "std": 2.3430749027719964,
+        "n": 10
+      },
+      "strong": {
+        "mean": 25.0,
+        "std": 5.761944116355173,
+        "n": 10
+      }
+    },
+    "max_drawdown": {
+      "baseline": {
+        "mean": -4.247,
+        "std": 1.5144573285503955,
+        "n": 10
+      },
+      "default": {
+        "mean": -8.500962962962964,
+        "std": 7.2421923603155856,
+        "n": 270
+      },
+      "light": {
+        "mean": -4.759,
+        "std": 3.868212636347697,
+        "n": 10
+      },
+      "strong": {
+        "mean": -6.627,
+        "std": 1.987284831120089,
+        "n": 10
+      }
+    },
+    "overall_high_risk_steps": {
+      "baseline": {
+        "mean": 45.2,
+        "std": 1.8867962264113207,
+        "n": 10
+      },
+      "default": {
+        "mean": 11.218518518518518,
+        "std": 14.820919575534843,
+        "n": 270
+      },
+      "light": {
+        "mean": 35.9,
+        "std": 2.3430749027719964,
+        "n": 10
+      },
+      "strong": {
+        "mean": 25.0,
+        "std": 5.761944116355173,
+        "n": 10
+      }
+    },
+    "intervention_count": {
+      "baseline": {
+        "mean": 0.0,
+        "std": 0.0,
+        "n": 10
+      },
+      "default": {
+        "mean": 0.3148148148148148,
+        "std": 1.6647107865162296,
+        "n": 270
+      },
+      "light": {
+        "mean": 12.0,
+        "std": 2.449489742783178,
+        "n": 10
+      },
+      "strong": {
+        "mean": 20.0,
+        "std": 0.0,
+        "n": 10
+      }
+    }
+  },
+  "pairwise": {
+    "baseline_vs_light": {
+      "peak_bubble_risk": {
+        "d": 2.3649242368758414,
+        "interpretation": "large",
+        "mean1": 0.74786,
+        "mean2": 0.5316099999999999,
+        "mean_diff": 0.21625000000000005,
+        "n1": 10,
+        "n2": 10
+      },
+      "bubble_high_risk_steps": {
+        "d": 4.14758133605919,
+        "interpretation": "large",
+        "mean1": 45.2,
+        "mean2": 35.9,
+        "mean_diff": 9.300000000000004,
+        "n1": 10,
+        "n2": 10
+      },
+      "max_drawdown": {
+        "d": 0.16535904982756708,
+        "interpretation": "negligible",
+        "mean1": -4.247,
+        "mean2": -4.759,
+        "mean_diff": 0.5120000000000005,
+        "n1": 10,
+        "n2": 10
+      },
+      "overall_high_risk_steps": {
+        "d": 4.14758133605919,
+        "interpretation": "large",
+        "mean1": 45.2,
+        "mean2": 35.9,
+        "mean_diff": 9.300000000000004,
+        "n1": 10,
+        "n2": 10
+      },
+      "intervention_count": {
+        "d": -6.572670690061994,
+        "interpretation": "large",
+        "mean1": 0.0,
+        "mean2": 12.0,
+        "mean_diff": -12.0,
+        "n1": 10,
+        "n2": 10
+      }
+    },
+    "baseline_vs_strong": {
+      "peak_bubble_risk": {
+        "d": 2.5110847295410665,
+        "interpretation": "large",
+        "mean1": 0.74786,
+        "mean2": 0.52702,
+        "mean_diff": 0.22083999999999993,
+        "n1": 10,
+        "n2": 10
+      },
+      "bubble_high_risk_steps": {
+        "d": 4.469921237009745,
+        "interpretation": "large",
+        "mean1": 45.2,
+        "mean2": 25.0,
+        "mean_diff": 20.200000000000003,
+        "n1": 10,
+        "n2": 10
+      },
+      "max_drawdown": {
+        "d": 1.2779699632803343,
+        "interpretation": "large",
+        "mean1": -4.247,
+        "mean2": -6.627,
+        "mean_diff": 2.38,
+        "n1": 10,
+        "n2": 10
+      },
+      "overall_high_risk_steps": {
+        "d": 4.469921237009745,
+        "interpretation": "large",
+        "mean1": 45.2,
+        "mean2": 25.0,
+        "mean_diff": 20.200000000000003,
+        "n1": 10,
+        "n2": 10
+      },
+      "intervention_count": {
+        "d": 0.0,
+        "interpretation": "undefined",
+        "mean_diff": -20.0
+      }
+    },
+    "light_vs_strong": {
+      "peak_bubble_risk": {
+        "d": 0.05838588901021076,
+        "interpretation": "negligible",
+        "mean1": 0.5316099999999999,
+        "mean2": 0.52702,
+        "mean_diff": 0.004589999999999872,
+        "n1": 10,
+        "n2": 10
+      },
+      "bubble_high_risk_steps": {
+        "d": 2.3510582297531126,
+        "interpretation": "large",
+        "mean1": 35.9,
+        "mean2": 25.0,
+        "mean_diff": 10.899999999999999,
+        "n1": 10,
+        "n2": 10
+      },
+      "max_drawdown": {
+        "d": 0.5762887565728498,
+        "interpretation": "medium",
+        "mean1": -4.759,
+        "mean2": -6.627,
+        "mean_diff": 1.8679999999999994,
+        "n1": 10,
+        "n2": 10
+      },
+      "overall_high_risk_steps": {
+        "d": 2.3510582297531126,
+        "interpretation": "large",
+        "mean1": 35.9,
+        "mean2": 25.0,
+        "mean_diff": 10.899999999999999,
+        "n1": 10,
+        "n2": 10
+      },
+      "intervention_count": {
+        "d": -4.3817804600413295,
+        "interpretation": "large",
+        "mean1": 12.0,
+        "mean2": 20.0,
+        "mean_diff": -8.0,
+        "n1": 10,
+        "n2": 10
+      }
+    }
+  },
+  "regulation_table_md": "| Condition | Peak Bubble Risk | Bubble High-Risk Steps | Max Drawdown | Interventions |\n|-----------|----------------:|-----------------------:|-------------:|--------------:|\n| Baseline  | 0.748 \u00b1 0.094 | 45.2 \u00b1 1.9 | -4.25 \u00b1 1.51 | 0.0 \u00b1 0.0 |\n| Default   | 0.351 \u00b1 0.214 | 11.2 \u00b1 14.8 | -8.50 \u00b1 7.24 | 0.3 \u00b1 1.7 |\n| Light     | 0.532 \u00b1 0.078 | 35.9 \u00b1 2.3 | -4.76 \u00b1 3.87 | 12.0 \u00b1 2.4 |\n| Strong    | 0.527 \u00b1 0.071 | 25.0 \u00b1 5.8 | -6.63 \u00b1 1.99 | 20.0 \u00b1 0.0 |"
+}

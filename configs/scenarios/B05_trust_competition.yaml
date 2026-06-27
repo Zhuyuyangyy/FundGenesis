@@ -1,0 +1,54 @@
+id: B05
+name: trust_competition
+category: trust_mechanism
+seed: 42
+steps: 90
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.30
+  initial_greed: 0.40
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 15
+  n_trend_follower: 30
+  n_retail_agent: 55
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "权威机构看好行业前景"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.80
+    credibility: 0.85
+    novelty: 0.75
+    duration: 50
+  - step: 8
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2"]
+  - step: 20
+    type: narrative_inject
+    narrative: "匿名消息源声称利好不实"
+    category: SENTIMENT
+    polarity: NEGATIVE
+    sector: tech
+    intensity: 0.70
+    credibility: 0.35
+    novelty: 0.80
+    duration: 40
+  - step: 25
+    type: kol_spread
+    kol_ids: ["micro_0", "micro_1"]
+expected:
+  peak_price_min: 100.0
+failure_modes:
+  - trust_competition_not_resolved
+  - low_credibility_overrides_high
