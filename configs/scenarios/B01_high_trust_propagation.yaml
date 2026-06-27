@@ -1,0 +1,41 @@
+id: B01
+name: high_trust_propagation
+category: trust_mechanism
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.60
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "权威机构发布看好报告"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.80
+    credibility: 0.85
+    novelty: 0.75
+    duration: 60
+  - step: 10
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1", "influencer_2", "influencer_3"]
+expected:
+  belief_concentration_min: 0.05
+failure_modes:
+  - belief_concentration_never_rises
+  - kol_spread_has_no_effect

@@ -1,0 +1,37 @@
+id: B02
+name: low_trust_failure
+category: trust_mechanism
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.60
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "无名博主发布利好猜测"
+    category: SENTIMENT
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.50
+    credibility: 0.30
+    novelty: 0.60
+    duration: 60
+expected:
+  bubble_risk_max: 0.40
+failure_modes:
+  - low_credibility_narrative_triggers_bubble

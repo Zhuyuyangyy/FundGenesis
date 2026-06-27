@@ -1,0 +1,48 @@
+id: A03
+name: narrative_reversal
+category: core_mechanism
+seed: 42
+steps: 120
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.60
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "行业前景一片光明"
+    category: EARNINGS
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.80
+    novelty: 0.80
+    duration: 50
+  - step: 50
+    type: narrative_inject
+    narrative: "行业基本面恶化，前期预期过于乐观"
+    category: REGULATORY
+    polarity: NEGATIVE
+    sector: tech
+    intensity: 0.90
+    credibility: 0.85
+    novelty: 0.90
+    duration: 60
+expected:
+  price_peak_then_decline: true
+failure_modes:
+  - price_monotonic_increase
+  - reversal_has_no_effect

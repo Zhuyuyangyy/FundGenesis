@@ -1,0 +1,46 @@
+id: C01
+name: self_validation_loop
+category: reflexivity
+seed: 42
+steps: 100
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.60
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "市场趋势向上，多头格局确立"
+    category: SENTIMENT
+    polarity: POSITIVE
+    sector: tech
+    intensity: 0.80
+    credibility: 0.70
+    novelty: 0.75
+    duration: 80
+  - step: 30
+    type: price_feedback
+    price_change: 0.02
+    confirmation_strength: 0.65
+  - step: 50
+    type: price_feedback
+    price_change: 0.03
+    confirmation_strength: 0.75
+expected:
+  peak_bubble_risk_min: 0.30
+failure_modes:
+  - bubble_risk_never_rises
+  - self_validation_loop_not_observed

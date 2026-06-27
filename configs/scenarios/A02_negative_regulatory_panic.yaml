@@ -1,0 +1,45 @@
+id: A02
+name: negative_regulatory_panic
+category: core_mechanism
+seed: 42
+steps: 80
+market:
+  initial_price: 100.0
+  impact_coefficient: 0.20
+  noise_std: 0.008
+  total_agents: 100
+emotion:
+  initial_fear: 0.15
+  initial_greed: 0.60
+  fear_inertia: 0.92
+  greed_inertia: 0.92
+regulation:
+  enabled: false
+  mode: baseline
+agents:
+  n_value_investor: 10
+  n_trend_follower: 30
+  n_retail_agent: 60
+scheduled_events:
+  - step: 5
+    type: narrative_inject
+    narrative: "监管部门将出台严厉新规"
+    category: REGULATORY
+    polarity: NEGATIVE
+    sector: tech
+    intensity: 0.85
+    credibility: 0.80
+    novelty: 0.75
+    duration: 60
+  - step: 15
+    type: kol_spread
+    kol_ids: ["influencer_0", "influencer_1"]
+  - step: 30
+    type: price_feedback
+    price_change: -0.03
+    confirmation_strength: 0.70
+expected:
+  fear_increase_min: 0.10
+failure_modes:
+  - fear_never_rises
+  - price_never_drops

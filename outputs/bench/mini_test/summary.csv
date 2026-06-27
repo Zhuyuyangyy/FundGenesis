@@ -1,0 +1,13 @@
+scenario_id,scenario_name,category,seed,condition,passed,fail_reason,peak_price,final_price,max_drawdown,peak_bubble_risk,bubble_high_risk_steps,peak_manipulation_risk,manipulation_high_risk_steps,panic_high_risk_steps,overall_high_risk_steps,intervention_count,event_count
+A01,positive_narrative_bubble,core_mechanism,42,default,True,,107.79,100.0,-7.23,0.3554,12,,0,0,12,0,254
+A02,negative_regulatory_panic,core_mechanism,42,default,True,,107.79,102.39,-5.01,0.2622,0,,0,0,0,0,261
+A03,narrative_reversal,core_mechanism,42,default,True,,107.79,106.07,-1.59,0.5507,6,,0,0,6,0,386
+B01,high_trust_propagation,trust_mechanism,42,default,True,,107.79,100.0,-7.23,0.3147,3,,0,0,3,0,252
+B02,low_trust_failure,trust_mechanism,42,default,True,,107.79,95.12,-11.75,0.0371,0,,0,0,0,0,250
+C01,self_validation_loop,reflexivity,42,default,True,,107.79,105.13,-2.47,0.3442,8,,0,0,8,0,315
+C02,bubble_burst,reflexivity,42,default,False,max_drawdown_min,107.79,105.13,-2.47,0.515,17,,0,0,17,0,386
+D01,kol_coordination,risk_identification,42,default,True,,107.79,95.12,-11.75,0.2837,0,,0,0,0,0,252
+D02,fomo_surge,risk_identification,42,default,True,,147.23,144.59,-1.79,0.6028,33,,0,0,33,0,297
+E01,regulation_baseline,regulation,42,baseline,True,,150.38,146.75,-2.41,0.7025,45,,0,0,45,0,756
+E02,regulation_light,regulation,42,light,True,,107.79,101.82,-5.53,0.4843,32,,0,0,32,11,767
+E03,regulation_strong,regulation,42,strong,True,,107.79,101.82,-5.53,0.4843,32,,0,0,32,11,767
